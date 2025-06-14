@@ -87,9 +87,8 @@ h1, .bio, .contacts a {
   border: 5px solid #40c4ff;
   box-shadow: 0 0 8px 3px rgba(64,196,255,0.6), 0 0 15px 6px rgba(64,196,255,0.4), 0 0 40px 12px rgba(64,196,255,0.2);
   cursor: pointer;
-  transition: box-shadow 0.4s, transform 0.3s;
+  transition: box-shadow 0.3s, transform 0.3s;
   transform: rotate(0deg);
-  user-select: none;
 }
 
 .profile-pic.playing {
@@ -112,6 +111,14 @@ h1 {
   margin: 0 0 12px;
   color: #40c4ff;
   text-shadow: 0 0 12px #40c4ff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.verified {
+  color: #1DA1F2;
+  font-size: 24px;
 }
 
 .bio {
@@ -125,67 +132,113 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background: rgba(64,196,255,0.15);
-  padding: 20px 25px;
-  border-radius: 12px;
-  border: 2.5px solid rgba(64,196,255,0.4);
-  user-select: none;
-}
-
-.contacts a {
-  color: #c3f0ff;
-  font-size: 17px;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  transition: color 0.3s;
-  user-select: none;
-}
-
-.contacts a:hover {
-  color: #40c4ff;
-}
-
-.icon {
-  font-size: 28px;
+  background: rgba(64,196,255,0.08);
+  padding: 16px 20px;
+  border-radius: 16px;
+  border: 1.5px solid #40c4ff;
+  box-shadow: 0 0 20px rgba(64,196,255,0.3);
 }
 
 .divider {
   height: 1px;
   background: rgba(255,255,255,0.15);
-  margin: 12px 0;
-  border-radius: 1px;
+  margin: 4px 0;
+}
+
+.contacts a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  color: #d0eaff;
+  text-decoration: none;
+  font-weight: bold;
+  background: rgba(64,196,255,0.08);
+  transition: background .3s, transform .3s;
+  position: relative;
+}
+
+.contacts a:hover {
+  background: #40c4ff;
+  color: #002e5e;
+  transform: translateX(5px);
+}
+
+.contacts .icon {
+  font-size: 24px;
+  color: #40c4ff;
+  min-width: 30px;
+}
+
+.verified-icon {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #1DA1F2;
+  font-size: 18px;
+  pointer-events: none;
 }
 
 .progress-container {
   width: 100%;
   height: 8px;
-  background: rgba(64,196,255,0.4);
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  margin-top: 25px;
   cursor: pointer;
-  margin-top: 12px;
   user-select: none;
+  overflow: hidden;
+}
+
+.progress-container.hidden {
+  display: none;
 }
 
 .progress {
   height: 100%;
   width: 0%;
   background: #40c4ff;
-  border-radius: 8px;
+  border-radius: 4px;
   transition: width 0.1s linear;
 }
 
-.hidden {
-  display: none;
-}
+/* موبایل */
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 20px 15px;
+    flex-direction: column;
+    max-width: 100%;
+  }
 
-.verified-icon {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  background: url('https://upload.wikimedia.org/wikipedia/commons/e/e4/Instagram_Verified_Badge.svg') no-repeat center center;
-  background-size: contain;
-  margin-right: 6px;
-  user-select: none;
+  .profile-pic {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+    display: block;
+    border-width: 4px;
+  }
+
+  h1 {
+    font-size: 30px;
+    justify-content: center;
+  }
+
+  .bio {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .contacts {
+    padding: 12px 15px;
+  }
+
+  .contacts a {
+    justify-content: center;
+  }
+
+  .verified-icon {
+    display: none; /* موبایل تیک رسمی رو مخفی کردم چون فضا کم است */
+  }
 }
