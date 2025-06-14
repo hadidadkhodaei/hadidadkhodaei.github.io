@@ -44,42 +44,31 @@
         </a>
       </div>
 
+      <!-- نوار پیشرفت موزیک -->
       <div class="progress-container hidden" id="progressContainer" title="برای جلو و عقب بردن موزیک کلیک کن">
         <div class="progress" id="progress"></div>
       </div>
     </div>
   </div>
 
+  <!-- متن مخفی برای گوگل -->
   <div style="position:absolute; left:-9999px; height:1px; width:1px; overflow:hidden;">
     هادی هادی دادخدایی هادی دادخدائی هادی دادخدائي دادخدایی دادخدائی دادخدائي هادی جومونگ دادخدا دادخدازهی سالارزهی سالار
   </div>
 
   <audio id="audioPlayer" preload="metadata">
-    <source src="https://irsv.upmusics.com/dlw/Unknown%20artist%20-%20GTA%20Songs%20(320).mp3" type="audio/mpeg" />
+    <source src="https://dl.mehrdl.top/Music/A/F/Hayede-faryad/07%20Gol%20Sang.MP3" type="audio/mpeg" />
     مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
   </audio>
 
   <script>
-    const profilePic = document.getElementById('profilePic');
     const audio = document.getElementById('audioPlayer');
-    const progress = document.getElementById('progress');
-    const progressContainer = document.getElementById('progressContainer');
+    const profilePic = document.getElementById('profilePic');
     const profileCard = document.getElementById('profileCard');
-    const infoSection = document.getElementById('infoSection');
+    const progressContainer = document.getElementById('progressContainer');
+    const progress = document.getElementById('progress');
 
-    let started = false;
-    document.body.addEventListener('click', () => {
-      if (!started) {
-        started = true;
-        audio.currentTime = 30;
-        audio.play();
-        profilePic.classList.add('playing');
-        profileCard.classList.add('playing');
-        progressContainer.classList.remove('hidden');
-      }
-    }, { once: true });
-
-    profilePic.addEventListener('click', () => {
+    document.addEventListener('click', () => {
       if (audio.paused) {
         audio.play();
         profilePic.classList.add('playing');
@@ -89,7 +78,6 @@
         audio.pause();
         profilePic.classList.remove('playing');
         profileCard.classList.remove('playing');
-        profilePic.style.transform = 'rotate(0deg)';
         progressContainer.classList.add('hidden');
       }
     });
@@ -98,38 +86,14 @@
       if (audio.duration) {
         const progressPercent = (audio.currentTime / audio.duration) * 100;
         progress.style.width = progressPercent + '%';
-        if(audio.currentTime >= 60) {
-          audio.pause();
-          profilePic.classList.remove('playing');
-          profileCard.classList.remove('playing');
-          profilePic.style.transform = 'rotate(0deg)';
-          progress.style.width = '0%';
-          progressContainer.classList.add('hidden');
-        }
       }
-    });
-
-    progressContainer.addEventListener('click', (e) => {
-      const rect = progressContainer.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const width = rect.width;
-      const newTime = (clickX / width) * audio.duration;
-      audio.currentTime = newTime;
     });
 
     audio.addEventListener('ended', () => {
       profilePic.classList.remove('playing');
       profileCard.classList.remove('playing');
-      profilePic.style.transform = 'rotate(0deg)';
       progress.style.width = '0%';
       progressContainer.classList.add('hidden');
-    });
-
-    infoSection.addEventListener('mousedown', (e) => {
-      let selection = window.getSelection();
-      if (selection && !selection.toString()) {
-        e.preventDefault();
-      }
     });
   </script>
 
