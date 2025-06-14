@@ -50,7 +50,12 @@ h1, .bio, .contacts a {
   border: 2.5px solid rgba(79,195,247,0.6);
   position: relative;
   transition: box-shadow 0.5s ease;
-  cursor: pointer; /* کل کارت کلیک‌پذیر */
+  cursor: pointer;
+}
+
+.profile-card.playing {
+  box-shadow: 0 0 30px 8px rgba(0, 255, 255, 0.8);
+  border-color: #00fff7;
 }
 
 .profile-pic {
@@ -60,9 +65,25 @@ h1, .bio, .contacts a {
   object-fit: cover;
   border: 5px solid #40c4ff;
   box-shadow: 0 0 8px 3px rgba(64,196,255,0.6), 0 0 15px 6px rgba(64,196,255,0.4), 0 0 40px 12px rgba(64,196,255,0.2);
-  transition: box-shadow 0.4s;
-  transform: rotate(0deg);
+  transition: box-shadow 0.4s, transform 0.4s;
   user-select: none;
+}
+
+.profile-pic.playing {
+  animation: rotateProfilePic 8s linear infinite;
+}
+
+.profile-pic.zoomed {
+  transform: scale(1.15);
+  box-shadow:
+    0 0 20px 8px rgba(64,196,255,0.9),
+    0 0 35px 12px rgba(64,196,255,0.7),
+    0 0 60px 20px rgba(64,196,255,0.5);
+}
+
+@keyframes rotateProfilePic {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 h1 {
@@ -97,7 +118,7 @@ h1 {
   margin: 4px 0;
 }
 
-.contacts a {
+.contacts a.contact-link {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -108,10 +129,11 @@ h1 {
   font-weight: bold;
   background: rgba(64,196,255,0.08);
   transition: background .3s, transform .3s;
-  cursor: pointer; /* برای لینک ها */
+  cursor: pointer;
+  user-select: none;
 }
 
-.contacts a:hover {
+.contacts a.contact-link:hover {
   background: #40c4ff;
   color: #002e5e;
   transform: scale(1.05);
@@ -128,6 +150,7 @@ h1 {
   display: inline-flex;
   margin-right: 6px;
   vertical-align: middle;
+  user-select: none;
 }
 
 .progress-container {
@@ -140,13 +163,7 @@ h1 {
   position: relative;
   box-shadow: 0 0 10px rgba(0,255,255,0.3), inset 0 0 5px rgba(255,255,255,0.1);
   transition: opacity 0.5s ease;
-  opacity: 1;
   cursor: pointer;
-}
-
-.progress-container.hidden {
-  opacity: 0;
-  pointer-events: none;
 }
 
 .progress {
@@ -179,7 +196,7 @@ h1 {
     text-align: center;
   }
 
-  .contacts a {
+  .contacts a.contact-link {
     font-size: 14px;
     gap: 8px;
     padding: 8px;
