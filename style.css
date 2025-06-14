@@ -162,7 +162,7 @@ h1 {
   color: currentColor;
 }
 
-/* نوار پیشرفت موزیک */
+/* ✅ نوار پیشرفت موزیک با ظاهر زیباتر */
 .progress-container {
   margin-top: 30px;
   width: 100%;
