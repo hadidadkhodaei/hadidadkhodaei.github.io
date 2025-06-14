@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>هادی دادخدائی | دادخدائی | هادی جومونگ | سالارزهی</title>
   <meta name="description" content="وبسایت رسمی هادی دادخدائی با نام‌های دادخدائی، هادی جومونگ، سالارزهی و سالار. توسعه‌دهنده و عاشق خلق چیزهای دیجیتال." />
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="profile-card" id="profileCard" title="کلیک در هر جای صفحه موزیک پخش/قطع می‌شود">
+
+  <div class="profile-card" id="profileCard">
     <img
       class="profile-pic"
       id="profilePic"
@@ -27,48 +29,30 @@
       <div class="contacts">
         <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank" rel="noopener noreferrer" class="contact-link">
           <i class="fab fa-instagram icon"></i> اینستاگرام
-          <span class="verified-icon" title="حساب رسمی اینستاگرام">
-            <!-- تیک رسمی اینستاگرام SVG -->
-            <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="#3897f0" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22.25 12c0-5.652-4.598-10.25-10.25-10.25S1.75 6.348 1.75 12 6.348 22.25 12 22.25 22.25 17.652 22.25 12zM9.75 16.5l-3-3 1.5-1.5 1.5 1.5 4.5-4.5 1.5 1.5-6 6z"/>
-            </svg>
-          </span>
+          <i class="verified-icon fa-solid fa-check-circle"></i>
         </a>
         <div class="divider"></div>
         <a href="https://t.me/+989130487019" target="_blank" rel="noopener noreferrer" class="contact-link">
           <i class="fab fa-telegram icon"></i> تلگرام
-          <span class="verified-icon" title="حساب رسمی تلگرام">
-            <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="#3897f0" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22.25 12c0-5.652-4.598-10.25-10.25-10.25S1.75 6.348 1.75 12 6.348 22.25 12 22.25 22.25 17.652 22.25 12zM9.75 16.5l-3-3 1.5-1.5 1.5 1.5 4.5-4.5 1.5 1.5-6 6z"/>
-            </svg>
-          </span>
         </a>
         <div class="divider"></div>
         <a href="https://wa.me/989130487019" target="_blank" rel="noopener noreferrer" class="contact-link">
           <i class="fab fa-whatsapp icon"></i> واتساپ
-          <span class="verified-icon" title="حساب رسمی واتساپ">
-            <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="#3897f0" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22.25 12c0-5.652-4.598-10.25-10.25-10.25S1.75 6.348 1.75 12 6.348 22.25 12 22.25 22.25 17.652 22.25 12zM9.75 16.5l-3-3 1.5-1.5 1.5 1.5 4.5-4.5 1.5 1.5-6 6z"/>
-            </svg>
-          </span>
         </a>
         <div class="divider"></div>
         <a href="tel:+989130487019" class="contact-link">
           <i class="fas fa-phone icon"></i> تماس
-          <span class="verified-icon" title="شماره تماس رسمی">
-            <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="#3897f0" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22.25 12c0-5.652-4.598-10.25-10.25-10.25S1.75 6.348 1.75 12 6.348 22.25 12 22.25 22.25 17.652 22.25 12zM9.75 16.5l-3-3 1.5-1.5 1.5 1.5 4.5-4.5 1.5 1.5-6 6z"/>
-            </svg>
-          </span>
         </a>
       </div>
 
+      <!-- نوار پیشرفت موزیک -->
       <div class="progress-container" id="progressContainer" title="برای جلو و عقب بردن موزیک کلیک کن">
         <div class="progress" id="progress"></div>
       </div>
     </div>
   </div>
 
+  <!-- متن مخفی برای گوگل -->
   <div style="position:absolute; left:-9999px; height:1px; width:1px; overflow:hidden;">
     هادی هادی دادخدایی هادی دادخدائی هادی دادخدائي دادخدایی دادخدائی دادخدائي هادی جومونگ دادخدا دادخدازهی سالارزهی سالار
   </div>
@@ -79,97 +63,110 @@
   </audio>
 
   <script>
-    const profileCard = document.getElementById('profileCard');
     const profilePic = document.getElementById('profilePic');
     const audio = document.getElementById('audioPlayer');
     const progress = document.getElementById('progress');
     const progressContainer = document.getElementById('progressContainer');
+    const profileCard = document.getElementById('profileCard');
     const contactLinks = document.querySelectorAll('.contact-link');
 
-    // مقدار شروع و پایان پخش بر اساس ثانیه
-    const startTime = 30;
-    const endTime = 60;
+    const startTime = 30; // شروع از ثانیه ۳۰
+    const endTime = 60;   // پایان در ثانیه ۶۰
 
-    // وقتی موزیک آماده شد، شروع کنیم از ثانیه 30
-    audio.addEventListener('loadedmetadata', () => {
-      audio.currentTime = startTime;
+    // ست کردن موزیک روی ثانیه ۳۰
+    audio.currentTime = startTime;
+
+    function togglePlayingClasses(isPlaying) {
+      if(isPlaying){
+        profilePic.classList.add('playing', 'zoomed');
+        profileCard.classList.add('playing');
+      } else {
+        profilePic.classList.remove('playing', 'zoomed');
+        profileCard.classList.remove('playing');
+      }
+    }
+
+    function updateProgress(percent) {
+      progress.style.width = percent + '%';
+    }
+
+    function showProgressBar() {
+      progressContainer.classList.add('visible');
+    }
+
+    function hideProgressBar() {
+      progressContainer.classList.remove('visible');
+    }
+
+    // پخش/توقف موزیک با کلیک روی هر جای پروفایل به جز لینک‌ها
+    profileCard.addEventListener('click', (e) => {
+      if(e.target.closest('.contact-link')) return; // روی لینک کلیک نکن
+      if(audio.paused){
+        if(audio.currentTime < startTime || audio.currentTime > endTime) {
+          audio.currentTime = startTime;
+        }
+        audio.play();
+        togglePlayingClasses(true);
+        showProgressBar();
+      } else {
+        audio.pause();
+        togglePlayingClasses(false);
+        hideProgressBar();
+      }
     });
 
-    // اگر بالاتر از endTime رفت، توقف کن
+    // قطع موزیک وقتی روی لینک‌ها کلیک میشه
+    contactLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if(!audio.paused){
+          audio.pause();
+          togglePlayingClasses(false);
+          hideProgressBar();
+        }
+      });
+    });
+
+    // بروزرسانی نوار پیشرفت موزیک
     audio.addEventListener('timeupdate', () => {
-      if(audio.currentTime > endTime){
+      if(audio.currentTime >= endTime){
         audio.pause();
         audio.currentTime = startTime;
-        updateProgress(0);
         togglePlayingClasses(false);
-      } else {
+        updateProgress(0);
+        hideProgressBar();
+      } else if(audio.currentTime >= startTime){
         const progressPercent = ((audio.currentTime - startTime) / (endTime - startTime)) * 100;
         updateProgress(progressPercent);
       }
     });
 
-    // تابع برای آپدیت نوار پیشرفت
-    function updateProgress(percent){
-      progress.style.width = percent + '%';
-    }
-
-    // کنترل کلاس‌ها برای جلوه‌های بصری پخش
-    function togglePlayingClasses(isPlaying){
-      if(isPlaying){
-        profileCard.classList.add('playing');
-        profilePic.classList.add('playing');
-      } else {
-        profileCard.classList.remove('playing');
-        profilePic.classList.remove('playing');
-      }
-    }
-
-    // پخش و توقف موزیک با کلیک روی کارت (غیر لینک‌ها)
-    profileCard.addEventListener('click', (e) => {
-      if(e.target.closest('.contact-link')) return; // اگر روی لینک کلیک شد کاری نکن
-      if(audio.paused){
-        audio.currentTime = Math.max(audio.currentTime, startTime);
-        audio.play();
-        togglePlayingClasses(true);
-      } else {
-        audio.pause();
-        togglePlayingClasses(false);
-      }
+    // مخفی کردن نوار هنگام بارگذاری
+    audio.addEventListener('loadedmetadata', () => {
+      audio.currentTime = startTime;
+      hideProgressBar();
     });
 
-    // وقتی روی عکس کلیک میکنی، عکس بزرگ و روشن تر میشه و برمیگرده
-    profilePic.addEventListener('click', (e) => {
-      e.stopPropagation(); // جلوگیری از پخش یا توقف موزیک توسط کلیک روی عکس
-      profilePic.classList.add('zoomed');
-      setTimeout(() => {
-        profilePic.classList.remove('zoomed');
-      }, 800);
-    });
-
-    // کلیک روی لینک‌های تماس باعث قطع شدن موزیک اگر پخش باشه
-    contactLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        if(!audio.paused){
-          audio.pause();
-          togglePlayingClasses(false);
-        }
-      });
-    });
-
-    // جلو و عقب بردن موزیک با کلیک روی نوار پیشرفت
+    // جلو عقب کردن موزیک با کلیک روی نوار پیشرفت
     progressContainer.addEventListener('click', (e) => {
       const rect = progressContainer.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
       const width = rect.width;
-      const clickPercent = clickX / width;
-      const newTime = startTime + clickPercent * (endTime - startTime);
+      const newTime = startTime + (clickX / width) * (endTime - startTime);
       audio.currentTime = newTime;
-      updateProgress(clickPercent * 100);
       if(audio.paused){
         audio.play();
         togglePlayingClasses(true);
+        showProgressBar();
       }
     });
+
+    // جلوگیری از انتخاب متن یا هایلایت لینک بعد از کلیک و بازگشت
+    contactLinks.forEach(link => {
+      link.addEventListener('focus', (e) => {
+        e.target.blur();
+      });
+    });
   </script>
+
 </body>
 </html>
