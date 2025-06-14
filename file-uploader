@@ -1,0 +1,4 @@
+file-uploader/
+├── server.js
+├── uploads/         (این پوشه خالی باشه، برای ذخیره فایل‌ها)
+└── index.html
