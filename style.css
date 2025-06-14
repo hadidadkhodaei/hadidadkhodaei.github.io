@@ -9,20 +9,16 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-
-  /* وسط چین کردن صفحه برای دسکتاپ */
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 body {
   font-family: 'Vazirmatn', Tahoma, sans-serif;
   direction: rtl;
   background: linear-gradient(135deg, #141e30, #243b55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
-
-  /* جلوگیری کلی از انتخاب متن با کلیک */
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -35,25 +31,19 @@ body {
   display: flex;
   flex-direction: column;
   user-select: text !important;
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
   cursor: default;
 }
 
 h1, .bio, .contacts a {
   user-select: text !important;
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
   cursor: default;
 }
 
 .profile-card {
-  background: rgba(255,255,255,0.07);
+  background: rgba(255, 255, 255, 0.07);
   backdrop-filter: blur(20px);
   border-radius: 16px;
-  box-shadow: 0 20px 70px rgba(79,195,247,0.8);
+  box-shadow: 0 20px 70px rgba(79, 195, 247, 0.8);
   max-width: 720px;
   width: 100%;
   padding: 30px;
@@ -61,14 +51,11 @@ h1, .bio, .contacts a {
   flex-wrap: wrap;
   gap: 20px;
   align-items: center;
-  border: 2.5px solid rgba(79,195,247,0.6);
+  border: 2.5px solid rgba(79, 195, 247, 0.6);
   position: relative;
   transition: box-shadow 0.5s ease;
-  /* وسط چین کردن محتوای داخل کارت */
-  margin: 0 auto;
 }
 
-/* نورهای رنگی چرخان */
 .profile-card.playing {
   animation: rotating-shadow 4s linear infinite;
   box-shadow:
@@ -123,9 +110,9 @@ h1, .bio, .contacts a {
   object-fit: cover;
   border: 5px solid #40c4ff;
   box-shadow:
-    0 0 8px 3px rgba(64,196,255,0.6),
-    0 0 15px 6px rgba(64,196,255,0.4),
-    0 0 40px 12px rgba(64,196,255,0.2);
+    0 0 8px 3px rgba(64, 196, 255, 0.6),
+    0 0 15px 6px rgba(64, 196, 255, 0.4),
+    0 0 40px 12px rgba(64, 196, 255, 0.2);
   cursor: pointer;
   transition: box-shadow 0.4s;
   transform: rotate(0deg);
@@ -167,33 +154,57 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background: rgba(64,196,255,0.08);
+  background: rgba(64, 196, 255, 0.08);
   padding: 16px 20px;
   border-radius: 16px;
   border: 1.5px solid #40c4ff;
-  box-shadow: 0 0 20px rgba(64,196,255,0.3);
+  box-shadow: 0 0 20px rgba(64, 196, 255, 0.3);
 }
 
-/* حذف خط جداکننده قدیمی و جایگزینی با خط موزیک زیباتر */
 .divider {
-  display: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 4px 0;
 }
 
-/* --- نوار پیشرفت موزیک زیبا و شفاف‌تر --- */
+.contacts a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 10px;
+  color: #d0eaff;
+  text-decoration: none;
+  font-weight: bold;
+  background: rgba(64, 196, 255, 0.08);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.contacts a:hover {
+  background: #40c4ff;
+  color: #002e5e;
+  transform: scale(1.05);
+}
+
+.icon {
+  font-size: 24px;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+/* نوار پیشرفت موزیک با افکت گرادینت زیبا */
 .progress-container {
   margin-top: 20px;
   width: 100%;
-  height: 10px;  /* کمی بلندتر */
-  background: linear-gradient(90deg, #40c4ff 0%, #81d4fa 50%, #40c4ff 100%);
+  height: 10px;
+  background: #222;
   border-radius: 10px;
   cursor: pointer;
-  box-shadow:
-    inset 0 0 10px rgba(0,0,0,0.2),
-    0 2px 6px rgba(64,196,255,0.6);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
   transition: opacity 0.5s ease;
   opacity: 1;
+  overflow: hidden;
   user-select: none;
-  border: 1px solid rgba(64,196,255,0.5);
 }
 
 .progress-container.hidden {
@@ -203,13 +214,35 @@ h1 {
 
 .progress {
   height: 100%;
-  background: linear-gradient(90deg, #00ffe7, #4caf50);
   width: 0%;
-  border-radius: 10px 0 0 10px;
-  box-shadow: 0 0 15px 3px #4caf50;
-  transition: width 0.1s linear;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #00ffff,
+    #ff00ff,
+    #ffff00,
+    #00ff00,
+    #00ffff,
+    #ff00ff
+  );
+  background-size: 300% 300%;
+  animation: progressGlow 5s ease infinite;
+  transition: width 0.2s linear;
 }
 
+@keyframes progressGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ریسپانسیو موبایل */
 @media (max-width: 720px) {
   .profile-card {
     flex-direction: column;
