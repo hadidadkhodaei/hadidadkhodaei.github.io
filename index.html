@@ -18,6 +18,7 @@
       src="https://hadidadkhodaei.ir/me.jpg"
       alt="عکس پروفایل هادی دادخدائی"
       title="کلیک کن برای پخش/توقف موزیک"
+      draggable="false"
     />
 
     <div class="info" id="infoSection">
@@ -27,24 +28,40 @@
       </p>
 
       <div class="contacts">
-        <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank" rel="noopener noreferrer">
+        <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank" rel="noopener noreferrer" class="contact-link">
           <i class="fab fa-instagram icon"></i> اینستاگرام
-          <i class="fas fa-check-circle verified-icon"></i>
+          <span class="verified-icon" aria-label="تیک تأیید اینستاگرام">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3897f0" viewBox="0 0 24 24">
+              <path d="M9 16.17l-3.88-3.88a1 1 0 0 0-1.42 1.42l4.59 4.59a1 1 0 0 0 1.42 0l8.59-8.59a1 1 0 1 0-1.42-1.42L9 16.17z"/>
+            </svg>
+          </span>
         </a>
         <div class="divider"></div>
-        <a href="https://t.me/+989130487019" target="_blank" rel="noopener noreferrer">
+        <a href="https://t.me/+989130487019" target="_blank" rel="noopener noreferrer" class="contact-link">
           <i class="fab fa-telegram icon"></i> تلگرام
-          <i class="fas fa-check-circle verified-icon"></i>
+          <span class="verified-icon" aria-label="تیک تأیید">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3897f0" viewBox="0 0 24 24">
+              <path d="M9 16.17l-3.88-3.88a1 1 0 0 0-1.42 1.42l4.59 4.59a1 1 0 0 0 1.42 0l8.59-8.59a1 1 0 1 0-1.42-1.42L9 16.17z"/>
+            </svg>
+          </span>
         </a>
         <div class="divider"></div>
-        <a href="https://wa.me/989130487019" target="_blank" rel="noopener noreferrer">
+        <a href="https://wa.me/989130487019" target="_blank" rel="noopener noreferrer" class="contact-link">
           <i class="fab fa-whatsapp icon"></i> واتساپ
-          <i class="fas fa-check-circle verified-icon"></i>
+          <span class="verified-icon" aria-label="تیک تأیید">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3897f0" viewBox="0 0 24 24">
+              <path d="M9 16.17l-3.88-3.88a1 1 0 0 0-1.42 1.42l4.59 4.59a1 1 0 0 0 1.42 0l8.59-8.59a1 1 0 1 0-1.42-1.42L9 16.17z"/>
+            </svg>
+          </span>
         </a>
         <div class="divider"></div>
-        <a href="tel:+989130487019">
+        <a href="tel:+989130487019" class="contact-link">
           <i class="fas fa-phone icon"></i> تماس
-          <i class="fas fa-check-circle verified-icon"></i>
+          <span class="verified-icon" aria-label="تیک تأیید">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3897f0" viewBox="0 0 24 24">
+              <path d="M9 16.17l-3.88-3.88a1 1 0 0 0-1.42 1.42l4.59 4.59a1 1 0 0 0 1.42 0l8.59-8.59a1 1 0 1 0-1.42-1.42L9 16.17z"/>
+            </svg>
+          </span>
         </a>
       </div>
 
@@ -61,7 +78,7 @@
   </div>
 
   <audio id="audioPlayer" preload="metadata">
-    <source src="https://irsv.upmusics.com/dlw/Unknown%20artist%20-%20GTA%20Songs%20(320).mp3" type="audio/mpeg" />
+    <source src="https://dl.mehrdl.top/Music/A/F/Hayede-faryad/07%20Gol%20Sang.MP3" type="audio/mpeg" />
     مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
   </audio>
 
@@ -70,14 +87,12 @@
     const progress = document.getElementById('progress');
     const progressContainer = document.getElementById('progressContainer');
     const profileCard = document.getElementById('profileCard');
-    const infoSection = document.getElementById('infoSection');
 
-    // وقتی صفحه لود شد، از ثانیه ۳۰ شروع کن
+    // شروع موزیک از ثانیه 30
     audio.addEventListener('loadedmetadata', () => {
       audio.currentTime = 30;
     });
 
-    // اگر از 60 ثانیه رد شد، متوقف کن و مخفی کن نوار
     audio.addEventListener('timeupdate', () => {
       if (audio.currentTime >= 60) {
         audio.pause();
@@ -87,7 +102,6 @@
       progress.style.width = progressPercent + '%';
     });
 
-    // پخش و توقف با کلیک روی کل کارت
     profileCard.addEventListener('click', () => {
       if (audio.paused) {
         audio.play();
@@ -98,7 +112,13 @@
       }
     });
 
-    // کلیک روی نوار پیشرفت برای تغییر زمان
+    const contactLinks = document.querySelectorAll('.contact-link');
+    contactLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.stopPropagation();
+      });
+    });
+
     progressContainer.addEventListener('click', (e) => {
       const rect = progressContainer.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
