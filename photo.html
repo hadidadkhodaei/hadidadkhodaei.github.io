@@ -1,140 +1,101 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8" />
-  <title>آپلود فایل و دریافت لینک</title>
+  <meta charset="UTF-8">
+  <title>آپلود فایل با GoFile</title>
   <style>
     body {
-      font-family: Tahoma, sans-serif;
-      background-color: #f2f2f2;
-      padding: 30px;
-      direction: rtl;
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #f9f9f9;
     }
-    input, button {
-      margin: 10px 0;
-      padding: 10px;
-      font-size: 14px;
+    .box {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="file"], input[type="text"] {
+      width: 100%;
+      margin: 1rem 0;
+      padding: 0.5rem;
     }
     button {
-      background-color: #4caf50;
+      padding: 0.5rem 1rem;
+      background: #0a84ff;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
     }
-    input[type="text"] {
-      width: 100%;
-      direction: ltr;
-    }
-    .result {
-      margin-top: 15px;
-      background: #e1f5fe;
-      padding: 10px;
-      border-radius: 6px;
-    }
-    #message {
-      margin-top: 10px;
-      color: red;
+    .link {
+      margin-top: 1rem;
+      word-break: break-all;
     }
   </style>
 </head>
 <body>
+  <div class="box">
+    <h2>آپلود فایل</h2>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">آپلود</button>
+    <div class="link" id="downloadLink"></div>
 
-<h2>آپلود فایل</h2>
-<input type="file" id="fileInput">
-<br>
-<button onclick="uploadFile()">آپلود</button>
+    <hr>
+    <h3>حذف فایل</h3>
+    <input type="text" id="deleteId" placeholder="کد فایل برای حذف (مثلاً: Xy123)">
+    <button onclick="deleteFile()">حذف فایل</button>
+    <div class="link" id="deleteResult"></div>
+  </div>
 
-<div class="result">
-  <label>لینک فایل:</label>
-  <input type="text" id="fileUrl" readonly>
-  <label>کد حذف:</label>
-  <input type="text" id="deleteCode" readonly>
-</div>
+  <script>
+    const token = "e240829b5edf58b647dea59a66c7a299";
 
-<h3>حذف فایل</h3>
-<input type="text" id="deleteInput" placeholder="کد حذف را وارد کنید">
-<button onclick="deleteFile()">حذف فایل</button>
+    async function uploadFile() {
+      const fileInput = document.getElementById("fileInput");
+      const file = fileInput.files[0];
+      if (!file) return alert("لطفاً یک فایل انتخاب کنید.");
 
-<div id="message"></div>
+      const getServerRes = await fetch("https://api.gofile.io/getServer");
+      const { data } = await getServerRes.json();
+      const server = data.server;
 
-<script>
-async function uploadFile() {
-  const file = document.getElementById('fileInput').files[0];
-  const message = document.getElementById('message');
-  message.style.color = 'red';
-  message.textContent = '';
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("token", token);
 
-  if (!file) {
-    message.textContent = 'لطفاً یک فایل انتخاب کنید.';
-    return;
-  }
+      const uploadRes = await fetch(`https://${server}.gofile.io/uploadFile`, {
+        method: "POST",
+        body: formData
+      });
 
-  message.textContent = 'در حال دریافت سرور...';
+      const uploadData = await uploadRes.json();
+      const code = uploadData.data.code;
+      const link = uploadData.data.downloadPage;
 
-  try {
-    const serverRes = await fetch('https://api.gofile.io/getServer');
-    const serverData = await serverRes.json();
-    const server = serverData.data.server;
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    message.textContent = 'در حال آپلود...';
-
-    const uploadRes = await fetch(`https://${server}.gofile.io/uploadFile`, {
-      method: 'POST',
-      body: formData
-    });
-
-    const uploadData = await uploadRes.json();
-
-    if (uploadData.status === 'ok') {
-      const url = uploadData.data.downloadPage;
-      const deleteCode = uploadData.data.code;
-
-      document.getElementById('fileUrl').value = url;
-      document.getElementById('deleteCode').value = deleteCode;
-
-      message.style.color = 'green';
-      message.textContent = 'آپلود با موفقیت انجام شد!';
-    } else {
-      throw new Error(uploadData.status);
+      document.getElementById("downloadLink").innerHTML =
+        `✔️ فایل با موفقیت آپلود شد. لینک:<br><a href="${link}" target="_blank">${link}</a>`;
     }
-  } catch (err) {
-    message.textContent = 'خطا در آپلود: ' + err.message;
-  }
-}
 
-async function deleteFile() {
-  const code = document.getElementById('deleteInput').value.trim();
-  const message = document.getElementById('message');
+    async function deleteFile() {
+      const code = document.getElementById("deleteId").value.trim();
+      if (!code) return alert("کد فایل را وارد کنید.");
 
-  if (!code) {
-    message.textContent = 'کد حذف را وارد کنید.';
-    return;
-  }
+      const res = await fetch("https://api.gofile.io/deleteContent", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contentId: code, token: token })
+      });
 
-  message.textContent = 'در حال حذف فایل...';
-
-  try {
-    const res = await fetch(`https://api.gofile.io/deleteContent?contentId=${code}`, {
-      method: 'DELETE'
-    });
-    const data = await res.json();
-
-    if (data.status === "ok") {
-      message.style.color = 'green';
-      message.textContent = 'فایل با موفقیت حذف شد.';
-    } else {
-      throw new Error(data.status);
+      const result = await res.json();
+      if (result.status === "ok") {
+        document.getElementById("deleteResult").textContent = "✔️ فایل حذف شد.";
+      } else {
+        document.getElementById("deleteResult").textContent = "❌ خطا در حذف فایل.";
+      }
     }
-  } catch (err) {
-    message.style.color = 'red';
-    message.textContent = 'خطا در حذف: ' + err.message;
-  }
-}
-</script>
-
+  </script>
 </body>
 </html>
