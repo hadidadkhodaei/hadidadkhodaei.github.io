@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>هادی دادخدائی | دادخدائی | هادی جومونگ | سالارزهی</title>
+  <title>هادی دادخدائی | دادخدخدائی | هادی جومونگ | سالارزهی</title>
   <meta name="description" content="وبسایت رسمی هادی دادخدائی با نام‌های دادخدائی، هادی جومونگ، سالارزهی و سالار. توسعه‌دهنده و عاشق خلق چیزهای دیجیتال." />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -27,26 +27,25 @@
       </p>
 
       <div class="contacts">
-        <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank" rel="noopener noreferrer" class="contact-link">
+        <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-instagram icon"></i> اینستاگرام
-          <i class="verified-icon fa-solid fa-check-circle"></i>
         </a>
         <div class="divider"></div>
-        <a href="https://t.me/+989130487019" target="_blank" rel="noopener noreferrer" class="contact-link">
+        <a href="https://t.me/+989130487019" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-telegram icon"></i> تلگرام
         </a>
         <div class="divider"></div>
-        <a href="https://wa.me/989130487019" target="_blank" rel="noopener noreferrer" class="contact-link">
+        <a href="https://wa.me/989130487019" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-whatsapp icon"></i> واتساپ
         </a>
         <div class="divider"></div>
-        <a href="tel:+989130487019" class="contact-link">
+        <a href="tel:+989130487019">
           <i class="fas fa-phone icon"></i> تماس
         </a>
       </div>
 
       <!-- نوار پیشرفت موزیک -->
-      <div class="progress-container" id="progressContainer" title="برای جلو و عقب بردن موزیک کلیک کن">
+      <div class="progress-container hidden" id="progressContainer" title="برای جلو و عقب بردن موزیک کلیک کن">
         <div class="progress" id="progress"></div>
       </div>
     </div>
@@ -58,7 +57,7 @@
   </div>
 
   <audio id="audioPlayer" preload="metadata">
-    <source src="https://irsv.upmusics.com/dlw/Unknown%20artist%20-%20GTA%20Songs%20(320).mp3" type="audio/mpeg" />
+    <source src="https://dl.mehrdl.top/Music/A/F/Hayede-faryad/07%20Gol%20Sang.MP3" type="audio/mpeg" />
     مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
   </audio>
 
@@ -68,103 +67,52 @@
     const progress = document.getElementById('progress');
     const progressContainer = document.getElementById('progressContainer');
     const profileCard = document.getElementById('profileCard');
-    const contactLinks = document.querySelectorAll('.contact-link');
+    const infoSection = document.getElementById('infoSection');
 
-    const startTime = 30; // شروع از ثانیه ۳۰
-    const endTime = 60;   // پایان در ثانیه ۶۰
-
-    // ست کردن موزیک روی ثانیه ۳۰
-    audio.currentTime = startTime;
-
-    function togglePlayingClasses(isPlaying) {
-      if(isPlaying){
-        profilePic.classList.add('playing', 'zoomed');
-        profileCard.classList.add('playing');
-      } else {
-        profilePic.classList.remove('playing', 'zoomed');
-        profileCard.classList.remove('playing');
-      }
-    }
-
-    function updateProgress(percent) {
-      progress.style.width = percent + '%';
-    }
-
-    function showProgressBar() {
-      progressContainer.classList.add('visible');
-    }
-
-    function hideProgressBar() {
-      progressContainer.classList.remove('visible');
-    }
-
-    // پخش/توقف موزیک با کلیک روی هر جای پروفایل به جز لینک‌ها
-    profileCard.addEventListener('click', (e) => {
-      if(e.target.closest('.contact-link')) return; // روی لینک کلیک نکن
-      if(audio.paused){
-        if(audio.currentTime < startTime || audio.currentTime > endTime) {
-          audio.currentTime = startTime;
-        }
+    profilePic.addEventListener('click', () => {
+      if (audio.paused) {
         audio.play();
-        togglePlayingClasses(true);
-        showProgressBar();
+        profilePic.classList.add('playing');
+        profileCard.classList.add('playing');
+        progressContainer.classList.remove('hidden');
       } else {
         audio.pause();
-        togglePlayingClasses(false);
-        hideProgressBar();
+        profilePic.classList.remove('playing');
+        profileCard.classList.remove('playing');
+        profilePic.style.transform = 'rotate(0deg)';
+        progressContainer.classList.add('hidden');
       }
     });
 
-    // قطع موزیک وقتی روی لینک‌ها کلیک میشه
-    contactLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if(!audio.paused){
-          audio.pause();
-          togglePlayingClasses(false);
-          hideProgressBar();
-        }
-      });
-    });
-
-    // بروزرسانی نوار پیشرفت موزیک
     audio.addEventListener('timeupdate', () => {
-      if(audio.currentTime >= endTime){
-        audio.pause();
-        audio.currentTime = startTime;
-        togglePlayingClasses(false);
-        updateProgress(0);
-        hideProgressBar();
-      } else if(audio.currentTime >= startTime){
-        const progressPercent = ((audio.currentTime - startTime) / (endTime - startTime)) * 100;
-        updateProgress(progressPercent);
+      if (audio.duration) {
+        const progressPercent = (audio.currentTime / audio.duration) * 100;
+        progress.style.width = progressPercent + '%';
       }
     });
 
-    // مخفی کردن نوار هنگام بارگذاری
-    audio.addEventListener('loadedmetadata', () => {
-      audio.currentTime = startTime;
-      hideProgressBar();
-    });
-
-    // جلو عقب کردن موزیک با کلیک روی نوار پیشرفت
     progressContainer.addEventListener('click', (e) => {
       const rect = progressContainer.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
       const width = rect.width;
-      const newTime = startTime + (clickX / width) * (endTime - startTime);
+      const newTime = (clickX / width) * audio.duration;
       audio.currentTime = newTime;
-      if(audio.paused){
-        audio.play();
-        togglePlayingClasses(true);
-        showProgressBar();
-      }
     });
 
-    // جلوگیری از انتخاب متن یا هایلایت لینک بعد از کلیک و بازگشت
-    contactLinks.forEach(link => {
-      link.addEventListener('focus', (e) => {
-        e.target.blur();
-      });
+    audio.addEventListener('ended', () => {
+      profilePic.classList.remove('playing');
+      profileCard.classList.remove('playing');
+      profilePic.style.transform = 'rotate(0deg)';
+      progress.style.width = '0%';
+      progressContainer.classList.add('hidden');
+    });
+
+    // جلوگیری از انتخاب متن با کلیک (فقط کلیک، درگ آزاد)
+    infoSection.addEventListener('mousedown', (e) => {
+      let selection = window.getSelection();
+      if (selection && !selection.toString()) {
+        e.preventDefault();
+      }
     });
   </script>
 
