@@ -57,19 +57,27 @@
   </div>
 
   <audio id="audioPlayer" preload="metadata">
-    <source src="https://dl.mehrdl.top/Music/A/F/Hayede-faryad/07%20Gol%20Sang.MP3" type="audio/mpeg" />
+    <source src="https://irsv.upmusics.com/dlw/Unknown%20artist%20-%20GTA%20Songs%20(320).mp3" type="audio/mpeg" />
     مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
   </audio>
 
   <script>
-    const audio = document.getElementById('audioPlayer');
     const profilePic = document.getElementById('profilePic');
-    const profileCard = document.getElementById('profileCard');
-    const progressContainer = document.getElementById('progressContainer');
+    const audio = document.getElementById('audioPlayer');
     const progress = document.getElementById('progress');
+    const progressContainer = document.getElementById('progressContainer');
+    const profileCard = document.getElementById('profileCard');
 
-    document.addEventListener('click', () => {
+    const START_TIME = 30;  // شروع پخش از ثانیه 30
+    const END_TIME = 60;    // قطع پخش در ثانیه 60
+
+    // هر جایی از صفحه کلیک شود، پخش/توقف موزیک انجام شود
+    document.body.addEventListener('click', (e) => {
+      // برای اینکه کلیک روی لینک‌ها موزیک قطع نشه
+      if (e.target.closest('a')) return;
+
       if (audio.paused) {
+        audio.currentTime = START_TIME;
         audio.play();
         profilePic.classList.add('playing');
         profileCard.classList.add('playing');
@@ -78,23 +86,25 @@
         audio.pause();
         profilePic.classList.remove('playing');
         profileCard.classList.remove('playing');
+        profilePic.style.transform = 'rotate(0deg)';
         progressContainer.classList.add('hidden');
       }
     });
 
     audio.addEventListener('timeupdate', () => {
-      if (audio.duration) {
-        const progressPercent = (audio.currentTime / audio.duration) * 100;
+      if (audio.currentTime >= END_TIME) {
+        audio.pause();
+        profilePic.classList.remove('playing');
+        profileCard.classList.remove('playing');
+        profilePic.style.transform = 'rotate(0deg)';
+        progress.style.width = '0%';
+        progressContainer.classList.add('hidden');
+      } else if (audio.currentTime >= START_TIME) {
+        const progressPercent = ((audio.currentTime - START_TIME) / (END_TIME - START_TIME)) * 100;
         progress.style.width = progressPercent + '%';
       }
     });
 
-    audio.addEventListener('ended', () => {
-      profilePic.classList.remove('playing');
-      profileCard.classList.remove('playing');
-      progress.style.width = '0%';
-      progressContainer.classList.add('hidden');
-    });
   </script>
 
 </body>
