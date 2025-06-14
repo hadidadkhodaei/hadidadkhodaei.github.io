@@ -50,33 +50,7 @@ h1, .bio, .contacts a {
   border: 2.5px solid rgba(79,195,247,0.6);
   position: relative;
   transition: box-shadow 0.5s ease;
-}
-
-.profile-card.playing {
-  animation: rotating-shadow 4s linear infinite;
-  box-shadow:
-    0 0 30px 4px #00fffc,
-    10px 0 50px 10px #ff00c8,
-    -10px 0 40px 10px #ffff00,
-    0 0 70px 10px #00ff3c;
-}
-
-@keyframes rotating-shadow {
-  0% {
-    box-shadow: 0 0 30px 4px #00fffc, 10px 0 50px 10px #ff00c8, -10px 0 40px 10px #ffff00, 0 0 70px 10px #00ff3c;
-  }
-  25% {
-    box-shadow: 10px 0 30px 4px #00ff3c, 0 0 50px 10px #00fffc, 0 10px 40px 10px #ff00c8, -10px 0 70px 10px #ffff00;
-  }
-  50% {
-    box-shadow: 0 10px 30px 4px #ffff00, -10px 0 50px 10px #00ff3c, 10px 0 40px 10px #00fffc, 0 0 70px 10px #ff00c8;
-  }
-  75% {
-    box-shadow: -10px 0 30px 4px #ff00c8, 0 0 50px 10px #ffff00, 0 -10px 40px 10px #00ff3c, 10px 0 70px 10px #00fffc;
-  }
-  100% {
-    box-shadow: 0 0 30px 4px #00fffc, 10px 0 50px 10px #ff00c8, -10px 0 40px 10px #ffff00, 0 0 70px 10px #00ff3c;
-  }
+  cursor: pointer; /* کل کارت کلیک‌پذیر */
 }
 
 .profile-pic {
@@ -86,23 +60,9 @@ h1, .bio, .contacts a {
   object-fit: cover;
   border: 5px solid #40c4ff;
   box-shadow: 0 0 8px 3px rgba(64,196,255,0.6), 0 0 15px 6px rgba(64,196,255,0.4), 0 0 40px 12px rgba(64,196,255,0.2);
-  cursor: pointer;
   transition: box-shadow 0.4s;
   transform: rotate(0deg);
-}
-
-.profile-pic.playing {
-  animation: slow-rotate 20s linear infinite;
-  box-shadow: 0 0 15px 5px #81d4fa, 0 0 30px 10px #81d4fa, 0 0 60px 20px #81d4fa;
-}
-
-@keyframes slow-rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  user-select: none;
 }
 
 h1 {
@@ -140,7 +100,7 @@ h1 {
 .contacts a {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   padding: 10px;
   border-radius: 10px;
   color: #d0eaff;
@@ -148,6 +108,7 @@ h1 {
   font-weight: bold;
   background: rgba(64,196,255,0.08);
   transition: background .3s, transform .3s;
+  cursor: pointer; /* برای لینک ها */
 }
 
 .contacts a:hover {
@@ -160,17 +121,15 @@ h1 {
   font-size: 24px;
   flex-shrink: 0;
   color: currentColor;
+  user-select: none;
 }
 
-/* تیک آبی */
 .verified-icon {
-  color: #1da1f2;
+  display: inline-flex;
   margin-right: 6px;
-  font-size: 14px;
   vertical-align: middle;
 }
 
-/* ✅ نوار پیشرفت موزیک با ظاهر زیباتر */
 .progress-container {
   margin-top: 30px;
   width: 100%;
@@ -182,6 +141,7 @@ h1 {
   box-shadow: 0 0 10px rgba(0,255,255,0.3), inset 0 0 5px rgba(255,255,255,0.1);
   transition: opacity 0.5s ease;
   opacity: 1;
+  cursor: pointer;
 }
 
 .progress-container.hidden {
@@ -212,5 +172,20 @@ h1 {
 
   h1 {
     font-size: 32px;
+    text-align: center;
+  }
+
+  .bio {
+    text-align: center;
+  }
+
+  .contacts a {
+    font-size: 14px;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .icon {
+    font-size: 20px;
   }
 }
