@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>هادی دادخدائی | دادخدائی | هادی جومونگ | سالارزهی</title>
-  <meta name="description" content="وبسایت رسمی هادی دادخدائی با نام‌های دادخدائی، هادی جومونگ، سالارزهی و سالار. توسعه‌دهنده و عاشق خلق چیزهای دیجیتال." />
+  <title>صفحه شخصی هادی دادخدائی</title>
 
+  <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -15,7 +14,7 @@
     <img
       class="profile-pic"
       id="profilePic"
-      src="https://hadidadkhodaei.ir/me.jpg"
+      src="https://s6.uupload.ir/files/inshot_۲۰۲۵۰۳۰۴_۱۰۴۷۳۵۰۱۲_cpyi.jpg"
       alt="عکس پروفایل هادی دادخدائی"
       title="کلیک کن برای پخش/توقف موزیک"
     />
@@ -27,19 +26,19 @@
       </p>
 
       <div class="contacts">
-        <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank" rel="noopener noreferrer">
+        <a href="https://instagram.com/I_hadi_0" target="_blank">
           <i class="fab fa-instagram icon"></i> اینستاگرام
         </a>
         <div class="divider"></div>
-        <a href="https://t.me/+989130487019" target="_blank" rel="noopener noreferrer">
+        <a href="https://t.me/I_hadi_0" target="_blank">
           <i class="fab fa-telegram icon"></i> تلگرام
         </a>
         <div class="divider"></div>
-        <a href="https://wa.me/989130487019" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-whatsapp icon"></i> واتساپ
+        <a href="mailto:hadi@example.com">
+          <i class="fas fa-envelope icon"></i> ایمیل
         </a>
         <div class="divider"></div>
-        <a href="tel:+989130487019">
+        <a href="tel:+989123456789">
           <i class="fas fa-phone icon"></i> تماس
         </a>
       </div>
@@ -51,13 +50,8 @@
     </div>
   </div>
 
-  <!-- متن مخفی برای گوگل -->
-  <div style="position:absolute; left:-9999px; height:1px; width:1px; overflow:hidden;">
-    هادی هادی دادخدایی هادی دادخدائی هادی دادخدائي دادخدایی دادخدائی دادخدائي هادی جومونگ دادخدا دادخدازهی سالارزهی سالار
-  </div>
-
   <audio id="audioPlayer" preload="metadata">
-    <source src="https://irsv.upmusics.com/dlw/Unknown%20artist%20-%20GTA%20Songs%20(320).mp3" type="audio/mpeg" />
+    <source src="https://dl.mehrdl.top/Music/A/F/Hayede-faryad/07%20Gol%20Sang.MP3" type="audio/mpeg" />
     مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
   </audio>
 
@@ -69,72 +63,44 @@
     const profileCard = document.getElementById('profileCard');
     const infoSection = document.getElementById('infoSection');
 
-    let hasStarted = false;
-
-    // وقتی کاربر برای اولین بار روی هر جایی کلیک کرد، موزیک از ثانیه 30 تا 60 پخش بشه
-    document.body.addEventListener('click', () => {
-      if (!hasStarted) {
-        audio.currentTime = 30;
-        audio.play();
-        progressContainer.classList.remove('hidden');
-        profileCard.classList.add('playing');
-        profilePic.classList.add('playing');
-        hasStarted = true;
-      }
-    }, { once: true }); // فقط یکبار اجرا میشه
-
-    // کلیک روی عکس برای پخش/توقف
     profilePic.addEventListener('click', () => {
-      if (!hasStarted) return; // اگر موزیک هنوز پخش نشده، کلیک عکس کاری نکنه
       if (audio.paused) {
         audio.play();
-        progressContainer.classList.remove('hidden');
-        profileCard.classList.add('playing');
         profilePic.classList.add('playing');
+        profileCard.classList.add('playing');
+        progressContainer.classList.remove('hidden');
       } else {
         audio.pause();
-        progressContainer.classList.add('hidden');
-        profileCard.classList.remove('playing');
         profilePic.classList.remove('playing');
+        profileCard.classList.remove('playing');
+        profilePic.style.transform = 'rotate(0deg)';
+        progressContainer.classList.add('hidden');
       }
     });
 
-    // بروزرسانی نوار پیشرفت
     audio.addEventListener('timeupdate', () => {
-      if (audio.currentTime >= 60) {
-        audio.pause();
-        audio.currentTime = 30;
-        progress.style.width = '0%';
-        progressContainer.classList.add('hidden');
-        profileCard.classList.remove('playing');
-        profilePic.classList.remove('playing');
-        return;
-      }
-      if (audio.currentTime >= 30) {
-        const percent = ((audio.currentTime - 30) / 30) * 100;
-        progress.style.width = percent + '%';
+      if (audio.duration) {
+        const progressPercent = (audio.currentTime / audio.duration) * 100;
+        progress.style.width = progressPercent + '%';
       }
     });
 
-    // کلیک روی نوار پیشرفت برای جابجایی
     progressContainer.addEventListener('click', (e) => {
       const rect = progressContainer.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
       const width = rect.width;
-      const newTime = 30 + (clickX / width) * 30;
+      const newTime = (clickX / width) * audio.duration;
       audio.currentTime = newTime;
     });
 
-    // وقتی موزیک تموم میشه یا قطع میشه
     audio.addEventListener('ended', () => {
+      profilePic.classList.remove('playing');
+      profileCard.classList.remove('playing');
+      profilePic.style.transform = 'rotate(0deg)';
       progress.style.width = '0%';
       progressContainer.classList.add('hidden');
-      profileCard.classList.remove('playing');
-      profilePic.classList.remove('playing');
-      audio.currentTime = 30;
     });
 
-    // جلوگیری از انتخاب متن با کلیک (فقط کلیک، درگ آزاد)
     infoSection.addEventListener('mousedown', (e) => {
       let selection = window.getSelection();
       if (selection && !selection.toString()) {
