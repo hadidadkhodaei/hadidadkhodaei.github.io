@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>هادی دادخدائی | Hotline Bling</title>
-  <meta name="description" content="وبسایت رسمی هادی دادخدائی. آهنگ Hotline Bling پخش خودکار و کنترل با کلیک روی صفحه." />
+  <title>هادی دادخدائی | دادخدائی | هادی جومونگ | سالارزهی</title>
+  <meta name="description" content="وبسایت رسمی هادی دادخدائی با نام‌های دادخدائی، هادی جومونگ، سالارزهی و سالار. توسعه‌دهنده و عاشق خلق چیزهای دیجیتال." />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
@@ -21,14 +21,14 @@
     />
 
     <div class="info" id="infoSection">
-      <h1>هادی دادخدائی <span class="verified"><i class="fa-solid fa-check-circle"></i></span></h1>
+      <h1>هادی دادخدائی</h1>
       <p class="bio">
-        توسعه‌دهنده و عاشق خلق چیزهای جدید با کد! اینجا راه ارتباطی با منه.
+        توسعه‌دهنده و عاشق خلق چیزای جدید با کد! اهل یادگیری، طراحی تمیز و عاشق کارهای دیجیتال. اینجا راه ارتباطی با منه.
       </p>
 
-      <div class="contacts" id="contacts">
+      <div class="contacts">
         <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-instagram icon"></i> اینستاگرام <span class="verified-icon"><i class="fa-solid fa-check-circle"></i></span>
+          <i class="fab fa-instagram icon"></i> اینستاگرام
         </a>
         <div class="divider"></div>
         <a href="https://t.me/+989130487019" target="_blank" rel="noopener noreferrer">
@@ -51,8 +51,13 @@
     </div>
   </div>
 
+  <!-- متن مخفی برای گوگل -->
+  <div style="position:absolute; left:-9999px; height:1px; width:1px; overflow:hidden;">
+    هادی هادی دادخدایی هادی دادخدائی هادی دادخدائي دادخدایی دادخدائی دادخدائي هادی جومونگ دادخدا دادخدازهی سالارزهی سالار
+  </div>
+
   <audio id="audioPlayer" preload="metadata">
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/21/audio_42f616bf8c.mp3?filename=hotline-bling-instrumental-124815.mp3" type="audio/mpeg" />
+    <source src="https://dl.mehrdl.top/Music/A/F/Hayede-faryad/07%20Gol%20Sang.MP3" type="audio/mpeg" />
     مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
   </audio>
 
@@ -63,39 +68,21 @@
     const progressContainer = document.getElementById('progressContainer');
     const profileCard = document.getElementById('profileCard');
     const infoSection = document.getElementById('infoSection');
-    const contacts = document.getElementById('contacts');
 
-    // پخش/توقف موزیک با کلیک روی کل صفحه به جز لینک‌ها
-    document.body.addEventListener('click', (e) => {
-      if(e.target.closest('a')) {
-        // اگر روی لینک کلیک شد، موزیک قطع شود
-        if (!audio.paused) {
-          audio.pause();
-          resetUI();
-        }
-        return; // از پخش جلوگیری کن
-      }
+    profilePic.addEventListener('click', () => {
       if (audio.paused) {
         audio.play();
-        showUI();
+        profilePic.classList.add('playing');
+        profileCard.classList.add('playing');
+        progressContainer.classList.remove('hidden');
       } else {
         audio.pause();
-        resetUI();
+        profilePic.classList.remove('playing');
+        profileCard.classList.remove('playing');
+        profilePic.style.transform = 'rotate(0deg)';
+        progressContainer.classList.add('hidden');
       }
     });
-
-    function showUI() {
-      profilePic.classList.add('playing');
-      profileCard.classList.add('playing');
-      progressContainer.classList.remove('hidden');
-    }
-
-    function resetUI() {
-      profilePic.classList.remove('playing');
-      profileCard.classList.remove('playing');
-      progress.style.width = '0%';
-      progressContainer.classList.add('hidden');
-    }
 
     audio.addEventListener('timeupdate', () => {
       if (audio.duration) {
@@ -112,29 +99,21 @@
       audio.currentTime = newTime;
     });
 
-    audio.addEventListener('ended', resetUI);
-
-    // افکت روی عکس هنگام کلیک
-    profilePic.addEventListener('mousedown', () => {
-      profilePic.style.transform = 'scale(1.1)';
-      profilePic.style.boxShadow = '0 0 30px 15px #40c4ff';
-    });
-    profilePic.addEventListener('mouseup', () => {
-      profilePic.style.transform = 'scale(1)';
-      profilePic.style.boxShadow = '';
-    });
-    profilePic.addEventListener('mouseleave', () => {
-      profilePic.style.transform = 'scale(1)';
-      profilePic.style.boxShadow = '';
+    audio.addEventListener('ended', () => {
+      profilePic.classList.remove('playing');
+      profileCard.classList.remove('playing');
+      profilePic.style.transform = 'rotate(0deg)';
+      progress.style.width = '0%';
+      progressContainer.classList.add('hidden');
     });
 
-    // جلوگیری از انتخاب متن روی div info به جز لینک ها
+    // جلوگیری از انتخاب متن با کلیک (فقط کلیک، درگ آزاد)
     infoSection.addEventListener('mousedown', (e) => {
-      if (!e.target.closest('a')) {
+      let selection = window.getSelection();
+      if (selection && !selection.toString()) {
         e.preventDefault();
       }
     });
-
   </script>
 
 </body>
