@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>هادی دادخدائی | دادخدائی | هادی جومونگ | سالارزهی</title>
-  <meta name="description" content="وبسایت رسمی هادی دادخدائی با نام‌های دادخدائی، هادی جومونگ، سالارزهی و سالار. توسعه‌دهنده و عاشق خلق چیزهای دیجیتال." />
+  <title>هادی دادخدائی | Hotline Bling</title>
+  <meta name="description" content="وبسایت رسمی هادی دادخدائی. آهنگ Hotline Bling پخش خودکار و کنترل با کلیک روی صفحه." />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
@@ -21,41 +21,38 @@
     />
 
     <div class="info" id="infoSection">
-      <h1>هادی دادخدائی</h1>
+      <h1>هادی دادخدائی <span class="verified"><i class="fa-solid fa-check-circle"></i></span></h1>
       <p class="bio">
-        توسعه‌دهنده و عاشق خلق چیزای جدید با کد! اهل یادگیری، طراحی تمیز و عاشق کارهای دیجیتال. اینجا راه ارتباطی با منه.
+        توسعه‌دهنده و عاشق خلق چیزهای جدید با کد! اینجا راه ارتباطی با منه.
       </p>
 
-      <div class="contacts">
+      <div class="contacts" id="contacts">
         <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-instagram icon"></i> اینستاگرام <span class="verified-icon"></span>
+          <i class="fab fa-instagram icon"></i> اینستاگرام <span class="verified-icon"><i class="fa-solid fa-check-circle"></i></span>
         </a>
         <div class="divider"></div>
         <a href="https://t.me/+989130487019" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-telegram icon"></i> تلگرام <span class="verified-icon"></span>
+          <i class="fab fa-telegram icon"></i> تلگرام
         </a>
         <div class="divider"></div>
         <a href="https://wa.me/989130487019" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-whatsapp icon"></i> واتساپ <span class="verified-icon"></span>
+          <i class="fab fa-whatsapp icon"></i> واتساپ
         </a>
         <div class="divider"></div>
         <a href="tel:+989130487019">
-          <i class="fas fa-phone icon"></i> تماس <span class="verified-icon"></span>
+          <i class="fas fa-phone icon"></i> تماس
         </a>
       </div>
 
+      <!-- نوار پیشرفت موزیک -->
       <div class="progress-container hidden" id="progressContainer" title="برای جلو و عقب بردن موزیک کلیک کن">
         <div class="progress" id="progress"></div>
       </div>
     </div>
   </div>
 
-  <div style="position:absolute; left:-9999px; height:1px; width:1px; overflow:hidden;">
-    هادی هادی دادخدایی هادی دادخدائی هادی دادخدائي دادخدایی دادخدائی دادخدائي هادی جومونگ دادخدا دادخدازهی سالارزهی سالار
-  </div>
-
   <audio id="audioPlayer" preload="metadata">
-    <!-- جایگزین آهنگ اینجا میشه -->
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/21/audio_42f616bf8c.mp3?filename=hotline-bling-instrumental-124815.mp3" type="audio/mpeg" />
     مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
   </audio>
 
@@ -66,35 +63,39 @@
     const progressContainer = document.getElementById('progressContainer');
     const profileCard = document.getElementById('profileCard');
     const infoSection = document.getElementById('infoSection');
-    const contacts = document.querySelectorAll('.contacts a');
+    const contacts = document.getElementById('contacts');
 
-    // toggle play/pause on click anywhere in profileCard
-    profileCard.addEventListener('click', (e) => {
-      if (contacts.includes(e.target) || e.target.closest('.contacts a')) {
-        // اگر روی لینک راه ارتباطی کلیک شده، موزیک رو قطع کن
+    // پخش/توقف موزیک با کلیک روی کل صفحه به جز لینک‌ها
+    document.body.addEventListener('click', (e) => {
+      if(e.target.closest('a')) {
+        // اگر روی لینک کلیک شد، موزیک قطع شود
         if (!audio.paused) {
           audio.pause();
-          profilePic.classList.remove('playing');
-          profileCard.classList.remove('playing');
-          progressContainer.classList.add('hidden');
-          progress.style.width = '0%';
+          resetUI();
         }
-        return;
+        return; // از پخش جلوگیری کن
       }
-
       if (audio.paused) {
         audio.play();
-        profilePic.classList.add('playing');
-        profileCard.classList.add('playing');
-        progressContainer.classList.remove('hidden');
+        showUI();
       } else {
         audio.pause();
-        profilePic.classList.remove('playing');
-        profileCard.classList.remove('playing');
-        progressContainer.classList.add('hidden');
-        progress.style.width = '0%';
+        resetUI();
       }
     });
+
+    function showUI() {
+      profilePic.classList.add('playing');
+      profileCard.classList.add('playing');
+      progressContainer.classList.remove('hidden');
+    }
+
+    function resetUI() {
+      profilePic.classList.remove('playing');
+      profileCard.classList.remove('playing');
+      progress.style.width = '0%';
+      progressContainer.classList.add('hidden');
+    }
 
     audio.addEventListener('timeupdate', () => {
       if (audio.duration) {
@@ -111,40 +112,29 @@
       audio.currentTime = newTime;
     });
 
-    audio.addEventListener('ended', () => {
-      profilePic.classList.remove('playing');
-      profileCard.classList.remove('playing');
-      progress.style.width = '0%';
-      progressContainer.classList.add('hidden');
-    });
+    audio.addEventListener('ended', resetUI);
 
-    // جلوگیری از انتخاب متن روی عکس
-    profilePic.addEventListener('mousedown', e => {
-      e.preventDefault();
-    });
-
-    // حذف هایلایت وقتی روی لینک‌ها کلیک شد
-    contacts.forEach(link => {
-      link.addEventListener('click', () => {
-        window.getSelection().removeAllRanges();
-      });
-    });
-
-    // بزرگ شدن عکس و نور زیرش موقع کلیک
+    // افکت روی عکس هنگام کلیک
     profilePic.addEventListener('mousedown', () => {
       profilePic.style.transform = 'scale(1.1)';
-      profilePic.style.boxShadow = '0 0 40px 15px rgba(64,196,255,0.8)';
+      profilePic.style.boxShadow = '0 0 30px 15px #40c4ff';
     });
-
     profilePic.addEventListener('mouseup', () => {
       profilePic.style.transform = 'scale(1)';
       profilePic.style.boxShadow = '';
     });
-
     profilePic.addEventListener('mouseleave', () => {
       profilePic.style.transform = 'scale(1)';
       profilePic.style.boxShadow = '';
     });
+
+    // جلوگیری از انتخاب متن روی div info به جز لینک ها
+    infoSection.addEventListener('mousedown', (e) => {
+      if (!e.target.closest('a')) {
+        e.preventDefault();
+      }
+    });
+
   </script>
 
 </body>
