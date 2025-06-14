@@ -20,12 +20,8 @@ body {
   align-items: center;
   padding: 20px;
   user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 }
 
-/* اجازه انتخاب متن فقط با درگ کردن (نه کلیک) */
 .info {
   flex: 1;
   display: flex;
@@ -40,10 +36,10 @@ h1, .bio, .contacts a {
 }
 
 .profile-card {
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255,255,255,0.07);
   backdrop-filter: blur(20px);
   border-radius: 16px;
-  box-shadow: 0 20px 70px rgba(79, 195, 247, 0.8);
+  box-shadow: 0 20px 70px rgba(79,195,247,0.8);
   max-width: 720px;
   width: 100%;
   padding: 30px;
@@ -51,7 +47,7 @@ h1, .bio, .contacts a {
   flex-wrap: wrap;
   gap: 20px;
   align-items: center;
-  border: 2.5px solid rgba(79, 195, 247, 0.6);
+  border: 2.5px solid rgba(79,195,247,0.6);
   position: relative;
   transition: box-shadow 0.5s ease;
 }
@@ -110,9 +106,9 @@ h1, .bio, .contacts a {
   object-fit: cover;
   border: 5px solid #40c4ff;
   box-shadow:
-    0 0 8px 3px rgba(64, 196, 255, 0.6),
-    0 0 15px 6px rgba(64, 196, 255, 0.4),
-    0 0 40px 12px rgba(64, 196, 255, 0.2);
+    0 0 8px 3px rgba(64,196,255,0.6),
+    0 0 15px 6px rgba(64,196,255,0.4),
+    0 0 40px 12px rgba(64,196,255,0.2);
   cursor: pointer;
   transition: box-shadow 0.4s;
   transform: rotate(0deg);
@@ -127,12 +123,8 @@ h1, .bio, .contacts a {
 }
 
 @keyframes slow-rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 h1 {
@@ -154,17 +146,11 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background: rgba(64, 196, 255, 0.08);
+  background: rgba(64,196,255,0.08);
   padding: 16px 20px;
   border-radius: 16px;
   border: 1.5px solid #40c4ff;
-  box-shadow: 0 0 20px rgba(64, 196, 255, 0.3);
-}
-
-.divider {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.15);
-  margin: 4px 0;
+  box-shadow: 0 0 20px rgba(64,196,255,0.3);
 }
 
 .contacts a {
@@ -176,8 +162,8 @@ h1 {
   color: #d0eaff;
   text-decoration: none;
   font-weight: bold;
-  background: rgba(64, 196, 255, 0.08);
-  transition: background 0.3s, transform 0.3s;
+  background: rgba(64,196,255,0.08);
+  transition: background .3s, transform .3s;
 }
 
 .contacts a:hover {
@@ -192,57 +178,40 @@ h1 {
   color: currentColor;
 }
 
-/* نوار پیشرفت موزیک با افکت گرادینت زیبا */
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+  margin: 4px 0;
+}
+
+/* نوار موزیک جذاب با رنگ‌های مختلف */
 .progress-container {
   margin-top: 20px;
   width: 100%;
   height: 10px;
-  background: #222;
+  background: #1c1c1c;
   border-radius: 10px;
-  cursor: pointer;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
-  transition: opacity 0.5s ease;
-  opacity: 1;
   overflow: hidden;
-  user-select: none;
-}
-
-.progress-container.hidden {
-  opacity: 0;
-  pointer-events: none;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
 }
 
 .progress {
   height: 100%;
   width: 0%;
-  border-radius: 10px;
-  background: linear-gradient(
-    90deg,
-    #00ffff,
-    #ff00ff,
-    #ffff00,
-    #00ff00,
-    #00ffff,
-    #ff00ff
-  );
-  background-size: 300% 300%;
-  animation: progressGlow 5s ease infinite;
+  background: linear-gradient(90deg, #00ffff, #ff00ff, #ffff00, #00ff00, #00ffff, #ff00ff);
+  background-size: 300% 100%;
+  animation: progress-bar-animation 6s linear infinite;
   transition: width 0.2s linear;
+  border-radius: 10px;
 }
 
-@keyframes progressGlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+@keyframes progress-bar-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* ریسپانسیو موبایل */
 @media (max-width: 720px) {
   .profile-card {
     flex-direction: column;
@@ -274,4 +243,4 @@ h1 {
   .icon {
     font-size: 20px;
   }
-}
+  }
