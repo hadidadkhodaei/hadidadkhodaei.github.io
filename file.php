@@ -16,7 +16,6 @@ if (!file_exists($filepath)) {
     exit;
 }
 
-// تعیین نوع محتوا بر اساس پسوند فایل
 $finfo = finfo_open(FILEINFO_MIME_TYPE);
 $mime = finfo_file($finfo, $filepath);
 finfo_close($finfo);
