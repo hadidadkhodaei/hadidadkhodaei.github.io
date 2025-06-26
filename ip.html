@@ -2,51 +2,54 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>بررسی دسترسی</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
 
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
       font-family: 'Vazirmatn', sans-serif;
       background: linear-gradient(to right, #141e30, #243b55);
       color: #fff;
-      margin: 0;
-      padding: 0;
-      text-align: center;
+    }
+
+    body {
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
     }
 
     .card {
       background-color: #1c1f2e;
-      border-radius: 20px;
-      padding: 30px 20px;
+      border-radius: 16px;
+      padding: 20px 15px;
       box-shadow: 0 0 20px rgba(0,0,0,0.4);
-      max-width: 500px;
+      max-width: 400px;
       width: 90%;
+      box-sizing: border-box;
+      text-align: center;
     }
 
     .card h2 {
+      font-size: 1.2rem;
       color: #00ffcc;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .quote {
       background: #2b2f3e;
-      padding: 15px;
+      padding: 12px;
       border-right: 4px solid #00bcd4;
-      margin: 25px 0;
+      margin: 20px 0;
       border-radius: 10px;
       text-align: right;
       direction: rtl;
-      word-break: break-word;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       cursor: pointer;
-      transition: background 0.3s;
     }
 
     .quote:hover {
@@ -54,14 +57,28 @@
     }
 
     .copied-msg {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #4caf50;
-      margin-top: -10px;
+      margin-top: -8px;
+    }
+
+    .guide-btn {
+      background-color: #00bcd4;
+      border: none;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .guide-btn:hover {
+      background-color: #0097a7;
     }
 
     .support {
-      margin-top: 20px;
-      font-size: 0.9rem;
+      margin-top: 16px;
+      font-size: 0.85rem;
       color: #ccc;
     }
 
@@ -69,22 +86,6 @@
       color: #4dd0e1;
       text-decoration: none;
       font-weight: bold;
-    }
-
-    .guide-btn {
-      background-color: #00bcd4;
-      border: none;
-      color: white;
-      padding: 10px 25px;
-      margin-top: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: 0.3s;
-    }
-
-    .guide-btn:hover {
-      background-color: #0097a7;
     }
   </style>
 </head>
@@ -95,10 +96,9 @@
 
   <script>
     const allowedIPs = [
-      "185.129.45.50",  // ← این IP ها را اینجا وارد کن
+      "185.129.45.50",
       "1.2.3.4",
-      "5.6.7.8.83",
-      "37.156.159.07"
+      "5.6.7.8"
     ];
 
     async function getIPAndCheck() {
@@ -108,13 +108,12 @@
         const userIP = data.ip;
 
         if (allowedIPs.includes(userIP)) {
-          // انتقال مستقیم بدون تأخیر
           window.location.replace("https://hadidadkhodaei.ir/config.html");
         } else {
           showAccessDenied(userIP);
         }
       } catch (err) {
-        document.getElementById("content").innerHTML = `<h2>خطا در دریافت IP</h2>`;
+        document.getElementById("content").innerHTML = `<h2>❌ خطا در دریافت IP</h2>`;
       }
     }
 
