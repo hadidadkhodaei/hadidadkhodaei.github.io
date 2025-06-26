@@ -1,12 +1,9 @@
 {
   "topMessage": "کانفیگ رایگان",
   "authorText": "من هادی دادخدایی هستم",
-  "codes": {
+  "title": "v2rayNG",
+  "operators": {
     "irancell": "*555*1#",
     "mci": "*111*1#"
-  },
-  "copyMessages": {
-    "irancell": "سرور ایرانسل با موفقیت کپی شد ✅",
-    "mci": "سرور همراه اول با موفقیت کپی شد ✅"
   }
 }
