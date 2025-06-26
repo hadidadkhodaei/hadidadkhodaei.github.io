@@ -2,19 +2,17 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>کپی کد اپراتور</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
 
     body {
       font-family: 'Vazirmatn', sans-serif;
-      background: linear-gradient(to right, #141e30, #243b55);
+      background: #1e1e2f;
       color: white;
       margin: 0;
       padding: 0;
-      height: 100vh;
-      overflow: hidden;
       text-align: center;
     }
 
@@ -22,24 +20,14 @@
       font-size: 1.6rem;
       font-weight: 700;
       color: #00ff00;
-      text-shadow: 1px 1px 5px #000;
-      padding: 10px 0;
-      background: transparent;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 10;
+      padding: 10px;
+      background-color: #111;
       border-bottom: 2px solid #fff;
     }
 
     .wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      padding-top: 70px;
-      box-sizing: border-box;
+      margin-top: 40px;
+      padding: 20px;
     }
 
     .author-box {
@@ -50,7 +38,7 @@
       color: black;
       font-weight: bold;
       border-radius: 16px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       font-size: 1.1rem;
       display: none;
     }
@@ -61,156 +49,107 @@
       100% { background-position: 0% 50%; }
     }
 
-    .title {
-      font-size: 3.5rem;
-      font-weight: 700;
-      margin-bottom: 25px;
-      color: #00d4ff;
-      text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
-    }
-
-    h2 {
-      font-size: 1.6rem;
-      margin-bottom: 30px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-    }
-
     .btn-container {
       display: flex;
       flex-direction: row;
       gap: 40px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: 20px;
+      margin-top: 20px;
     }
 
     .operator {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 16px;
+      padding: 18px;
+      background: #444;
       border-radius: 14px;
-      min-width: 130px;
-      box-shadow: 0 0 10px 3px #aaa, 0 0 12px 3px #666 inset;
+      box-shadow: 0 0 10px #888;
     }
 
-    button {
-      padding: 12px 28px;
-      font-size: 1rem;
+    .operator button {
+      padding: 12px 25px;
       border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .irancell {
-      background: linear-gradient(145deg, #fff59d, #fdd835);
-    }
-
-    .irancell button {
-      background-color: #fbc02d;
-      color: #212121;
-    }
-
-    .mci {
-      background: linear-gradient(145deg, #90caf9, #42a5f5);
-    }
-
-    .mci button {
-      background-color: #1e88e5;
+      border-radius: 10px;
+      font-size: 1rem;
+      background-color: #00c853;
       color: white;
-    }
-
-    .google-link {
-      margin-top: 25px;
-    }
-
-    .google-link img {
-      width: 60px;
-      height: 60px;
       cursor: pointer;
     }
 
     .toast {
       margin-top: 20px;
       font-size: 1rem;
-      color: #f1f1f1;
       display: none;
     }
   </style>
 </head>
 <body>
-  <div class="top-message" id="configText">کانفیگ رایگان</div>
+
+  <div id="topMessage" class="top-message">در حال بارگذاری...</div>
+
   <div class="wrapper">
-    <div class="author-box" id="authorBox">من هادی دادخدایی هستم</div>
-    <div class="title">v2rayNG</div>
-    <h2>اپراتور خود را انتخاب کنید</h2>
+    <div id="authorBox" class="author-box"></div>
+
     <div class="btn-container">
-      <div class="operator irancell">
+      <div class="operator">
         <button onclick="copyCode('irancell')">ایرانسل</button>
       </div>
-      <div class="operator mci">
+      <div class="operator">
         <button onclick="copyCode('mci')">همراه اول</button>
       </div>
     </div>
-    <div class="google-link">
-      <a href="https://www.hadidadkhodaei.ir" target="_blank">
-        <img src="https://uploadkon.ir/uploads/1e2f26_25InShot-20250626-233242025.png" alt="Google Icon">
-      </a>
-    </div>
+
     <div class="toast" id="toast"></div>
   </div>
 
   <script>
-    let config = {
-      irancellCode: "*555*1#",
-      mciCode: "*111*1#"
+    let codes = {
+      irancell: '',
+      mci: ''
     };
 
-    // تنظیم از فایل آنلاین
-    fetch("https://yourdomain.com/config.json") // 🔁 آدرس واقعی فایل JSON را جایگزین کن
+    fetch('data.json')
       .then(res => res.json())
       .then(data => {
-        config = data;
-
-        // متن بالای صفحه
-        document.getElementById("configText").textContent = config.configText || "کانفیگ رایگان";
+        // نمایش پیام بالا
+        document.getElementById('topMessage').textContent = data.topMessage || '';
 
         // نمایش یا پنهان‌سازی کادر نویسنده
-        if (config.author && config.author.trim() !== "") {
-          const authorBox = document.getElementById("authorBox");
-          authorBox.textContent = config.author;
-          authorBox.style.display = "block";
+        if (data.author && data.author.trim() !== '') {
+          const authorBox = document.getElementById('authorBox');
+          authorBox.textContent = data.author;
+          authorBox.style.display = 'block';
         }
+
+        // ذخیره کدها برای استفاده در دکمه‌ها
+        codes.irancell = data.irancellCode || '';
+        codes.mci = data.mciCode || '';
+      })
+      .catch(err => {
+        document.getElementById('topMessage').textContent = 'خطا در بارگذاری اطلاعات!';
+        console.error('JSON Load Error:', err);
       });
 
     function copyCode(operator) {
-      let code = '';
-      let msg = '';
-
-      if (operator === 'irancell') {
-        code = config.irancellCode;
-        msg = 'سرور ایرانسل با موفقیت کپی شد ✅';
-      } else if (operator === 'mci') {
-        code = config.mciCode;
-        msg = 'سرور همراه اول با موفقیت کپی شد ✅';
+      const code = codes[operator] || '';
+      if (!code) {
+        showToast('کدی برای این اپراتور تعریف نشده.');
+        return;
       }
 
       navigator.clipboard.writeText(code).then(() => {
-        showToast(msg);
-      }, () => {
-        showToast('کپی کردن انجام نشد. لطفاً دوباره امتحان کنید.');
+        showToast('کد کپی شد ✅');
+      }).catch(() => {
+        showToast('کپی انجام نشد ❌');
       });
     }
 
-    function showToast(message) {
-      const toast = document.getElementById("toast");
-      toast.textContent = message;
-      toast.style.display = "block";
-      setTimeout(() => {
-        toast.style.display = "none";
-      }, 4000);
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(() => toast.style.display = 'none', 3000);
     }
   </script>
+
 </body>
 </html>
