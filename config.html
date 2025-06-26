@@ -2,11 +2,10 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>کپی کد اپراتور</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
-
+    /* استایل‌ها همان کد قبلی */
     body {
       font-family: 'Vazirmatn', sans-serif;
       background: linear-gradient(to right, #141e30, #243b55);
@@ -17,7 +16,6 @@
       overflow: hidden;
       text-align: center;
     }
-
     .top-message {
       font-size: 1.6rem;
       font-weight: 700;
@@ -31,7 +29,6 @@
       z-index: 10;
       border-bottom: 2px solid #fff;
     }
-
     .wrapper {
       display: flex;
       flex-direction: column;
@@ -41,7 +38,6 @@
       padding-top: 70px;
       box-sizing: border-box;
     }
-
     .author-box {
       padding: 12px 28px;
       background: linear-gradient(-45deg, #00f, #0ff, #0f0, #ff0, #f00);
@@ -54,19 +50,11 @@
       font-size: 1.1rem;
       display: none; /* اول مخفی */
     }
-
     @keyframes rainbowBg {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
-
     .title {
       font-size: 3.5rem;
       font-weight: 700;
@@ -74,13 +62,11 @@
       color: #00d4ff;
       text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
     }
-
     h2 {
       font-size: 1.6rem;
       margin-bottom: 30px;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
     }
-
     .btn-container {
       display: flex;
       flex-direction: row;
@@ -89,7 +75,6 @@
       flex-wrap: wrap;
       margin-bottom: 20px;
     }
-
     .operator {
       display: flex;
       flex-direction: column;
@@ -99,7 +84,6 @@
       min-width: 130px;
       box-shadow: 0 0 10px 3px #aaa, 0 0 12px 3px #666 inset;
     }
-
     button {
       padding: 12px 28px;
       font-size: 1rem;
@@ -108,35 +92,28 @@
       cursor: pointer;
       transition: 0.3s;
     }
-
     .irancell {
       background: linear-gradient(145deg, #fff59d, #fdd835);
     }
-
     .irancell button {
       background-color: #fbc02d;
       color: #212121;
     }
-
     .mci {
       background: linear-gradient(145deg, #90caf9, #42a5f5);
     }
-
     .mci button {
       background-color: #1e88e5;
       color: white;
     }
-
     .google-link {
       margin-top: 25px;
     }
-
     .google-link img {
       width: 60px;
       height: 60px;
       cursor: pointer;
     }
-
     .toast {
       margin-top: 20px;
       font-size: 1rem;
@@ -149,7 +126,7 @@
   <div class="top-message" id="topMessage"></div>
   <div class="wrapper">
     <div class="author-box" id="authorBox"></div>
-    <div class="title">v2rayNG</div>
+    <div class="title" id="title"></div>
     <h2>اپراتور خود را انتخاب کنید</h2>
     <div class="btn-container">
       <div class="operator irancell">
@@ -168,53 +145,54 @@
   </div>
 
   <script>
-    // مسیر فایل JSON (اگر توی یک فولدر دیگه است، مسیرش را اصلاح کن)
-    const jsonUrl = 'data.json';
+    let data;
 
-    let codes = {};
-    let copyMessages = {};
+    fetch('data.json')
+      .then(response => {
+        if (!response.ok) throw new Error('فایل JSON بارگذاری نشد');
+        return response.json();
+      })
+      .then(jsonData => {
+        data = jsonData;
+        // پر کردن متن‌ها
+        document.getElementById('topMessage').textContent = data.topMessage;
 
-    // بارگذاری JSON و ست کردن متن‌ها
-    fetch(jsonUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        // تنظیم متن بالای صفحه
-        document.getElementById('topMessage').textContent = data.topMessage || '';
-
-        // تنظیم نویسنده و نمایش یا مخفی کردن با توجه به متن
         const authorBox = document.getElementById('authorBox');
         if (data.authorText && data.authorText.trim() !== '') {
           authorBox.textContent = data.authorText;
-          authorBox.style.display = 'inline-block';
+          authorBox.style.display = 'inline-block'; // نمایش کادر وقتی متن هست
         } else {
-          authorBox.style.display = 'none';
+          authorBox.style.display = 'none'; // مخفی وقتی متنی نیست
         }
 
-        // ذخیره کدها و پیام‌ها
-        codes = data.codes || {};
-        copyMessages = data.copyMessages || {};
+        document.getElementById('title').textContent = data.title;
+
+        // تنظیم دکمه‌ها
+        document.getElementById('btnIrancell').onclick = () => copyCode('irancell');
+        document.getElementById('btnMci').onclick = () => copyCode('mci');
       })
-      .catch((err) => {
-        console.error('خطا در بارگذاری فایل JSON:', err);
+      .catch(error => {
+        console.error('خطا در بارگذاری داده‌ها:', error);
       });
 
     function copyCode(operator) {
-      const code = codes[operator];
-      const msg = copyMessages[operator] || 'کپی شد';
+      let code = '';
+      let msg = '';
+      if (!data) return;
 
-      if (!code) {
-        showToast('کدی برای این اپراتور موجود نیست.');
-        return;
+      if (operator === 'irancell') {
+        code = data.operators.irancell;
+        msg = 'سرور ایرانسل با موفقیت کپی شد ✅';
+      } else if (operator === 'mci') {
+        code = data.operators.mci;
+        msg = 'سرور همراه اول با موفقیت کپی شد ✅';
       }
 
-      navigator.clipboard.writeText(code).then(
-        () => {
-          showToast(msg);
-        },
-        () => {
-          showToast('کپی کردن انجام نشد. لطفاً دوباره امتحان کنید.');
-        }
-      );
+      navigator.clipboard.writeText(code).then(() => {
+        showToast(msg);
+      }, () => {
+        showToast('کپی کردن انجام نشد. لطفاً دوباره امتحان کنید.');
+      });
     }
 
     function showToast(message) {
@@ -225,10 +203,6 @@
         toast.style.display = 'none';
       }, 4000);
     }
-
-    // اتصال دکمه‌ها به عملکرد کپی
-    document.getElementById('btnIrancell').addEventListener('click', () => copyCode('irancell'));
-    document.getElementById('btnMci').addEventListener('click', () => copyCode('mci'));
   </script>
 </body>
 </html>
