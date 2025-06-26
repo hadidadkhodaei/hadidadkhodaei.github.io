@@ -2,57 +2,52 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8" />
-  <title>صفحه ورود ساده</title>
+  <title>دسترسی به سیستم</title>
   <style>
     body {
-      background: #2c3e50;
-      color: #ecf0f1;
-      font-family: Tahoma, sans-serif;
+      background: #121212;
+      color: #fff;
+      font-family: sans-serif;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       flex-direction: column;
-      text-align: center;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .box {
+      background: #1e1e1e;
       padding: 20px;
-    }
-    #deviceCode {
-      font-size: 24px;
-      background: #3498db;
-      padding: 15px 30px;
       border-radius: 10px;
-      font-weight: bold;
-      user-select: all;
-      margin-bottom: 30px;
-      letter-spacing: 2px;
-    }
-    p {
-      max-width: 400px;
-      line-height: 1.6;
+      font-size: 20px;
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
-  <h1>کد اختصاصی دستگاه شما</h1>
-  <div id="deviceCode">در حال محاسبه...</div>
-  <p>این کد را برای دریافت مجوز ارسال کنید.<br>پس از تایید، می‌توانید وارد صفحه اصلی شوید.</p>
+  <div class="box">در حال دریافت IP...</div>
+  <div class="box" id="ipBox"></div>
+  <div style="font-size: 14px;">IP بالا را برای مدیر ارسال کنید</div>
 
   <script>
-    function generateDeviceCode() {
-      // ترکیب userAgent + تاریخ (یا هر چیز ثابت)
-      const ua = navigator.userAgent;
-      // ساخت یه hash ساده و کوتاه
-      let hash = 0;
-      for (let i = 0; i < ua.length; i++) {
-        hash = (hash << 5) - hash + ua.charCodeAt(i);
-        hash |= 0; // به عدد 32 بیتی تبدیل می‌کنه
-      }
-      // تبدیل عدد به رشته هگزادسیمال با طول 16 کاراکتر
-      return ('00000000' + (hash >>> 0).toString(16)).slice(-8).toUpperCase();
-    }
+    let ipAddress = "";
 
-    const deviceCode = generateDeviceCode();
-    document.getElementById('deviceCode').textContent = deviceCode;
+    fetch("https://api64.ipify.org?format=json")
+      .then(res => res.json())
+      .then(data => {
+        ipAddress = data.ip;
+        document.getElementById("ipBox").innerText = ipAddress;
+        localStorage.setItem("userIP", ipAddress);
+
+        // حالا بررسی کنیم آیا در لیست مجاز است
+        fetch("auth.js")
+          .then(r => r.text())
+          .then(t => {
+            const allowedIPs = eval(t.match(/const allowedIPs = \[(.*?)\]/s)?.[0] || "[]");
+            if (allowedIPs.includes(ipAddress)) {
+              window.location.href = "mainPage.html";
+            }
+          });
+      });
   </script>
 </body>
 </html>
