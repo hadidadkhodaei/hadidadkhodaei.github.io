@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>بررسی دسترسی</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background-color: #1c1f2e;
+      border-radius: 20px;
+      padding: 30px 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .card h2 {
+      color: #00ffcc;
+      margin-bottom: 20px;
+    }
+
+    .quote {
+      background: #2b2f3e;
+      padding: 15px;
+      border-right: 4px solid #00bcd4;
+      margin: 25px 0;
+      border-radius: 10px;
+      text-align: right;
+      direction: rtl;
+      word-break: break-word;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .quote:hover {
+      background: #344057;
+    }
+
+    .copied-msg {
+      font-size: 0.85rem;
+      color: #4caf50;
+      margin-top: -10px;
+    }
+
+    .support {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    .support a {
+      color: #4dd0e1;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .guide-btn {
+      background-color: #00bcd4;
+      border: none;
+      color: white;
+      padding: 10px 25px;
+      margin-top: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .guide-btn:hover {
+      background-color: #0097a7;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="content">
+    <h2>در حال بررسی دسترسی شما...</h2>
+  </div>
+
+  <script>
+    const allowedIPs = [
+      "185.129.45.50",  // ← این IP ها را اینجا وارد کن
+      "1.2.3.4",
+      "5.6.7.8.83",
+      "37.156.159.07"
+    ];
+
+    async function getIPAndCheck() {
+      try {
+        const response = await fetch("https://api.ipify.org?format=json");
+        const data = await response.json();
+        const userIP = data.ip;
+
+        if (allowedIPs.includes(userIP)) {
+          // انتقال مستقیم بدون تأخیر
+          window.location.replace("https://hadidadkhodaei.ir/config.html");
+        } else {
+          showAccessDenied(userIP);
+        }
+      } catch (err) {
+        document.getElementById("content").innerHTML = `<h2>خطا در دریافت IP</h2>`;
+      }
+    }
+
+    function showAccessDenied(ip) {
+      document.getElementById("content").innerHTML = `
+        <h2>❌ دسترسی شما مجاز نیست</h2>
+        <div class="quote" onclick="copyIP('${ip}')">آی‌پی شما: ${ip}</div>
+        <div class="copied-msg" id="copied-msg" style="display: none;">✅ آی‌پی کپی شد</div>
+        <button class="guide-btn" onclick="alert('برای دریافت دسترسی با پشتیبانی تماس بگیرید')">راهنمایی</button>
+        <div class="support">
+          برای ورود با <a href="https://hadidadkhodaei.ir" target="_blank">پشتیبانی</a> ارتباط برقرار کنید.
+        </div>
+      `;
+    }
+
+    function copyIP(ip) {
+      navigator.clipboard.writeText(ip).then(() => {
+        const msg = document.getElementById('copied-msg');
+        msg.style.display = 'block';
+        setTimeout(() => {
+          msg.style.display = 'none';
+        }, 2000);
+      });
+    }
+
+    getIPAndCheck();
+  </script>
+</body>
+</html>
