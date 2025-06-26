@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <title>صفحه ورود ساده</title>
+  <style>
+    body {
+      background: #2c3e50;
+      color: #ecf0f1;
+      font-family: Tahoma, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+    #deviceCode {
+      font-size: 24px;
+      background: #3498db;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-weight: bold;
+      user-select: all;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+    }
+    p {
+      max-width: 400px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <h1>کد اختصاصی دستگاه شما</h1>
+  <div id="deviceCode">در حال محاسبه...</div>
+  <p>این کد را برای دریافت مجوز ارسال کنید.<br>پس از تایید، می‌توانید وارد صفحه اصلی شوید.</p>
+
+  <script>
+    function generateDeviceCode() {
+      // ترکیب userAgent + تاریخ (یا هر چیز ثابت)
+      const ua = navigator.userAgent;
+      // ساخت یه hash ساده و کوتاه
+      let hash = 0;
+      for (let i = 0; i < ua.length; i++) {
+        hash = (hash << 5) - hash + ua.charCodeAt(i);
+        hash |= 0; // به عدد 32 بیتی تبدیل می‌کنه
+      }
+      // تبدیل عدد به رشته هگزادسیمال با طول 16 کاراکتر
+      return ('00000000' + (hash >>> 0).toString(16)).slice(-8).toUpperCase();
+    }
+
+    const deviceCode = generateDeviceCode();
+    document.getElementById('deviceCode').textContent = deviceCode;
+  </script>
+</body>
+</html>
