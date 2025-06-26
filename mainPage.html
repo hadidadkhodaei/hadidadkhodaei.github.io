@@ -2,37 +2,31 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8" />
-  <title>صفحه اصلی</title>
+  <title>دسترسی مجاز</title>
   <style>
     body {
-      margin: 0;
       background-color: black;
+      color: white;
+      font-size: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
     }
   </style>
-</head>
-<body>
   <script src="auth.js"></script>
   <script>
-    function generateDeviceCode() {
-      const ua = navigator.userAgent;
-      let hash = 0;
-      for (let i = 0; i < ua.length; i++) {
-        hash = (hash << 5) - hash + ua.charCodeAt(i);
-        hash |= 0;
-      }
-      return ('00000000' + (hash >>> 0).toString(16)).slice(-8).toUpperCase();
-    }
-
-    const deviceCode = generateDeviceCode();
-
-    if (typeof allowedCodes !== 'undefined' && allowedCodes.includes(deviceCode)) {
-      // اجازه ورود
-      console.log('دسترسی داده شد');
-    } else {
-      // برگرد به صفحه ورود
-      window.location.href = 'loginPage.html';
-    }
+    fetch("https://api64.ipify.org?format=json")
+      .then(res => res.json())
+      .then(data => {
+        const userIP = data.ip;
+        if (!allowedIPs.includes(userIP)) {
+          window.location.href = "loginPage.html";
+        }
+      });
   </script>
+</head>
+<body>
+  🎉 خوش آمدید!
 </body>
 </html>
