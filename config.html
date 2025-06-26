@@ -56,9 +56,15 @@
     }
 
     @keyframes rainbowBg {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
     .title {
@@ -72,7 +78,7 @@
     h2 {
       font-size: 1.6rem;
       margin-bottom: 30px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
     }
 
     .btn-container {
@@ -140,17 +146,17 @@
   </style>
 </head>
 <body>
-  <div class="top-message">در حال بارگذاری...</div>
+  <div class="top-message" id="topMessage"></div>
   <div class="wrapper">
-    <div class="author-box"></div>
+    <div class="author-box" id="authorBox"></div>
     <div class="title">v2rayNG</div>
     <h2>اپراتور خود را انتخاب کنید</h2>
     <div class="btn-container">
       <div class="operator irancell">
-        <button onclick="copyCode('irancell')">ایرانسل</button>
+        <button id="btnIrancell">ایرانسل</button>
       </div>
       <div class="operator mci">
-        <button onclick="copyCode('mci')">همراه اول</button>
+        <button id="btnMci">همراه اول</button>
       </div>
     </div>
     <div class="google-link">
@@ -162,62 +168,53 @@
   </div>
 
   <script>
-    let codes = {
-      irancell: '',
-      mci: ''
-    };
+    // مسیر فایل JSON (اگر توی یک فولدر دیگه است، مسیرش را اصلاح کن)
+    const jsonUrl = 'data.json';
 
-    // بارگذاری داده از فایل JSON
-    fetch('data.json')
-      .then(response => response.json())
-      .then(data => {
-        // پیام بالا
-        const topMsg = document.querySelector('.top-message');
-        if (data.topMessage && data.topMessage.trim() !== '') {
-          topMsg.textContent = data.topMessage;
-        } else {
-          topMsg.textContent = '';
-        }
+    let codes = {};
+    let copyMessages = {};
 
-        // نویسنده
-        const authorBox = document.querySelector('.author-box');
-        if (data.author && data.author.trim() !== '') {
-          authorBox.textContent = data.author;
+    // بارگذاری JSON و ست کردن متن‌ها
+    fetch(jsonUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        // تنظیم متن بالای صفحه
+        document.getElementById('topMessage').textContent = data.topMessage || '';
+
+        // تنظیم نویسنده و نمایش یا مخفی کردن با توجه به متن
+        const authorBox = document.getElementById('authorBox');
+        if (data.authorText && data.authorText.trim() !== '') {
+          authorBox.textContent = data.authorText;
           authorBox.style.display = 'inline-block';
         } else {
           authorBox.style.display = 'none';
         }
 
-        // کدهای اپراتورها
-        codes.irancell = data.irancellCode || '';
-        codes.mci = data.mciCode || '';
+        // ذخیره کدها و پیام‌ها
+        codes = data.codes || {};
+        copyMessages = data.copyMessages || {};
       })
-      .catch(err => {
-        console.error('خطا در خواندن data.json:', err);
-        document.querySelector('.top-message').textContent = 'خطا در بارگذاری داده‌ها';
+      .catch((err) => {
+        console.error('خطا در بارگذاری فایل JSON:', err);
       });
 
     function copyCode(operator) {
-      let code = '';
-      let msg = '';
-      if (operator === 'irancell') {
-        code = codes.irancell;
-        msg = 'سرور ایرانسل با موفقیت کپی شد ✅';
-      } else if (operator === 'mci') {
-        code = codes.mci;
-        msg = 'سرور همراه اول با موفقیت کپی شد ✅';
-      }
+      const code = codes[operator];
+      const msg = copyMessages[operator] || 'کپی شد';
 
       if (!code) {
-        showToast('کدی برای این اپراتور تعریف نشده.');
+        showToast('کدی برای این اپراتور موجود نیست.');
         return;
       }
 
-      navigator.clipboard.writeText(code).then(() => {
-        showToast(msg);
-      }).catch(() => {
-        showToast('کپی کردن انجام نشد. لطفاً دوباره امتحان کنید.');
-      });
+      navigator.clipboard.writeText(code).then(
+        () => {
+          showToast(msg);
+        },
+        () => {
+          showToast('کپی کردن انجام نشد. لطفاً دوباره امتحان کنید.');
+        }
+      );
     }
 
     function showToast(message) {
@@ -228,6 +225,10 @@
         toast.style.display = 'none';
       }, 4000);
     }
+
+    // اتصال دکمه‌ها به عملکرد کپی
+    document.getElementById('btnIrancell').addEventListener('click', () => copyCode('irancell'));
+    document.getElementById('btnMci').addEventListener('click', () => copyCode('mci'));
   </script>
 </body>
 </html>
