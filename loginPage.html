@@ -2,10 +2,10 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8" />
-  <title>دسترسی به سیستم</title>
+  <title>ورود به سیستم</title>
   <style>
     body {
-      background: #121212;
+      background: linear-gradient(to right, #141e30, #243b55);
       color: #fff;
       font-family: sans-serif;
       display: flex;
@@ -13,40 +13,45 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      margin: 0;
     }
-    .box {
-      background: #1e1e1e;
+    .code-box {
+      background: rgba(255,255,255,0.1);
       padding: 20px;
       border-radius: 10px;
-      font-size: 20px;
-      margin-bottom: 15px;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .note {
+      font-size: 14px;
+      opacity: 0.8;
     }
   </style>
 </head>
 <body>
-  <div class="box">در حال دریافت IP...</div>
-  <div class="box" id="ipBox"></div>
-  <div style="font-size: 14px;">IP بالا را برای مدیر ارسال کنید</div>
+  <div class="code-box" id="deviceCode">در حال تولید کد...</div>
+  <div class="note">این کد را برای مدیر ارسال کنید تا دسترسی دریافت کنید.</div>
 
   <script>
-    let ipAddress = "";
+    function getDeviceCode() {
+      const deviceId = btoa(navigator.userAgent + navigator.platform).slice(0, 8).toUpperCase();
+      return deviceId;
+    }
 
-    fetch("https://api64.ipify.org?format=json")
-      .then(res => res.json())
-      .then(data => {
-        ipAddress = data.ip;
-        document.getElementById("ipBox").innerText = ipAddress;
-        localStorage.setItem("userIP", ipAddress);
+    const code = getDeviceCode();
+    document.getElementById("deviceCode").innerText = code;
 
-        // حالا بررسی کنیم آیا در لیست مجاز است
-        fetch("auth.js")
-          .then(r => r.text())
-          .then(t => {
-            const allowedIPs = eval(t.match(/const allowedIPs = \[(.*?)\]/s)?.[0] || "[]");
-            if (allowedIPs.includes(ipAddress)) {
-              window.location.href = "mainPage.html";
-            }
-          });
+    // ذخیره در localStorage
+    localStorage.setItem("deviceCode", code);
+
+    // بررسی مجاز بودن دستگاه
+    fetch("auth.js")
+      .then((r) => r.text())
+      .then((t) => {
+        const allowedCodes = eval(t.match(/const allowedCodes = \[(.*?)\]/s)?.[0] || "[]");
+        if (allowedCodes.includes(code)) {
+          window.location.href = "mainPage.html";
+        }
       });
   </script>
 </body>
