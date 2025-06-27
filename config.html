@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <title>کپی کد اپراتور</title>
+  <title>برنامه V2ray</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
-
     body {
       font-family: 'Vazirmatn', sans-serif;
       background: linear-gradient(to right, #141e30, #243b55);
@@ -17,7 +16,6 @@
       overflow: hidden;
       text-align: center;
     }
-
     .top-message {
       font-size: 1.6rem;
       font-weight: 700;
@@ -31,7 +29,6 @@
       z-index: 10;
       border-bottom: 2px solid #fff;
     }
-
     .wrapper {
       display: flex;
       flex-direction: column;
@@ -41,7 +38,6 @@
       padding-top: 70px;
       box-sizing: border-box;
     }
-
     .author-box {
       padding: 12px 28px;
       background: linear-gradient(-45deg, #00f, #0ff, #0f0, #ff0, #f00);
@@ -52,21 +48,12 @@
       border-radius: 16px;
       margin-bottom: 15px;
       font-size: 1.1rem;
-      /* اینجا می‌تونی مخفی کنی با display:none */
     }
-
     @keyframes rainbowBg {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
-
     .title {
       font-size: 3.5rem;
       font-weight: 700;
@@ -74,13 +61,11 @@
       color: #00d4ff;
       text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
     }
-
     h2 {
       font-size: 1.6rem;
       margin-bottom: 30px;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
     }
-
     .btn-container {
       display: flex;
       flex-direction: row;
@@ -89,7 +74,6 @@
       flex-wrap: wrap;
       margin-bottom: 20px;
     }
-
     .operator {
       display: flex;
       flex-direction: column;
@@ -99,7 +83,6 @@
       min-width: 130px;
       box-shadow: 0 0 10px 3px #aaa, 0 0 12px 3px #666 inset;
     }
-
     button {
       padding: 12px 28px;
       font-size: 1rem;
@@ -108,98 +91,166 @@
       cursor: pointer;
       transition: 0.3s;
     }
-
     .irancell {
       background: linear-gradient(145deg, #fff59d, #fdd835);
     }
-
     .irancell button {
       background-color: #fbc02d;
       color: #212121;
     }
-
     .mci {
       background: linear-gradient(145deg, #90caf9, #42a5f5);
     }
-
     .mci button {
       background-color: #1e88e5;
       color: white;
     }
-
     .google-link {
       margin-top: 25px;
     }
-
     .google-link img {
       width: 60px;
       height: 60px;
       cursor: pointer;
     }
-
     .toast {
       margin-top: 20px;
       font-size: 1rem;
       color: #f1f1f1;
       display: none;
     }
+    .denied-box {
+      margin-top: 40px;
+    }
+    .username {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 12px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 15px;
+      font-size: 1rem;
+    }
+    .request-btn {
+      margin-top: 15px;
+      padding: 10px 22px;
+      border-radius: 10px;
+      border: none;
+      background-color: #00bcd4;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+    }
   </style>
 </head>
 <body>
-  <!-- تغییر متن زیر اینجا -->
-  <div class="top-message">کانفیگ رایگان</div>
-  <div class="wrapper">
-    <div class="author-box">خوش آمدید</div> <!-- متن داخل اینجا -->
-    <div class="title">v2rayNG</div> <!-- متن اینجا -->
-    <h2>اپراتور خود را انتخاب کنید</h2> <!-- متن اینجا -->
-
-    <div class="btn-container">
-      <div class="operator irancell">
-        <button onclick="copyCode('irancell')">ایرانسل</button> <!-- متن دکمه -->
-      </div>
-      <div class="operator mci">
-        <button onclick="copyCode('mci')">همراه اول</button> <!-- متن دکمه -->
-      </div>
-    </div>
-
-    <div class="google-link">
-      <a href="https://www.hadidadkhodaei.ir" target="_blank">
-        <img src="https://uploadkon.ir/uploads/1e2f26_25InShot-20250626-233242025.png" alt="Google Icon" />
-      </a>
-    </div>
-    <div class="toast" id="toast"></div>
-  </div>
+  <div class="top-message" id="top-message"></div>
+  <div class="wrapper" id="app-content"></div>
 
   <script>
+    let texts = {};
+    let deviceId = '';
+
+    async function loadTexts() {
+      const res = await fetch("texts.json");
+      texts = await res.json();
+    }
+
+    function getDeviceId() {
+      deviceId = localStorage.getItem("deviceId");
+      if (!deviceId) {
+        deviceId = "device-" + Math.random().toString(36).substring(2, 12);
+        localStorage.setItem("deviceId", deviceId);
+      }
+      return deviceId;
+    }
+
+    function renderAccessDenied() {
+      const container = document.getElementById("app-content");
+      container.innerHTML = `
+        <div class="denied-box">
+          <h2>${texts.accessDeniedTitle}</h2>
+          <div class="username" onclick="copyUsername()" title="${texts.copiedUsername}">${texts.usernameLabel} ${deviceId}</div>
+          <br/>
+          <button class="request-btn" onclick="sendRequest()">${texts.requestPermissionBtn}</button>
+        </div>
+      `;
+    }
+
+    function renderMainPage() {
+      const container = document.getElementById("app-content");
+      container.innerHTML = `
+        <div class="author-box">${texts.welcomeText}</div>
+        <div class="title">${texts.mainTitle}</div>
+        <h2>${texts.chooseOperator}</h2>
+        <div class="btn-container">
+          <div class="operator irancell">
+            <button onclick="copyCode('irancell')">${texts.irancellBtn}</button>
+          </div>
+          <div class="operator mci">
+            <button onclick="copyCode('mci')">${texts.mciBtn}</button>
+          </div>
+        </div>
+        <div class="google-link">
+          <a href="${texts.linkHref}" target="_blank">
+            <img src="${texts.linkIcon}" alt="Google Icon" />
+          </a>
+        </div>
+        <div class="toast" id="toast"></div>
+      `;
+    }
+
     function copyCode(operator) {
       let code = '';
       let msg = '';
       if (operator === 'irancell') {
-        code = '*555*1#'; // کد ایرانسل
-        msg = 'سرور ایرانسل با موفقیت کپی شد ✅'; // پیام موفقیت
-      } else if (operator === 'mci') {
-        code = '*111*1#'; // کد همراه اول
-        msg = 'سرور همراه اول با موفقیت کپی شد ✅'; // پیام موفقیت
+        code = texts.irancellCode;
+        msg = texts.irancellCopied;
+      } else {
+        code = texts.mciCode;
+        msg = texts.mciCopied;
       }
 
       navigator.clipboard.writeText(code).then(
-        () => {
-          showToast(msg);
-        },
-        () => {
-          showToast('کپی کردن انجام نشد. لطفاً دوباره امتحان کنید.');
-        }
+        () => showToast(msg),
+        () => showToast(texts.copyFailed)
       );
     }
 
+    function copyUsername() {
+      navigator.clipboard.writeText(deviceId).then(() => {
+        showToast(texts.copiedUsername);
+      });
+    }
+
+    function sendRequest() {
+      const msg = `${texts.requestPermissionSMS} ${deviceId}`;
+      window.location.href = `sms:+989130487019?body=${encodeURIComponent(msg)}`;
+    }
+
     function showToast(message) {
-      const toast = document.getElementById('toast');
+      const toast = document.getElementById("toast");
       toast.textContent = message;
       toast.style.display = 'block';
       setTimeout(() => {
         toast.style.display = 'none';
-      }, 4000);
+      }, 3000);
     }
+
+    async function initApp() {
+      await loadTexts();
+      document.getElementById("top-message").textContent = texts.topMessage;
+      const id = getDeviceId();
+      const allowed = ['device']; // آیدی‌های مجاز
+      if (allowed.includes(id)) {
+        renderMainPage();
+      } else {
+        renderAccessDenied();
+      }
+    }
+
+    initApp();
   </script>
 </body>
 </html>
