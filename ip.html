@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>بررسی دسترسی</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
@@ -13,79 +13,84 @@
       overflow: hidden;
       height: 100%;
       font-family: 'Vazirmatn', sans-serif;
-      background: linear-gradient(to right, #141e30, #243b55);
-      color: #fff;
-    }
-
-    body {
+      background: linear-gradient(135deg, #141e30, #243b55);
+      color: #eee;
       display: flex;
       justify-content: center;
       align-items: center;
+      direction: rtl;
     }
 
     .card {
-      background-color: #1c1f2e;
-      border-radius: 16px;
-      padding: 20px 15px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      background-color: #22273f;
+      border-radius: 18px;
+      padding: 30px 28px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
       max-width: 400px;
       width: 90%;
       box-sizing: border-box;
       text-align: center;
+      user-select: none; /* جلوگیری از انتخاب تصادفی متن */
     }
 
     .card h2 {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: #00ffcc;
-      margin-bottom: 18px;
+      margin-bottom: 26px;
+      font-weight: 700;
     }
 
     .quote {
-      background: #2b2f3e;
-      padding: 12px;
-      border-right: 4px solid #00bcd4;
-      margin: 20px 0;
-      border-radius: 10px;
+      background: #2e344e;
+      padding: 14px 18px;
+      border-right: 5px solid #00bcd4;
+      margin: 25px 0 20px 0;
+      border-radius: 12px;
       text-align: right;
-      direction: rtl;
-      font-size: 0.9rem;
+      font-size: 1.2rem;
       cursor: pointer;
+      user-select: none; /* جلوگیری از انتخاب متن */
+      transition: background-color 0.3s ease;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+      color: #b8f1f5;
+      box-shadow: 0 3px 10px rgba(0, 188, 212, 0.35);
+      white-space: nowrap; /* جلوگیری از شکست خط */
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .quote:hover {
-      background: #344057;
+      background: #3f5273;
     }
 
-    .copied-msg {
-      font-size: 0.8rem;
+    #copied-msg {
+      font-size: 0.9rem;
       color: #4caf50;
-      margin-top: -8px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      display: none;
+      font-weight: 600;
     }
 
-    .guide-btn {
+    .support-btn {
       background-color: #00bcd4;
       border: none;
       color: white;
-      padding: 8px 20px;
-      border-radius: 6px;
+      padding: 14px 32px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 0.95rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 18px;
+      transition: background-color 0.25s ease;
+      user-select: none;
+      box-shadow: 0 4px 18px rgba(0, 188, 212, 0.55);
     }
 
-    .guide-btn:hover {
+    .support-btn:hover {
       background-color: #0097a7;
-    }
-
-    .support {
-      margin-top: 16px;
-      font-size: 0.85rem;
-      color: #ccc;
-    }
-
-    .support a {
-      color: #4dd0e1;
-      text-decoration: none;
-      font-weight: bold;
+      box-shadow: 0 6px 22px rgba(0, 151, 167, 0.7);
     }
   </style>
 </head>
@@ -95,51 +100,58 @@
   </div>
 
   <script>
-    const allowedIPs = [
-      "",  
-      "",
-      "5.6.7.8"
+    const supportPhone = '+989130487019';
+    const allowedIds = [
+      // 'device-abc123xyz',
+      // 'device-xyz987abc'
     ];
 
-    async function getIPAndCheck() {
-      try {
-        const response = await fetch("https://api.ipify.org?format=json");
-        const data = await response.json();
-        const userIP = data.ip;
-
-        if (allowedIPs.includes(userIP)) {
-          window.location.replace("https://hadidadkhodaei.ir/config.html");
-        } else {
-          showAccessDenied(userIP);
-        }
-      } catch (err) {
-        document.getElementById("content").innerHTML = `<h2>❌ خطا در دریافت IP</h2>`;
+    function getDeviceId() {
+      let deviceId = localStorage.getItem('deviceId');
+      if (!deviceId) {
+        deviceId = 'device-' + Math.random().toString(36).substring(2, 12);
+        localStorage.setItem('deviceId', deviceId);
       }
+      return deviceId;
     }
 
-    function showAccessDenied(ip) {
+    function showAccessDenied(deviceId) {
       document.getElementById("content").innerHTML = `
-        <h2>❌ دسترسی شما مجاز نیست</h2>
-        <div class="quote" onclick="copyIP('${ip}')">آی‌پی شما: ${ip}</div>
-        <div class="copied-msg" id="copied-msg" style="display: none;">✅ آی‌پی کپی شد</div>
-        <button class="guide-btn" onclick="alert('برای دریافت دسترسی با پشتیبانی تماس بگیرید')">راهنمایی</button>
-        <div class="support">
-          برای ورود با <a href="https://hadidadkhodaei.ir" target="_blank">پشتیبانی</a> ارتباط برقرار کنید.
-        </div>
+        <h2>❌ شما مجوز ورود را ندارید</h2>
+        <div class="quote" id="deviceIdQuote" title="کلیک برای کپی کردن">نام کاربری: ${deviceId}</div>
+        <div id="copied-msg">✅ نام کاربری کپی شد</div>
+        <button class="support-btn" id="supportBtn">ارسال درخواست مجوز 📩</button>
       `;
-    }
 
-    function copyIP(ip) {
-      navigator.clipboard.writeText(ip).then(() => {
-        const msg = document.getElementById('copied-msg');
-        msg.style.display = 'block';
-        setTimeout(() => {
-          msg.style.display = 'none';
-        }, 2000);
+      const quoteEl = document.getElementById('deviceIdQuote');
+      const copiedMsg = document.getElementById('copied-msg');
+      const supportBtn = document.getElementById('supportBtn');
+
+      quoteEl.addEventListener('click', () => {
+        navigator.clipboard.writeText(deviceId).then(() => {
+          copiedMsg.style.display = 'block';
+          setTimeout(() => {
+            copiedMsg.style.display = 'none';
+          }, 1800);
+        });
+      });
+
+      supportBtn.addEventListener('click', () => {
+        const message = `سلام و درود 🌸\nبنده میخواهم از برنامه V² استفاده کنم اما دسترسی ورود را ندارم. لطفاً مجوز ورود مرا تایید کنید.\n\nنام کاربری من: ${deviceId}`;
+        window.location.href = `sms:${supportPhone}?body=${encodeURIComponent(message)}`;
       });
     }
 
-    getIPAndCheck();
+    function checkAccess() {
+      const deviceId = getDeviceId();
+      if (allowedIds.includes(deviceId)) {
+        window.location.replace("https://hadidadkhodaei.ir/config.html");
+      } else {
+        showAccessDenied(deviceId);
+      }
+    }
+
+    checkAccess();
   </script>
 </body>
 </html>
