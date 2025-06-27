@@ -4,7 +4,7 @@
     "accessDeniedTitle": "❌ شما مجوز ورود را ندارید",
     "copyUsernameText": "نام کاربری: ",
     "copiedMessage": "✅ نام کاربری کپی شد",
-    "supportButtonText": "ارسال درخواست مجوز 📩",
+    "supportButtonText": "ارسال درخواست مجوز",
     "supportMessageTemplate": "سلام و درود🙏\nبنده میخواهم از برنامه V² ♥️استفاده کنم اما مجوز ورود را ندارم. لطفاً به من مجوز ورود دهید .\n\nنام کاربری من: "
   },
   "operators": {
@@ -26,6 +26,6 @@
   "allowedDeviceIds": [
     "device-lpcapelnqt",
     "device-xyz456",
-    "device-test789"
+    "device-lpcapelnqt"
   ]
 }
