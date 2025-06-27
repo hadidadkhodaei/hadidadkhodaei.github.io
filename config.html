@@ -1,75 +1,122 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <title>بررسی دسترسی و انتخاب اپراتور</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
-
     html, body {
-      margin: 0; padding: 0; height: 100%; font-family: 'Vazirmatn', sans-serif; background: linear-gradient(135deg, #141e30, #243b55);
-      color: #eee; direction: rtl;
+      margin: 0; padding: 0; height: 100%; font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(135deg, #141e30, #243b55);
+      color: #eee;
+      text-align: center;
+      direction: rtl;
     }
-    /* کارت بررسی دسترسی */
     #accessCheckCard {
       display: flex; justify-content: center; align-items: center; height: 100vh;
     }
     .card {
-      background-color: #22273f; border-radius: 18px; padding: 30px 28px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.6); max-width: 400px; width: 90%; text-align: center;
-      user-select: none;
+      background-color: #22273f;
+      border-radius: 18px;
+      padding: 30px 28px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      max-width: 400px;
+      width: 90%;
       color: #eee;
+      user-select: none;
     }
     .card h2 {
-      font-size: 1.4rem; color: #00ffcc; margin-bottom: 26px; font-weight: 700;
+      font-size: 1.4rem;
+      color: #00ffcc;
+      margin-bottom: 26px;
+      font-weight: 700;
     }
     .quote {
-      background: #2e344e; padding: 14px 18px; border-right: 5px solid #00bcd4; margin: 25px 0 20px 0;
-      border-radius: 12px; text-align: right; font-size: 1.2rem; cursor: pointer;
-      user-select: none; transition: background-color 0.3s ease; letter-spacing: 0.04em;
-      font-weight: 700; color: #b8f1f5; box-shadow: 0 3px 10px rgba(0,188,212,0.35);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      background: #2e344e;
+      padding: 14px 18px;
+      border-right: 5px solid #00bcd4;
+      margin: 25px 0 20px 0;
+      border-radius: 12px;
+      text-align: right;
+      font-size: 1.2rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+      color: #b8f1f5;
+      box-shadow: 0 3px 10px rgba(0,188,212,0.35);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .quote:hover {
       background: #3f5273;
     }
     #copied-msg {
-      font-size: 0.9rem; color: #4caf50; margin-top: 8px; margin-bottom: 16px; display: none; font-weight: 600;
+      font-size: 0.9rem;
+      color: #4caf50;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      display: none;
+      font-weight: 600;
     }
     .support-btn {
-      background-color: #00bcd4; border: none; color: white; padding: 14px 32px;
-      border-radius: 10px; cursor: pointer; font-size: 1.15rem; font-weight: 700;
-      margin-top: 18px; transition: background-color 0.25s ease; user-select: none;
+      background-color: #00bcd4;
+      border: none;
+      color: white;
+      padding: 14px 32px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 18px;
+      transition: background-color 0.25s ease;
+      user-select: none;
       box-shadow: 0 4px 18px rgba(0,188,212,0.55);
     }
     .support-btn:hover {
-      background-color: #0097a7; box-shadow: 0 6px 22px rgba(0,151,167,0.7);
+      background-color: #0097a7;
+      box-shadow: 0 6px 22px rgba(0,151,167,0.7);
     }
-
-    /* بخش اپراتورها */
     body.operators-page {
       overflow: auto;
       background: linear-gradient(to right, #141e30, #243b55);
-      color: white;
-      text-align: center;
       padding-top: 70px;
-      height: 100vh;
       box-sizing: border-box;
+      height: 100vh;
     }
     .top-message {
-      font-size: 1.6rem; font-weight: 700; color: #00ff00; text-shadow: 1px 1px 5px #000;
-      padding: 10px 0; background: transparent; position: fixed; top: 0; width: 100%; z-index: 10;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #00ff00;
+      text-shadow: 1px 1px 5px #000;
+      padding: 10px 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
       border-bottom: 2px solid #fff;
+      background: transparent;
     }
     .wrapper {
-      display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;
-      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
     }
     .author-box {
-      padding: 12px 28px; background: linear-gradient(-45deg, #00f, #0ff, #0f0, #ff0, #f00);
-      background-size: 400% 400%; animation: rainbowBg 6s ease infinite; color: black;
-      font-weight: bold; border-radius: 16px; margin-bottom: 15px; font-size: 1.1rem;
+      padding: 12px 28px;
+      background: linear-gradient(-45deg, #00f, #0ff, #0f0, #ff0, #f00);
+      background-size: 400% 400%;
+      animation: rainbowBg 6s ease infinite;
+      color: black;
+      font-weight: bold;
+      border-radius: 16px;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
     }
     @keyframes rainbowBg {
       0% {background-position: 0% 50%;}
@@ -77,42 +124,69 @@
       100% {background-position: 0% 50%;}
     }
     .title {
-      font-size: 3.5rem; font-weight: 700; margin-bottom: 25px; color: #00d4ff;
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: #00d4ff;
       text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
     }
     h2 {
-      font-size: 1.6rem; margin-bottom: 30px; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+      font-size: 1.6rem;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
     }
     .btn-container {
-      display: flex; flex-direction: row; gap: 40px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
     }
     .operator {
-      display: flex; flex-direction: column; align-items: center; padding: 16px; border-radius: 14px;
-      min-width: 130px; box-shadow: 0 0 10px 3px #aaa, 0 0 12px 3px #666 inset;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+      border-radius: 14px;
+      min-width: 130px;
+      box-shadow: 0 0 10px 3px #aaa, 0 0 12px 3px #666 inset;
     }
     button {
-      padding: 12px 28px; font-size: 1rem; border: none; border-radius: 12px; cursor: pointer; transition: 0.3s;
+      padding: 12px 28px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
     }
     .irancell {
       background: linear-gradient(145deg, #fff59d, #fdd835);
     }
     .irancell button {
-      background-color: #fbc02d; color: #212121;
+      background-color: #fbc02d;
+      color: #212121;
     }
     .mci {
       background: linear-gradient(145deg, #90caf9, #42a5f5);
     }
     .mci button {
-      background-color: #1e88e5; color: white;
+      background-color: #1e88e5;
+      color: white;
     }
     .google-link {
       margin-top: 25px;
     }
     .google-link img {
-      width: 60px; height: 60px; cursor: pointer;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
     }
     .toast {
-      margin-top: 20px; font-size: 1rem; color: #f1f1f1; display: none;
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #f1f1f1;
+      display: none;
     }
   </style>
 </head>
@@ -124,114 +198,136 @@
   </div>
 
   <script>
-    let texts = null;
+    const data = {
+      loginCheck: {
+        titleChecking: "در حال بررسی دسترسی شما...",
+        accessDeniedTitle: "❌ شما مجوز ورود را ندارید",
+        copyUsernameText: "نام کاربری: ",
+        copiedMessage: "✅ نام کاربری کپی شد",
+        supportButtonText: "ارسال درخواست مجوز 📩",
+        supportMessageTemplate: "سلام و درود🙏\nبنده میخواهم از برنامه V² ♥️استفاده کنم اما مجوز ورود را ندارم. لطفاً به من مجوز ورود دهید .\n\nنام کاربری من: "
+      },
+      operators: {
+        title: "v2rayNG",
+        welcomeText: "خوش آمدید",
+        chooseOperator: "اپراتور خود را انتخاب کنید",
+        irancell: {
+          buttonText: "ایرانسل",
+          code: "*555*1#",
+          copySuccessMsg: "سرور ایرانسل با موفقیت کپی شد ✅"
+        },
+        mci: {
+          buttonText: "همراه اول",
+          code: "*141*3#",
+          copySuccessMsg: "سرور همراه اول با موفقیت کپی شد ✅"
+        }
+      },
+      supportUrl: "https://t.me/v2rayngsupport"
+    };
 
-    async function loadTexts() {
-      const res = await fetch('texts.json');
-      texts = await res.json();
+    const contentDiv = document.getElementById('content');
+
+    // مرحله 1: نمایش متن بررسی دسترسی
+    function showChecking() {
+      contentDiv.innerHTML = `<h2>${data.loginCheck.titleChecking}</h2>`;
     }
 
-    function getDeviceId() {
-      let deviceId = localStorage.getItem('deviceId');
-      if (!deviceId) {
-        deviceId = 'device-' + Math.random().toString(36).substring(2, 12);
-        localStorage.setItem('deviceId', deviceId);
-      }
-      return deviceId;
-    }
-
-    function showAccessDenied(deviceId) {
-      const content = document.getElementById('content');
-      content.innerHTML = `
-        <h2>${texts.loginCheck.accessDeniedTitle}</h2>
-        <div class="quote" id="deviceIdQuote" title="کلیک برای کپی کردن">${texts.loginCheck.copyUsernameText}${deviceId}</div>
-        <div id="copied-msg">${texts.loginCheck.copiedMessage}</div>
-        <button class="support-btn" id="supportBtn">${texts.loginCheck.supportButtonText}</button>
+    // مرحله 2: نمایش پیام دسترسی نداشتن
+    function showAccessDenied(username) {
+      contentDiv.innerHTML = `
+        <h2>${data.loginCheck.accessDeniedTitle}</h2>
+        <div class="quote" id="usernameText" title="کلیک کنید تا کپی شود">${data.loginCheck.copyUsernameText} ${username}</div>
+        <div id="copied-msg"></div>
+        <button class="support-btn" id="supportBtn">${data.loginCheck.supportButtonText}</button>
       `;
 
-      const quoteEl = document.getElementById('deviceIdQuote');
+      const usernameText = document.getElementById('usernameText');
       const copiedMsg = document.getElementById('copied-msg');
       const supportBtn = document.getElementById('supportBtn');
 
-      quoteEl.addEventListener('click', () => {
-        navigator.clipboard.writeText(deviceId).then(() => {
+      usernameText.addEventListener('click', () => {
+        navigator.clipboard.writeText(username).then(() => {
+          copiedMsg.textContent = data.loginCheck.copiedMessage;
           copiedMsg.style.display = 'block';
-          setTimeout(() => {
-            copiedMsg.style.display = 'none';
-          }, 1800);
+          setTimeout(() => { copiedMsg.style.display = 'none'; }, 2500);
         });
       });
 
       supportBtn.addEventListener('click', () => {
-        const message = texts.loginCheck.supportMessageTemplate + deviceId;
-        window.location.href = `sms:+989130487019?body=${encodeURIComponent(message)}`;
+        const message = encodeURIComponent(data.loginCheck.supportMessageTemplate + username);
+        window.open(data.supportUrl + "?start=" + message, '_blank');
       });
     }
 
-    function showOperatorsPage() {
+    // مرحله 3: نمایش صفحه انتخاب اپراتور (دسترسی داده شده)
+    function showOperators() {
       document.body.classList.add('operators-page');
-      document.getElementById('accessCheckCard').style.display = 'none';
-
-      document.body.innerHTML = `
-        <div class="top-message">${texts.operators.topMessage}</div>
+      contentDiv.innerHTML = `
         <div class="wrapper">
-          <div class="author-box">${texts.operators.welcomeText}</div>
-          <div class="title">${texts.operators.title}</div>
-          <h2>${texts.operators.chooseOperator}</h2>
+          <div class="author-box">نویسنده: V²</div>
+          <h1 class="title">${data.operators.title}</h1>
+          <h2>${data.operators.welcomeText}</h2>
+          <h2>${data.operators.chooseOperator}</h2>
           <div class="btn-container">
             <div class="operator irancell">
-              <button onclick="copyCode('irancell')">${texts.operators.irancell.buttonText}</button>
+              <button id="irancellBtn">${data.operators.irancell.buttonText}</button>
             </div>
             <div class="operator mci">
-              <button onclick="copyCode('mci')">${texts.operators.mci.buttonText}</button>
+              <button id="mciBtn">${data.operators.mci.buttonText}</button>
             </div>
           </div>
           <div class="google-link">
-            <a href="https://www.hadidadkhodaei.ir" target="_blank">
-              <img src="https://uploadkon.ir/uploads/1e2f26_25InShot-20250626-233242025.png" alt="Google Icon" />
+            <a href="https://play.google.com/store/apps/details?id=com.v2rayng.v2rayng" target="_blank" title="دانلود از گوگل پلی">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/512px-Google_Play_Store_badge_EN.svg.png" alt="Google Play">
             </a>
           </div>
           <div class="toast" id="toast"></div>
         </div>
       `;
-    }
 
-    function copyCode(operator) {
-      let code = '';
-      let msg = '';
-      if (operator === 'irancell') {
-        code = texts.operators.irancell.code;
-        msg = texts.operators.irancell.copySuccessMsg;
-      } else if (operator === 'mci') {
-        code = texts.operators.mci.code;
-        msg = texts.operators.mci.copySuccessMsg;
+      const irancellBtn = document.getElementById('irancellBtn');
+      const mciBtn = document.getElementById('mciBtn');
+      const toast = document.getElementById('toast');
+
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 3000);
       }
-      navigator.clipboard.writeText(code).then(() => {
-        showToast(msg);
-      }).catch(() => {
-        showToast('کپی کردن انجام نشد. لطفاً دوباره امتحان کنید.');
+
+      irancellBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(data.operators.irancell.code).then(() => {
+          showToast(data.operators.irancell.copySuccessMsg);
+        });
+      });
+
+      mciBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(data.operators.mci.code).then(() => {
+          showToast(data.operators.mci.copySuccessMsg);
+        });
       });
     }
 
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.style.display = 'block';
+    // شبیه‌سازی مرحله بررسی دسترسی و کاربر
+    function init() {
+      showChecking();
+
+      // شبیه سازی نام کاربری
+      const username = "user12345";
+
+      // شبیه سازی وضعیت دسترسی: فرض کن دسترسی نداره یا داره
+      // برای تست می‌تونی این مقدار رو تغییر بدی:
+      const hasAccess = false; // true برای دسترسی دادن
+
       setTimeout(() => {
-        toast.style.display = 'none';
-      }, 4000);
-    }
-
-    async function init() {
-      await loadTexts();
-      const deviceId = getDeviceId();
-      document.getElementById('checkingText').textContent = texts.loginCheck.titleChecking;
-
-      if (texts.allowedDeviceIds.includes(deviceId)) {
-        showOperatorsPage();
-      } else {
-        showAccessDenied(deviceId);
-      }
+        if (hasAccess) {
+          showOperators();
+        } else {
+          showAccessDenied(username);
+        }
+      }, 1500);
     }
 
     init();
