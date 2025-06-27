@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>دسترسی و اپراتور</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(135deg, #141e30, #243b55);
+      color: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      direction: rtl;
+    }
+
+    .card {
+      background-color: #22273f;
+      border-radius: 18px;
+      padding: 30px 28px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      max-width: 400px;
+      width: 90%;
+      box-sizing: border-box;
+      text-align: center;
+      user-select: none;
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      color: #00ffcc;
+      margin-bottom: 26px;
+      font-weight: 700;
+    }
+
+    .quote {
+      background: #2e344e;
+      padding: 14px 18px;
+      border-right: 5px solid #00bcd4;
+      margin: 25px 0 20px 0;
+      border-radius: 12px;
+      text-align: right;
+      font-size: 1.2rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+      color: #b8f1f5;
+      box-shadow: 0 3px 10px rgba(0, 188, 212, 0.35);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .quote:hover {
+      background: #3f5273;
+    }
+
+    #copied-msg {
+      font-size: 0.9rem;
+      color: #4caf50;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      display: none;
+      font-weight: 600;
+    }
+
+    .support-btn {
+      background-color: #00bcd4;
+      border: none;
+      color: white;
+      padding: 14px 32px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 18px;
+      transition: background-color 0.25s ease;
+      user-select: none;
+      box-shadow: 0 4px 18px rgba(0, 188, 212, 0.55);
+    }
+
+    .support-btn:hover {
+      background-color: #0097a7;
+      box-shadow: 0 6px 22px rgba(0, 151, 167, 0.7);
+    }
+
+    /* صفحه اپراتور */
+    .operator-page {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding-top: 70px;
+      text-align: center;
+    }
+
+    .top-message {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #00ff00;
+      text-shadow: 1px 1px 5px #000;
+      padding: 10px 0;
+      background: transparent;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+      border-bottom: 2px solid #fff;
+      text-align: center;
+    }
+
+    .author-box {
+      padding: 12px 28px;
+      background: linear-gradient(-45deg, #00f, #0ff, #0f0, #ff0, #f00);
+      background-size: 400% 400%;
+      animation: rainbowBg 6s ease infinite;
+      color: black;
+      font-weight: bold;
+      border-radius: 16px;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    @keyframes rainbowBg {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: #00d4ff;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+    }
+
+    .btn-container {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .operator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+      border-radius: 14px;
+      min-width: 130px;
+      box-shadow: 0 0 10px 3px #aaa, 0 0 12px 3px #666 inset;
+    }
+
+    button {
+      padding: 12px 28px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .irancell {
+      background: linear-gradient(145deg, #fff59d, #fdd835);
+    }
+    .irancell button {
+      background-color: #fbc02d;
+      color: #212121;
+    }
+
+    .mci {
+      background: linear-gradient(145deg, #90caf9, #42a5f5);
+    }
+    .mci button {
+      background-color: #1e88e5;
+      color: white;
+    }
+
+    .google-link img {
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+    }
+
+    .toast {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #f1f1f1;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="access-card">
+    <h2>در حال بررسی دسترسی شما...</h2>
+  </div>
+
+  <div class="operator-page" id="operator-page">
+    <div class="top-message">کانفیگ رایگان</div>
+    <div class="author-box">خوش آمدید</div>
+    <div class="title">v2rayNG</div>
+    <h2>اپراتور خود را انتخاب کنید</h2>
+    <div class="btn-container">
+      <div class="operator irancell">
+        <button onclick="copyCode('irancell')">ایرانسل</button>
+      </div>
+      <div class="operator mci">
+        <button onclick="copyCode('mci')">همراه اول</button>
+      </div>
+    </div>
+    <div class="google-link">
+      <a href="https://www.hadidadkhodaei.ir" target="_blank">
+        <img src="https://uploadkon.ir/uploads/1e2f26_25InShot-20250626-233242025.png" alt="Google Icon" />
+      </a>
+    </div>
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script>
+    const supportPhone = '+989130487019';
+    
+    ///کد دیوایس
+    const allowedIds = [ 'device-hai97e6sk' ];
+    
+    function getDeviceId() {
+      let deviceId = localStorage.getItem('deviceId');
+      if (!deviceId) {
+        deviceId = 'device-' + Math.random().toString(36).substring(2, 12);
+        localStorage.setItem('deviceId', deviceId);
+      }
+      return deviceId;
+    }
+
+    function showAccessDenied(deviceId) {
+      document.getElementById("access-card").innerHTML = `
+        <h2>❌ شما مجوز ورود را ندارید</h2>
+        <div class="quote" id="deviceIdQuote" title="کلیک برای کپی کردن">نام کاربری: ${deviceId}</div>
+        <div id="copied-msg">✅ نام کاربری کپی شد</div>
+        <button class="support-btn" id="supportBtn">ارسال درخواست مجوز 📩</button>
+      `;
+
+      const quoteEl = document.getElementById('deviceIdQuote');
+      const copiedMsg = document.getElementById('copied-msg');
+      const supportBtn = document.getElementById('supportBtn');
+
+      quoteEl.addEventListener('click', () => {
+        navigator.clipboard.writeText(deviceId).then(() => {
+          copiedMsg.style.display = 'block';
+          setTimeout(() => {
+            copiedMsg.style.display = 'none';
+          }, 1800);
+        });
+      });
+
+      supportBtn.addEventListener('click', () => {
+        const message = `سلام و درود🙏\nبنده میخواهم از برنامه V² ♥️استفاده کنم اما مجوز ورود را ندارم. لطفاً به من مجوز ورود دهید .\n\nنام کاربری من: ${deviceId}`;
+        window.location.href = `sms:${supportPhone}?body=${encodeURIComponent(message)}`;
+      });
+    }
+
+    function showOperatorPage() {
+      document.getElementById("access-card").style.display = "none";
+      document.getElementById("operator-page").style.display = "flex";
+    }
+
+    function checkAccess() {
+      const deviceId = getDeviceId();
+      if (allowedIds.includes(deviceId)) {
+        showOperatorPage();
+      } else {
+        showAccessDenied(deviceId);
+      }
+    }
+
+    function copyCode(operator) {
+      let code = '';
+      let msg = '';
+      if (operator === 'irancell') {
+        code = '*555*1#';
+        msg = 'سرور ایرانسل با موفقیت کپی شد ✅';
+      } else if (operator === 'mci') {
+        code = '*111*1#';
+        msg = 'سرور همراه اول با موفقیت کپی شد ✅';
+      }
+      navigator.clipboard.writeText(code).then(() => {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 4000);
+      });
+    }
+
+    checkAccess();
+  </script>
+</body>
+</html>
