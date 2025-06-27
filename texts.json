@@ -1,0 +1,20 @@
+{
+  "topMessage": "کانفیگ رایگان",
+  "welcomeText": "خوش آمدید",
+  "mainTitle": "v2rayNG",
+  "chooseOperator": "اپراتور خود را انتخاب کنید",
+  "irancellBtn": "ایرانسل",
+  "mciBtn": "همراه اول",
+  "irancellCode": "*555*1#",
+  "mciCode": "*111*1#",
+  "irancellCopied": "سرور ایرانسل با موفقیت کپی شد ✅",
+  "mciCopied": "سرور همراه اول با موفقیت کپی شد ✅",
+  "copyFailed": "کپی کردن انجام نشد. لطفاً دوباره امتحان کنید.",
+  "accessDeniedTitle": "دسترسی غیر مجاز ❌",
+  "usernameLabel": "نام کاربری شما:",
+  "copiedUsername": "نام کاربری کپی شد 📋",
+  "requestPermissionBtn": "درخواست دسترسی",
+  "requestPermissionSMS": "لطفاً برای من دسترسی فعال کنید. نام کاربری من:",
+  "linkHref": "https://www.hadidadkhodaei.ir",
+  "linkIcon": "https://uploadkon.ir/uploads/1e2f26_25InShot-20250626-233242025.png"
+}
