@@ -1,153 +1,131 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>کانفیگ رایگانV2rayNG </title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+  <meta charset="UTF-8" />
+  <title>کانفیگ رایگان</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap');
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+    * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+    body {
       font-family: 'Vazirmatn', sans-serif;
       direction: rtl;
-      user-select: none;
-      touch-action: none;
+      overflow: hidden;
+    }
+
+    .splash, .main {
+      width: 100vw; height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+    }
+
+    .splash {
+      background: linear-gradient(to bottom, #202020, #111);
+      color: #fff;
+    }
+
+    .splash img.logo {
+      width: 160px; margin-bottom: 20px;
+    }
+
+    .loader {
+      width: 36px; height: 36px;
+      border: 4px solid #888;
+      border-top: 4px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .insta {
+      margin-top: 18px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 14px; color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .insta:hover { color: #fff; }
+    .insta img {
+      width: 20px; height: 20px;
+      border-radius: 4px;
+    }
+
+    .main {
       background: linear-gradient(#c7eaff, #c2e0ba);
-      position: relative;
-    }
-
-    .wave {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 200%;
-      height: 180px;
-      background: url('https://svgshare.com/i/13KJ.svg') repeat-x;
-      animation: waveMove 16s linear infinite;
-      opacity: 0.3;
-      z-index: 0;
-    }
-
-    @keyframes waveMove {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .bird {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background: url('https://svgshare.com/i/13Kr.svg') no-repeat center;
-      background-size: contain;
-      animation: flyBird 14s linear infinite;
-      z-index: 0;
-    }
-
-    .bird:nth-child(1) { top: 10%; left: -50px; animation-delay: 1s; }
-    .bird:nth-child(2) { top: 25%; left: -70px; animation-delay: 5s; }
-
-    @keyframes flyBird {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(160vw); }
+      display: none;
+      padding: 24px;
     }
 
     .card {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #fff;
-      border-radius: 18px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
-      width: 92%;
-      max-width: 440px;
-      padding: 26px 22px;
+      background: #fff;
+      color: #333;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+      width: 92%; max-width: 440px;
+      padding: 24px;
       text-align: center;
-      z-index: 2;
     }
 
-    h1 {
-      font-size: 21px;
-      color: #1c3978;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-
-    p {
-      font-size: 14px;
-      color: #444;
-      margin-bottom: 16px;
-      line-height: 1.6;
-    }
+    h1 { font-size: 21px; margin-bottom: 10px; color: #1c3978; }
+    p  { font-size: 14px; margin-bottom: 16px; }
 
     .quote-box {
-      background-color: #fefefe;
-      border-left: 5px solid #1c3978;
-      padding: 14px 18px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      background: #fefefe;
+      border-left: 4px solid #1c3978;
+      padding: 12px 16px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       cursor: pointer;
-      transition: background-color 0.3s;
+      margin-bottom: 16px;
     }
-
-    .quote-box:hover {
-      background-color: #eef2ff;
-    }
+    .quote-box:hover { background: #eef2ff; }
 
     .quote-text {
+      font-weight: 600;
       font-size: 15px;
       color: #1c3978;
-      font-weight: 600;
     }
 
     .link-preview {
       margin-top: 10px;
       font-family: monospace;
-      font-size: 13px;
-      background-color: #f5faff;
+      background: #f5faff;
       border: 1px dashed #9cbcec;
-      padding: 8px 10px;
+      padding: 8px;
       border-radius: 8px;
-      color: #222;
-      direction: ltr;
       display: none;
       overflow-wrap: anywhere;
+      direction: ltr;
+      font-size: 13px;
     }
 
     .copied-msg {
+      margin-top: 6px;
       font-size: 12px;
       color: #27a844;
-      margin-top: 8px;
       display: none;
     }
 
     .download-btn {
-      margin-top: 28px;
-      background-color: #1c3978;
+      display: inline-block;
+      margin-top: 20px;
+      background: #1c3978;
       color: #fff;
-      padding: 14px 22px;
-      border-radius: 12px;
-      font-size: 17px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 16px;
       font-weight: bold;
       text-decoration: none;
-      transition: background-color 0.3s;
-      display: inline-block;
-    }
-
-    .download-btn:hover {
-      background-color: #142e5c;
     }
 
     .footer {
-      margin-top: 18px;
+      margin-top: 16px;
       font-size: 13px;
-      color: #666;
     }
 
     .footer a {
@@ -155,43 +133,46 @@
       font-weight: bold;
       text-decoration: none;
     }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
-  <div class="wave"></div>
-  <div class="bird"></div>
-  <div class="bird"></div>
 
-  <div class="card">
-    <h1 class="title"></h1>
-    <p class="description"></p>
+  <!-- صفحه اول: هخامنشی -->
+  <div class="splash" id="splash">
+    <img src="https://s6.uupload.ir/files/achaemenid_falcon.svg_k447.png" alt="هخامنشی" class="logo" />
+    <div class="loader"></div>
+    <a href="https://instagram.com/hadi_dadkhodaei" target="_blank" class="insta">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" />
+      <span>@hadi_dadkhodaei</span>
+    </a>
+  </div>
 
-    <div class="quote-box" onclick="toggleConfig()">
-      <div class="quote-text"></div>
-      <div id="linkPreview" class="link-preview"></div>
-      <div id="copied" class="copied-msg">✅ نسخه کامل کپی شد!</div>
-    </div>
+  <!-- صفحه دوم: کانفیگ V2ray -->
+  <div class="main" id="main">
+    <div class="card">
+      <h1 class="title">بارگذاری...</h1>
+      <p class="description"></p>
 
-    <a href="#" class="download-btn"></a>
+      <div class="quote-box" onclick="toggleConfig()">
+        <div class="quote-text"></div>
+        <div id="linkPreview" class="link-preview"></div>
+        <div id="copied" class="copied-msg">✅ نسخه کامل کپی شد!</div>
+      </div>
 
-    <div class="footer">
-      <span class="footer-label"></span>
-      <a href="#" target="_blank"></a>
+      <a href="#" class="download-btn"></a>
+
+      <div class="footer">
+        <span class="footer-label"></span><a href="#" target="_blank"></a>
+      </div>
     </div>
   </div>
 
   <script>
-    let visible = false;
-    let linkFull = "";
+    let linkFull = "", visible = false;
 
     function toggleConfig() {
       const preview = document.getElementById('linkPreview');
-      const copied = document.getElementById('copied');
-
+      const copied  = document.getElementById('copied');
       visible = !visible;
       preview.style.display = visible ? 'block' : 'none';
 
@@ -207,20 +188,26 @@
       }
     }
 
-    // بارگذاری فایل config.json
-    fetch('V2ray.json')
-      .then(res => res.json())
-      .then(data => {
-        document.querySelector(".title").textContent = data.title;
-        document.querySelector(".description").textContent = data.description;
-        document.querySelector(".quote-text").textContent = data.quoteLabel;
-        document.getElementById("linkPreview").textContent = data.linkShort;
-        document.querySelector(".download-btn").textContent = data.downloadText;
-        document.querySelector(".footer a").textContent = data.footerLinkText;
-        document.querySelector(".footer a").href = data.footerLinkUrl;
-        document.querySelector(".footer-label").textContent = data.footerText + ' ';
-        linkFull = data.linkFull;
-      });
+    // نمایش صفحه دوم بعد از ۷ ثانیه
+    setTimeout(() => {
+      document.getElementById("splash").style.display = "none";
+      document.getElementById("main").style.display = "flex";
+
+      // بارگذاری محتوا از V2ray.json
+      fetch("V2ray.json")
+        .then(res => res.json())
+        .then(data => {
+          document.querySelector(".title").textContent = data.title;
+          document.querySelector(".description").textContent = data.description;
+          document.querySelector(".quote-text").textContent = data.quoteLabel;
+          document.getElementById("linkPreview").textContent = data.linkShort;
+          document.querySelector(".download-btn").textContent = data.downloadText;
+          document.querySelector(".footer-label").textContent = data.footerText + " ";
+          document.querySelector(".footer a").textContent = data.footerLinkText;
+          document.querySelector(".footer a").href = data.footerLinkUrl;
+          linkFull = data.linkFull;
+        });
+    }, 7000);
   </script>
 </body>
 </html>
