@@ -3,7 +3,7 @@
   "description": "با استفاده از این کانفیگ امن و سریع، بدون محدودیت و سانسور به اینترنت آزاد متصل شوید.",
   "quoteLabel": "برای دریافت کانفیگ کلیک کنید",
   "linkShort": "v2ray://sample-short-link",
-  "linkFull": "v2ray://full-config-encrypted-connection-id",
+  "linkFull": "vless://2f393071-ac9d-4510-916f-eed41b10d2b6@65.109.191.147:2087?security=none&encryption=none&host=speedtest.net&headerType=http&type=tcp#hadi",
   "downloadText": "دانلود فایل کانفیگ",
   "footerText": "صفحه رسمی ما در اینستاگرام",
   "footerLinkText": "@hadi_dadkhodaei",
