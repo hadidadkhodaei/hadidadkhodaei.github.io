@@ -208,7 +208,7 @@
     }
 
     // بارگذاری فایل config.json
-    fetch('config.json')
+    fetch('V2ray.json')
       .then(res => res.json())
       .then(data => {
         document.querySelector(".title").textContent = data.title;
