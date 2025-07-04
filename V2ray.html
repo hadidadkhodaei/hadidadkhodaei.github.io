@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>کانفیگ رایگانV2rayNG </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap');
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Vazirmatn', sans-serif;
+      direction: rtl;
+      user-select: none;
+      touch-action: none;
+      background: linear-gradient(#c7eaff, #c2e0ba);
+      position: relative;
+    }
+
+    .wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 200%;
+      height: 180px;
+      background: url('https://svgshare.com/i/13KJ.svg') repeat-x;
+      animation: waveMove 16s linear infinite;
+      opacity: 0.3;
+      z-index: 0;
+    }
+
+    @keyframes waveMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .bird {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: url('https://svgshare.com/i/13Kr.svg') no-repeat center;
+      background-size: contain;
+      animation: flyBird 14s linear infinite;
+      z-index: 0;
+    }
+
+    .bird:nth-child(1) { top: 10%; left: -50px; animation-delay: 1s; }
+    .bird:nth-child(2) { top: 25%; left: -70px; animation-delay: 5s; }
+
+    @keyframes flyBird {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(160vw); }
+    }
+
+    .card {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+      width: 92%;
+      max-width: 440px;
+      padding: 26px 22px;
+      text-align: center;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 21px;
+      color: #1c3978;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    p {
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .quote-box {
+      background-color: #fefefe;
+      border-left: 5px solid #1c3978;
+      padding: 14px 18px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .quote-box:hover {
+      background-color: #eef2ff;
+    }
+
+    .quote-text {
+      font-size: 15px;
+      color: #1c3978;
+      font-weight: 600;
+    }
+
+    .link-preview {
+      margin-top: 10px;
+      font-family: monospace;
+      font-size: 13px;
+      background-color: #f5faff;
+      border: 1px dashed #9cbcec;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #222;
+      direction: ltr;
+      display: none;
+      overflow-wrap: anywhere;
+    }
+
+    .copied-msg {
+      font-size: 12px;
+      color: #27a844;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .download-btn {
+      margin-top: 28px;
+      background-color: #1c3978;
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      display: inline-block;
+    }
+
+    .download-btn:hover {
+      background-color: #142e5c;
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .footer a {
+      color: #1c3978;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="wave"></div>
+  <div class="bird"></div>
+  <div class="bird"></div>
+
+  <div class="card">
+    <h1 class="title"></h1>
+    <p class="description"></p>
+
+    <div class="quote-box" onclick="toggleConfig()">
+      <div class="quote-text"></div>
+      <div id="linkPreview" class="link-preview"></div>
+      <div id="copied" class="copied-msg">✅ نسخه کامل کپی شد!</div>
+    </div>
+
+    <a href="#" class="download-btn"></a>
+
+    <div class="footer">
+      <span class="footer-label"></span>
+      <a href="#" target="_blank"></a>
+    </div>
+  </div>
+
+  <script>
+    let visible = false;
+    let linkFull = "";
+
+    function toggleConfig() {
+      const preview = document.getElementById('linkPreview');
+      const copied = document.getElementById('copied');
+
+      visible = !visible;
+      preview.style.display = visible ? 'block' : 'none';
+
+      if (visible) {
+        navigator.clipboard.writeText(linkFull).then(() => {
+          copied.style.display = 'block';
+          setTimeout(() => {
+            copied.style.display = 'none';
+            preview.style.display = 'none';
+            visible = false;
+          }, 2500);
+        });
+      }
+    }
+
+    // بارگذاری فایل config.json
+    fetch('config.json')
+      .then(res => res.json())
+      .then(data => {
+        document.querySelector(".title").textContent = data.title;
+        document.querySelector(".description").textContent = data.description;
+        document.querySelector(".quote-text").textContent = data.quoteLabel;
+        document.getElementById("linkPreview").textContent = data.linkShort;
+        document.querySelector(".download-btn").textContent = data.downloadText;
+        document.querySelector(".footer a").textContent = data.footerLinkText;
+        document.querySelector(".footer a").href = data.footerLinkUrl;
+        document.querySelector(".footer-label").textContent = data.footerText + ' ';
+        linkFull = data.linkFull;
+      });
+  </script>
+</body>
+</html>
