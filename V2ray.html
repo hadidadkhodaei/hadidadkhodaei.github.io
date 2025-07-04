@@ -2,142 +2,37 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8" />
-  <title>کانفیگ رایگان</title>
+  <title>V2ray هخامنشی</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap');
-    * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
-    body {
-      font-family: 'Vazirmatn', sans-serif;
-      direction: rtl;
-      overflow: hidden;
-    }
-
-    .splash, .main {
-      width: 100vw; height: 100vh;
-      display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      text-align: center;
-    }
-
-    .splash {
-      background: linear-gradient(to bottom, #202020, #111);
-      color: #fff;
-    }
-
-    .splash img.logo {
-      width: 160px; margin-bottom: 20px;
-    }
-
-    .loader {
-      width: 36px; height: 36px;
-      border: 4px solid #888;
-      border-top: 4px solid #fff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .insta {
-      margin-top: 18px;
-      display: flex; align-items: center; gap: 8px;
-      font-size: 14px; color: #ccc;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .insta:hover { color: #fff; }
-    .insta img {
-      width: 20px; height: 20px;
-      border-radius: 4px;
-    }
-
-    .main {
-      background: linear-gradient(#c7eaff, #c2e0ba);
-      display: none;
-      padding: 24px;
-    }
-
-    .card {
-      background: #fff;
-      color: #333;
-      border-radius: 16px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-      width: 92%; max-width: 440px;
-      padding: 24px;
-      text-align: center;
-    }
-
-    h1 { font-size: 21px; margin-bottom: 10px; color: #1c3978; }
-    p  { font-size: 14px; margin-bottom: 16px; }
-
-    .quote-box {
-      background: #fefefe;
-      border-left: 4px solid #1c3978;
-      padding: 12px 16px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      cursor: pointer;
-      margin-bottom: 16px;
-    }
-    .quote-box:hover { background: #eef2ff; }
-
-    .quote-text {
-      font-weight: 600;
-      font-size: 15px;
-      color: #1c3978;
-    }
-
-    .link-preview {
-      margin-top: 10px;
-      font-family: monospace;
-      background: #f5faff;
-      border: 1px dashed #9cbcec;
-      padding: 8px;
-      border-radius: 8px;
-      display: none;
-      overflow-wrap: anywhere;
-      direction: ltr;
-      font-size: 13px;
-    }
-
-    .copied-msg {
-      margin-top: 6px;
-      font-size: 12px;
-      color: #27a844;
-      display: none;
-    }
-
-    .download-btn {
-      display: inline-block;
-      margin-top: 20px;
-      background: #1c3978;
-      color: #fff;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .footer {
-      margin-top: 16px;
-      font-size: 13px;
-    }
-
-    .footer a {
-      color: #1c3978;
-      font-weight: bold;
-      text-decoration: none;
-    }
+    *{margin:0;padding:0;box-sizing:border-box;user-select:none}
+    body{font-family:'Vazirmatn',sans-serif;direction:rtl;overflow:hidden}
+    .splash,.main{width:100vw;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+    .splash{background:linear-gradient(to bottom,#202020,#111);color:#fff}
+    .splash img.logo{width:160px;margin-bottom:20px}
+    .loader{width:36px;height:36px;border:4px solid #888;border-top:4px solid #fff;border-radius:50%;animation:spin 1s linear infinite}
+    @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+    .insta{margin-top:18px;display:flex;align-items:center;gap:8px;font-size:14px;color:#ccc;text-decoration:none;transition:color .3s}
+    .insta:hover{color:#fff}
+    .insta img{width:20px;height:20px;border-radius:4px}
+    .main{background:linear-gradient(#c7eaff,#c2e0ba);display:none;padding:24px}
+    .card{background:#fff;color:#333;border-radius:16px;box-shadow:0 6px 16px rgba(0,0,0,.2);width:92%;max-width:440px;padding:24px;text-align:center}
+    h1{font-size:21px;margin-bottom:10px;color:#1c3978}
+    p{font-size:14px;margin-bottom:16px}
+    .quote-box{background:#fefefe;border-left:4px solid #1c3978;padding:12px 16px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.08);cursor:pointer;margin-bottom:16px}
+    .quote-box:hover{background:#eef2ff}
+    .quote-text{font-weight:600;font-size:15px;color:#1c3978}
+    .link-preview{margin-top:10px;font-family:monospace;background:#f5faff;border:1px dashed #9cbcec;padding:8px;border-radius:8px;display:none;overflow-wrap:anywhere;direction:ltr;font-size:13px}
+    .copied-msg{margin-top:6px;font-size:12px;color:#27a844;display:none}
+    .download-btn{display:inline-block;margin-top:20px;background:#1c3978;color:#fff;padding:12px 20px;border-radius:10px;font-size:16px;font-weight:bold;text-decoration:none}
+    .footer{margin-top:16px;font-size:13px}
+    .footer a{color:#1c3978;font-weight:bold;text-decoration:none}
   </style>
 </head>
 <body>
 
-  <!-- صفحه اول: هخامنشی -->
+  <!-- صفحه اول -->
   <div class="splash" id="splash">
     <img src="https://s6.uupload.ir/files/achaemenid_falcon.svg_k447.png" alt="هخامنشی" class="logo" />
     <div class="loader"></div>
@@ -147,16 +42,16 @@
     </a>
   </div>
 
-  <!-- صفحه دوم: کانفیگ V2ray -->
+  <!-- صفحه دوم -->
   <div class="main" id="main">
     <div class="card">
       <h1 class="title">بارگذاری...</h1>
       <p class="description"></p>
 
-      <div class="quote-box" onclick="toggleConfig()">
+      <div class="quote-box" id="quoteBox">
         <div class="quote-text"></div>
         <div id="linkPreview" class="link-preview"></div>
-        <div id="copied" class="copied-msg">✅ نسخه کامل کپی شد!</div>
+        <div id="copied" class="copied-msg">✅ لینک کپی شد!</div>
       </div>
 
       <a href="#" class="download-btn"></a>
@@ -168,11 +63,13 @@
   </div>
 
   <script>
-    let linkFull = "", visible = false;
+    let linkFull = "";
+    let visible = false;
 
     function toggleConfig() {
       const preview = document.getElementById('linkPreview');
       const copied  = document.getElementById('copied');
+
       visible = !visible;
       preview.style.display = visible ? 'block' : 'none';
 
@@ -188,12 +85,14 @@
       }
     }
 
-    // نمایش صفحه دوم بعد از ۷ ثانیه
+    document.getElementById("quoteBox").addEventListener("click", toggleConfig);
+
+    // نمایش صفحه دوم پس از ۷ ثانیه
     setTimeout(() => {
       document.getElementById("splash").style.display = "none";
       document.getElementById("main").style.display = "flex";
 
-      // بارگذاری محتوا از V2ray.json
+      // بارگذاری داده‌ها از V2ray.json
       fetch("V2ray.json")
         .then(res => res.json())
         .then(data => {
