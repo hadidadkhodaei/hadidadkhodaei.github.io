@@ -1,11 +1,11 @@
 {
-  "title": " دریافت کانفیگ رایگان VLESS",
-  "description": "روی باکس زیر کلیک کن تا لینک خلاصه‌نمایش داده بشه و نسخه کامل کانفیگ کپی بشه ✅",
-  "quoteLabel": "🎨 کانفیگ رایگان",
-  "linkShort": "vless://0b55ec95-...type=xhttp&mode=auto...",
-  "linkFull": "vless://2f393071-ac9d-4510-916f-eed41b10d2b6@65.109.191.147:2087?security=none&encryption=none&host=speedtest.net&headerType=http&type=tcp#hadi",
-  "downloadText": "دانلود برنامه ",
-  "footerText": ":ساخته شده توسط",
-  "footerLinkText": "هادی دادخدائی",
-  "footerLinkUrl": "https://hadidadkhodaei.ir"
+  "title": "کانفیگ رایگان V2rayNG 🔥",
+  "description": "با استفاده از این کانفیگ امن و سریع، بدون محدودیت و سانسور به اینترنت آزاد متصل شوید.",
+  "quoteLabel": "برای دریافت کانفیگ کلیک کنید",
+  "linkShort": "v2ray://sample-short-link",
+  "linkFull": "v2ray://full-config-encrypted-connection-id",
+  "downloadText": "دانلود فایل کانفیگ",
+  "footerText": "صفحه رسمی ما در اینستاگرام",
+  "footerLinkText": "@hadi_dadkhodaei",
+  "footerLinkUrl": "https://instagram.com/hadi_dadkhodaei"
 }
