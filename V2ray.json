@@ -3,9 +3,7 @@
   "description": "با استفاده از این کانفیگ امن و سریع، بدون محدودیت و سانسور به اینترنت آزاد متصل شوید.",
   "quoteLabel": "برای دریافت کانفیگ کلیک کنید",
   "linkShort": "v2ray://sample-short-link",
-  "linkFull": "vmess://eyJhZGQiOiJtdG4ueWVrdGFuZXQuaW5mbyIsImFpZCI6IjAiLCJhbHBuIjoiIiwiZnAiOiIiLCJob3N0IjoiYnBpLmlyIiwiaWQiOiI1YjMwYzNlNS01NmU2LTQ1NDYtODBkNS0xNGU1ODYxYzUyMzgiLCJuZXQiOiJ0Y3AiLCJwYXRoIjoiLyIsInBvcnQiOiI0NDYxMyIsInBzIjoiNC1HQiIsInNjeSI6ImF1dG8iLCJzbmkiOiIiLCJ0bHMiOiIiLCJ0eXBlIjoiaHR0cCIsInYiOiIyIn0=
-vmess://eyJhZGQiOiJtY2kueWVrdGFuZXQuaW5mbyIsImFpZCI6IjAiLCJhbHBuIjoiIiwiZnAiOiIiLCJob3N0IjoiIiwiaWQiOiIxODIxMDU3YS04NGJiLTQ0NjgtYjhjNy0yMjY5NWViZWQyZjQiLCJuZXQiOiJ0Y3AiLCJwYXRoIjoiIiwicG9ydCI6IjU1NTU1IiwicHMiOiIyNC10aW1lIiwic2N5IjoiYXV0byIsInNuaSI6IiIsInRscyI6IiIsInR5cGUiOiJub25lIiwidiI6IjIifQ==
-vless://2f393071-ac9d-4510-916f-eed41b10d2b6@65.109.191.147:2087?security=none&encryption=none&host=speedtest.net&headerType=http&type=tcp#hadi",
+  "linkFull": "vmess://eyJhZGQiOiJtdG4ueWVrdGFuZXQuaW5mbyIsImFpZCI6IjAiLCJhbHBuIjoiIiwiZnAiOiIiLCJob3N0IjoiYnBpLmlyIiwiaWQiOiI1YjMwYzNlNS01NmU2LTQ1NDYtODBkNS0xNGU1ODYxYzUyMzgiLCJuZXQiOiJ0Y3AiLCJwYXRoIjoiLyIsInBvcnQiOiI0NDYxMyIsInBzIjoiNC1HQiIsInNjeSI6ImF1dG8iLCJzbmkiOiIiLCJ0bHMiOiIiLCJ0eXBlIjoiaHR0cCIsInYiOiIyIn0=","vmess://eyJhZGQiOiJtY2kueWVrdGFuZXQuaW5mbyIsImFpZCI6IjAiLCJhbHBuIjoiIiwiZnAiOiIiLCJob3N0IjoiIiwiaWQiOiIxODIxMDU3YS04NGJiLTQ0NjgtYjhjNy0yMjY5NWViZWQyZjQiLCJuZXQiOiJ0Y3AiLCJwYXRoIjoiIiwicG9ydCI6IjU1NTU1IiwicHMiOiIyNC10aW1lIiwic2N5IjoiYXV0byIsInNuaSI6IiIsInRscyI6IiIsInR5cGUiOiJub25lIiwidiI6IjIifQ==","vless://2f393071-ac9d-4510-916f-eed41b10d2b6@65.109.191.147:2087?security=none&encryption=none&host=speedtest.net&headerType=http&type=tcp#adi",
   "downloadText":"",
   "footerText": "صفحه رسمی ما در اینستاگرام",
   "footerLinkText": "@hadi_dadkhodaei",
