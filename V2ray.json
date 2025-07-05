@@ -2,10 +2,13 @@
   "title": "کانفیگ رایگان V2rayNG",
   "description": "با استفاده از این کانفیگ امن و سریع، بدون محدودیت و سانسور به اینترنت آزاد متصل شوید.",
   "quoteLabel": "برای دریافت کانفیگ کلیک کنید",
-  "linkShort": "v2ray://sample-short-link",
+  "linkShort": "",
   "linkFull": "https://raw.githubusercontent.com/hadidadkhodaei/hadidadkhodaei.github.io/main/sub.txt",
-  "downloadText":"",
+  "downloadText": "دانلود فایل کانفیگ",
   "footerText": "صفحه رسمی ما در اینستاگرام",
   "footerLinkText": "@hadi_dadkhodaei",
-  "footerLinkUrl": "https://instagram.com/hadi_dadkhodaei"
+  "footerLinkUrl": "https://instagram.com/hadi_dadkhodaei",
+  "madeByText": "ساخته شده توسط",
+  "madeByName": "هادی دادخدائی",
+  "madeByLink": "https://hadidadkhodaei.ir"
 }
