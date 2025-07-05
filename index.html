@@ -2,55 +2,69 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <body>
+<div class="seo-names" style="display:none;">
+  هادی دادخدائی، هادی دادخدایی، هادی دادخدا، هادی دادخ، هادی دادخدای،
+  دادخدایی، دادخدائی، دادخدای
+</div>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>هادی دادخدایی</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .iran-clock {
+      font-family: 'Arial', sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      color: #ffffff;
+      letter-spacing: 1px;
+      text-shadow: 0 0 4px rgba(255,255,255,0.4), 0 0 8px rgba(64,196,255,0.2);
+      margin-top: 8px;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
-<body>
+<body oncontextmenu="return false" onselectstart="return false" ontouchstart="">
 
   <div class="profile-card" id="profileCard">
     <img
       class="profile-pic"
       id="profilePic"
       src="https://hadidadkhodaei.ir/me.jpg"
-      alt="عکس پروفایل هادی دادخدائی"
+      alt="عکس پروفایل"
       title="کلیک کن برای پخش/توقف موزیک"
     />
 
-    <div class="info" id="infoSection">
+    <div class="info">
       <h1>هادی دادخدائی</h1>
-      <p class="bio">
-        توسعه‌دهنده و عاشق خلق چیزای جدید با کد! اهل یادگیری، طراحی تمیز و عاشق کارهای دیجیتال. اینجا راه ارتباطی با منه.
-      </p>
+      <div class="bio">توسعه‌دهنده‌ی اندروید از رودبار<br>علاقمند به امنیت، تجربه کاربری و طراحی کاربردی</div>
 
       <div class="contacts">
-        <a href="https://instagram.com/hadi_dadkhodaei" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-instagram icon"></i> اینستاگرام
-        </a>
-        <div class="divider"></div>
-        <a href="https://t.me/hadi_dadkhodaei" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-telegram icon"></i> تلگرام
-        </a>
-        <div class="divider"></div>
-        <a href="https://wa.me/989130487019" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-whatsapp icon"></i> واتساپ
-        </a>
-        <div class="divider"></div>
-        <a href="tel:+989130487019">
-          <i class="fas fa-phone icon"></i> تماس
+        <a href="https://instagram.com/hadi_dadkhodaei"><i class="fab fa-instagram icon"></i> اینستاگرام</a>
+        <div class="line"></div>
+        <a href="https://t.me/hadi_dadkhodaei"><i class="fab fa-telegram icon"></i> تلگرام</a>
+        <div class="line"></div>
+        <a href="https://wa.me/989130487019"><i class="fab fa-whatsapp icon"></i> واتساپ</a>
+        <div class="line"></div>
+        <a href="tel:+989130487019"><i class="fas fa-phone icon"></i> تماس</a>
+        <div class="line"></div>
+        <a href="https://hadidadkhodaei.ir/ip.html">
+          <img src="https://hadidadkhodaei.ir/v.jpg" alt="لوگو کانفیگ" style="height:20px;" />
+          کانفیگ رایگان
         </a>
       </div>
 
-      <div class="progress-container hidden" id="progressContainer" title="برای جلو و عقب بردن موزیک کلیک کن">
+      <div class="progress-container hidden" id="progressContainer">
         <div class="progress" id="progress"></div>
       </div>
-    </div>
-  </div>
 
-  <!-- اسامی برای سئو (مخفی برای کاربر) -->
-  <div class="seo-names" aria-hidden="true">
-    هادی دادخدائی، هادی دادخدائي، هادی، هادی دادخدایی، دادخدایی، دادخدائی
+      <div class="iran-clock" id="iranClock">بارگذاری زمان...</div>
+    </div>
   </div>
 
   <audio id="audioPlayer" preload="metadata">
@@ -90,7 +104,6 @@
       const width = progressContainer.clientWidth;
       const clickX = e.offsetX;
       const duration = audioPlayer.duration;
-
       if (!isNaN(duration)) {
         audioPlayer.currentTime = (clickX / width) * duration;
       }
@@ -102,7 +115,37 @@
       progressContainer.classList.add('hidden');
       progress.style.width = '0%';
     });
-  </script>
 
+    // نمایش تاریخ شمسی با اعداد انگلیسی و ساعت ایران
+    function updateIranClock() {
+      const now = new Date();
+
+      const rawDate = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+        timeZone: 'Asia/Tehran',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      }).format(now);
+
+      const persianDate = rawDate
+        .replace(/[۰-۹]/g, d => String.fromCharCode(d.charCodeAt(0) - 1728))
+        .replace(/[^\d\/]/g, '')
+        .replace(/\/+/g, '/');
+
+      const iranTime = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Tehran',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      }).format(now);
+
+      const iranClock = document.getElementById('iranClock');
+      if (iranClock) iranClock.textContent = `📆 ${persianDate}   ⏰ ${iranTime}`;
+    }
+
+    setInterval(updateIranClock, 1000);
+    updateIranClock();
+  </script>
 </body>
 </html>
