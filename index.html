@@ -1,150 +1,265 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8" />
-  <body>
-<div class="seo-names" style="display:none;">
-  هادی دادخدائی، هادی دادخدایی، هادی دادخدا
-</div>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>هادی دادخدایی</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>هادی دادخدائی</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&family=Estedad:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    .iran-clock {
-      font-family: 'Arial', sans-serif;
-      font-size: 16px;
-      font-weight: bold;
-      text-align: center;
-      color: #ffffff;
-      letter-spacing: 1px;
-      text-shadow: 0 0 4px rgba(255,255,255,0.4), 0 0 8px rgba(64,196,255,0.2);
-      margin-top: 8px;
-      animation: fadeIn 0.6s ease-in-out;
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Estedad', 'Vazirmatn', sans-serif;
+      background: linear-gradient(120deg,#f0f4f8,#e0e7ff);
+      color: #333;
+      user-select: none;
+      overflow-x: hidden;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(5px); }
-      to   { opacity: 1; transform: translateY(0); }
+
+    /* Header */
+    header {
+      position: relative;
+      text-align: center;
+      padding: 60px 20px 40px;
+      background: #4CAF50;
+      color: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+    header img {
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      border: 4px solid white;
+      object-fit: cover;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.35);
+    }
+    header h1 { 
+      font-size: 2.5rem; 
+      margin-bottom: 10px; 
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 700;
+    }
+    header p { 
+      font-size: 1.2rem; 
+      color: #f0f0f0; 
+      font-family: 'Estedad', sans-serif;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      position: absolute; top: 20px; left: 20px;
+      width: 35px; height: 30px; cursor: pointer;
+      display: flex; flex-direction: column; justify-content: space-between;
+      z-index: 1002;
+    }
+    .hamburger div {
+      width: 100%; height: 4px; background: white; border-radius: 2px; transition: 0.3s;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      z-index: 999;
+    }
+    .overlay.show { display: block; }
+
+    /* Side Menu */
+    .side-menu {
+      position: fixed; 
+      top: 0; 
+      left: -100%; 
+      width: 250px; 
+      height: 100%;
+      background: linear-gradient(180deg,#4CAF50,#81C784);
+      color: white; 
+      padding: 60px 20px;
+      transition: left 0.4s ease; 
+      z-index: 1000;
+      box-shadow: none; 
+    }
+    .side-menu.open {
+      left: 0; 
+      box-shadow: 3px 0 15px rgba(0,0,0,0.2);
+    }
+    .side-menu .close-menu {
+      position: absolute; top: 20px; right: 20px;
+      width: 30px; height: 25px; cursor: pointer;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .side-menu .close-menu div {
+      width: 100%; height: 4px; background: white; border-radius: 2px;
+    }
+    .side-menu a {
+      display: block; margin: 25px 0; padding: 12px 20px;
+      color: white; text-decoration: none; font-size: 1.2rem; font-weight: bold;
+      text-align: center; transition: 0.3s;
+      border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+      background: rgba(255,255,255,0.05);
+    }
+    .side-menu a:hover {
+      color: #f0f0f0; transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+    }
+
+    /* Sections */
+    section {
+      max-width: 900px; margin: 40px auto;
+      padding: 35px; background: white;
+      border-radius: 18px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    section:hover { 
+      transform: translateY(-6px); 
+      box-shadow: 0 12px 35px rgba(0,0,0,0.18);
+    }
+    section h2 { 
+      text-align: center; 
+      margin-bottom: 20px; 
+      color: #4CAF50; 
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 700;
+    }
+    section p { 
+      font-size: 1.1rem; 
+      line-height: 1.8; 
+      font-family: 'Estedad', sans-serif;
+    }
+
+    /* Contact */
+    .contact-icons {
+      display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;
+    }
+    .contact-icons a {
+      margin: 10px; border-radius: 50%; overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      transition: transform 0.3s, box-shadow 0.3s;
+      background: white;
+    }
+    .contact-icons a img { width: 60px; height: 60px; }
+    .contact-icons a:hover {
+      transform: scale(1.1); box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    /* Form */
+    form input, form textarea {
+      width: 100%; padding: 14px; margin: 8px 0 16px;
+      border: 1px solid #ccc; border-radius: 10px; font-size: 1rem;
+      font-family: 'Estedad', sans-serif;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.08);
+    }
+    form button {
+      background: #4CAF50; color: white;
+      padding: 12px 25px; border: none; border-radius: 10px;
+      font-size: 1rem; cursor: pointer;
+      transition: 0.3s; box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 600;
+    }
+    form button:hover {
+      background: #45a049; box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center; padding: 20px; margin-top: 40px;
+      background: #333; color: white;
+      font-family: 'Estedad', sans-serif;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
+    }
+
+    /* Responsive */
+    @media(max-width:768px){
+      header h1 { font-size: 2rem; }
+      header p { font-size: 1rem; }
     }
   </style>
 </head>
-<body oncontextmenu="return false" onselectstart="return false" ontouchstart="">
+<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
 
-  <div class="profile-card" id="profileCard">
-    <img
-      class="profile-pic"
-      id="profilePic"
-      src="https://hadidadkhodaei.ir/image/me.jpg"
-      alt="عکس پروفایل"
-      title="کلیک کن برای پخش/توقف موزیک"
-    />
-
-    <div class="info">
-      <h1>هادی دادخدائی</h1>
-      <div class="bio">توسعه‌دهنده‌ی اندروید از رودبار<br>علاقمند به امنیت، تجربه کاربری و طراحی کاربردی</div>
-
-      <div class="contacts">
-        <a href="https://instagram.com/hadi_dadkhodaei"><i class="fab fa-instagram icon"></i> اینستاگرام</a>
-        <div class="line"></div>
-        <a href="https://t.me/+989130487019"><i class="fab fa-telegram icon"></i> تلگرام</a>
-        <div class="line"></div>
-        <a href="https://wa.me/989130487019"><i class="fab fa-whatsapp icon"></i> واتساپ</a>
-        <div class="line"></div>
-        <a href="tel:+989130487019"><i class="fas fa-phone icon"></i> تماس</a>
-        <div class="line"></div>
-        <a href="https://hadidadkhodaei.ir/v2rayNG">
-          <img src="https://hadidadkhodaei.ir/v2rayNG/Logo.jpg" alt="لوگو کانفیگ" style="height:20px;" />
-          کانفیگ رایگان
-        </a>
-      </div>
-
-      <div class="progress-container hidden" id="progressContainer">
-        <div class="progress" id="progress"></div>
-      </div>
-
-      <div class="iran-clock" id="iranClock">بارگذاری زمان...</div>
+  <!-- Header -->
+  <header>
+    <div class="hamburger" id="hamburger">
+      <div></div><div></div><div></div>
     </div>
-  </div>
+    <img src="https://hadidadkhodaei.ir/image/me.jpg" alt="هادی دادخدائی">
+    <h1>هادی دادخدائی</h1>
+    <p>توسعه‌دهنده اندروید | علاقه‌مند به امنیت و تجربه کاربری</p>
+  </header>
 
-  <audio id="audioPlayer" preload="metadata">
-    <source src="https://hadidadkhodaei.ir/music/Mehdi%20Sharifi%20-%20Rozegar.mp3" type="audio/mpeg" />
-    مرورگر شما از پخش موزیک پشتیبانی نمی‌کند.
-  </audio>
+  <!-- Overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Side Menu -->
+  <nav class="side-menu" id="sideMenu">
+    <div class="close-menu" id="closeMenu">
+      <div></div><div></div><div></div>
+    </div>
+    <a href="ip.html">کانفیگ رایگان</a>
+    <a href="#about">درباره من</a>
+    <a href="#contact">راه‌های ارتباطی</a>
+  </nav>
+
+  <!-- About -->
+  <section id="about">
+    <h2>بیوگرافی</h2>
+    <p>سلام! من هادی دادخدائی هستم، 20 ساله و دانشجوی مهندسی کامپیوتر. علاقه‌مند به توسعه اندروید، امنیت و طراحی تجربه کاربری هستم.</p>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>راه‌های ارتباطی</h2>
+    <div class="contact-icons">
+      <a href="https://wa.me/989130487019" target="_blank"><img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"></a>
+      <a href="https://t.me/+989130487019" target="_blank"><img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png"></a>
+      <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank"><img src="https://img.icons8.com/color/48/000000/instagram-new--v1.png"></a>
+      <a href="tel:+989130487019"><img src="https://img.icons8.com/color/48/000000/phone.png"></a>
+    </div>
+    <form onsubmit="alert('پیام شما ارسال شد!'); return false;">
+      <input type="text" placeholder="نام شما" required>
+      <input type="email" placeholder="ایمیل شما" required>
+      <textarea placeholder="پیام شما" rows="5" required></textarea>
+      <button type="submit">ارسال پیام</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>© 2025 هادی دادخدائی</footer>
 
   <script>
-    const profilePic = document.getElementById('profilePic');
-    const audioPlayer = document.getElementById('audioPlayer');
-    const profileCard = document.getElementById('profileCard');
-    const progressContainer = document.getElementById('progressContainer');
-    const progress = document.getElementById('progress');
+    const hamburger = document.getElementById('hamburger');
+    const sideMenu = document.getElementById('sideMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const overlay = document.getElementById('overlay');
 
-    profilePic.addEventListener('click', () => {
-      if (audioPlayer.paused) {
-        audioPlayer.play();
-        profilePic.classList.add('playing');
-        profileCard.classList.add('playing');
-        progressContainer.classList.remove('hidden');
+    function toggleMenu(open) {
+      if(open) {
+        sideMenu.classList.add('open');
+        overlay.classList.add('show');
+        hamburger.style.display = 'none';
       } else {
-        audioPlayer.pause();
-        profilePic.classList.remove('playing');
-        profileCard.classList.remove('playing');
-        progressContainer.classList.add('hidden');
+        sideMenu.classList.remove('open');
+        overlay.classList.remove('show');
+        hamburger.style.display = 'flex';
       }
-    });
-
-    audioPlayer.addEventListener('timeupdate', () => {
-      if (audioPlayer.duration) {
-        const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-        progress.style.width = progressPercent + '%';
-      }
-    });
-
-    progressContainer.addEventListener('click', (e) => {
-      const width = progressContainer.clientWidth;
-      const clickX = e.offsetX;
-      const duration = audioPlayer.duration;
-      if (!isNaN(duration)) {
-        audioPlayer.currentTime = (clickX / width) * duration;
-      }
-    });
-
-    audioPlayer.addEventListener('ended', () => {
-      profilePic.classList.remove('playing');
-      profileCard.classList.remove('playing');
-      progressContainer.classList.add('hidden');
-      progress.style.width = '0%';
-    });
-
-    // نمایش تاریخ شمسی با اعداد انگلیسی و ساعت ایران
-    function updateIranClock() {
-      const now = new Date();
-
-      const rawDate = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
-        timeZone: 'Asia/Tehran',
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      }).format(now);
-
-      const persianDate = rawDate
-        .replace(/[۰-۹]/g, d => String.fromCharCode(d.charCodeAt(0) - 1728))
-        .replace(/[^\d\/]/g, '')
-        .replace(/\/+/g, '/');
-
-      const iranTime = new Intl.DateTimeFormat('en-GB', {
-        timeZone: 'Asia/Tehran',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      }).format(now);
-
-      const iranClock = document.getElementById('iranClock');
-      if (iranClock) iranClock.textContent = `📆 ${persianDate}   ⏰ ${iranTime}`;
     }
 
-    setInterval(updateIranClock, 1000);
-    updateIranClock();
+    hamburger.addEventListener('click', () => toggleMenu(true));
+    closeMenu.addEventListener('click', () => toggleMenu(false));
+    overlay.addEventListener('click', () => toggleMenu(false));
+
+    // Swipe gestures for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+    document.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      if(touchEndX - touchStartX > 100) toggleMenu(true);  // swipe right
+      if(touchStartX - touchEndX > 100) toggleMenu(false); // swipe left
+    });
   </script>
 </body>
 </html>
