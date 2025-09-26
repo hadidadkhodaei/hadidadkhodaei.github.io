@@ -1,265 +1,295 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>هادی دادخدائی</title>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&family=Estedad:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Estedad', 'Vazirmatn', sans-serif;
-      background: linear-gradient(120deg,#f0f4f8,#e0e7ff);
-      color: #333;
-      user-select: none;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>هادی دادخدائی</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Vazirmatn', sans-serif;
+  background: linear-gradient(120deg,#f0f4f8,#e0e7ff);
+  color: #333;
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  user-select: none;
+}
 
-    /* Header */
-    header {
-      position: relative;
-      text-align: center;
-      padding: 60px 20px 40px;
-      background: #4CAF50;
-      color: white;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-    }
-    header img {
-      width: 150px; height: 150px;
-      border-radius: 50%;
-      border: 4px solid white;
-      object-fit: cover;
-      margin-bottom: 20px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.35);
-    }
-    header h1 { 
-      font-size: 2.5rem; 
-      margin-bottom: 10px; 
-      font-family: 'Vazirmatn', sans-serif;
-      font-weight: 700;
-    }
-    header p { 
-      font-size: 1.2rem; 
-      color: #f0f0f0; 
-      font-family: 'Estedad', sans-serif;
-    }
+body {
+  overflow-y: hidden;
+}
 
-    /* Hamburger */
-    .hamburger {
-      position: absolute; top: 20px; left: 20px;
-      width: 35px; height: 30px; cursor: pointer;
-      display: flex; flex-direction: column; justify-content: space-between;
-      z-index: 1002;
-    }
-    .hamburger div {
-      width: 100%; height: 4px; background: white; border-radius: 2px; transition: 0.3s;
-    }
+header {
+  position: relative;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(120deg,#3A6EA5,#2A4D73);
+  color: white;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
 
-    /* Overlay */
-    .overlay {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
-      display: none;
-      z-index: 999;
-    }
-    .overlay.show { display: block; }
+header img {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  border: 4px solid white;
+  object-fit: cover;
+  margin-bottom: 5px;
+}
 
-    /* Side Menu */
-    .side-menu {
-      position: fixed; 
-      top: 0; 
-      left: -100%; 
-      width: 250px; 
-      height: 100%;
-      background: linear-gradient(180deg,#4CAF50,#81C784);
-      color: white; 
-      padding: 60px 20px;
-      transition: left 0.4s ease; 
-      z-index: 1000;
-      box-shadow: none; 
-    }
-    .side-menu.open {
-      left: 0; 
-      box-shadow: 3px 0 15px rgba(0,0,0,0.2);
-    }
-    .side-menu .close-menu {
-      position: absolute; top: 20px; right: 20px;
-      width: 30px; height: 25px; cursor: pointer;
-      display: flex; flex-direction: column; justify-content: space-between;
-    }
-    .side-menu .close-menu div {
-      width: 100%; height: 4px; background: white; border-radius: 2px;
-    }
-    .side-menu a {
-      display: block; margin: 25px 0; padding: 12px 20px;
-      color: white; text-decoration: none; font-size: 1.2rem; font-weight: bold;
-      text-align: center; transition: 0.3s;
-      border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.3);
-      background: rgba(255,255,255,0.05);
-    }
-    .side-menu a:hover {
-      color: #f0f0f0; transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.45);
-    }
+header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
 
-    /* Sections */
-    section {
-      max-width: 900px; margin: 40px auto;
-      padding: 35px; background: white;
-      border-radius: 18px;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.12);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    section:hover { 
-      transform: translateY(-6px); 
-      box-shadow: 0 12px 35px rgba(0,0,0,0.18);
-    }
-    section h2 { 
-      text-align: center; 
-      margin-bottom: 20px; 
-      color: #4CAF50; 
-      font-family: 'Vazirmatn', sans-serif;
-      font-weight: 700;
-    }
-    section p { 
-      font-size: 1.1rem; 
-      line-height: 1.8; 
-      font-family: 'Estedad', sans-serif;
-    }
+header p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
 
-    /* Contact */
-    .contact-icons {
-      display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;
-    }
-    .contact-icons a {
-      margin: 10px; border-radius: 50%; overflow: hidden;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-      transition: transform 0.3s, box-shadow 0.3s;
-      background: white;
-    }
-    .contact-icons a img { width: 60px; height: 60px; }
-    .contact-icons a:hover {
-      transform: scale(1.1); box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-    }
+.menu-toggle {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 38px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  z-index: 1001;
+  transition: opacity 0.3s ease;
+}
 
-    /* Form */
-    form input, form textarea {
-      width: 100%; padding: 14px; margin: 8px 0 16px;
-      border: 1px solid #ccc; border-radius: 10px; font-size: 1rem;
-      font-family: 'Estedad', sans-serif;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.08);
-    }
-    form button {
-      background: #4CAF50; color: white;
-      padding: 12px 25px; border: none; border-radius: 10px;
-      font-size: 1rem; cursor: pointer;
-      transition: 0.3s; box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-      font-family: 'Vazirmatn', sans-serif;
-      font-weight: 600;
-    }
-    form button:hover {
-      background: #45a049; box-shadow: 0 10px 28px rgba(0,0,0,0.45);
-    }
+.menu-toggle.hidden {
+  opacity: 0;
+}
 
-    /* Footer */
-    footer {
-      text-align: center; padding: 20px; margin-top: 40px;
-      background: #333; color: white;
-      font-family: 'Estedad', sans-serif;
-      box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
-    }
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  background: linear-gradient(160deg,#3A6EA5,#2A4D73);
+  color: white;
+  padding: 10px;
+  transform: translateY(-100%);
+  transition: transform 0.5s ease;
+  overflow-y: auto;
+  z-index: 1000;
+}
 
-    /* Responsive */
-    @media(max-width:768px){
-      header h1 { font-size: 2rem; }
-      header p { font-size: 1rem; }
-    }
-  </style>
+.side-menu.open {
+  transform: translateY(0);
+}
+
+.side-menu .menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.menu-close {
+  font-size: 28px;
+  font-weight: bold;
+  color: red;
+  cursor: pointer;
+}
+
+.side-menu hr {
+  border: 1px solid white;
+  margin-bottom: 10px;
+}
+
+.side-menu h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.side-menu a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+  padding: 12px;
+  color: black;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 12px;
+  background: white;
+  text-align: center;
+  transition: all 0.4s ease;
+}
+
+.side-menu a:hover {
+  background: rgba(255,255,255,0.9);
+}
+
+section {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+section h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #3A6EA5;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+section p {
+  font-size: 1rem;
+  color: #555;
+  text-align: right;
+}
+
+.contact-icons {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.contact-icons a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: transform 0.5s ease;
+}
+
+.contact-icons a img {
+  width: 40px; height: 40px;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background: #333;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.full-screen-animation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 2000;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  transition: all 0.4s ease-in-out;
+}
+
+.full-screen-animation.open {
+  width: 200vw;
+  height: 200vh;
+  border-radius: 0;
+}
+
+.menu-button {
+  position: relative;
+  z-index: 1;
+}
+</style>
 </head>
-<body oncontextmenu="return false;" onselectstart="return false;" ondragstart="return false;">
+<body>
 
-  <!-- Header -->
-  <header>
-    <div class="hamburger" id="hamburger">
-      <div></div><div></div><div></div>
-    </div>
-    <img src="https://hadidadkhodaei.ir/image/me.jpg" alt="هادی دادخدائی">
-    <h1>هادی دادخدائی</h1>
-    <p>توسعه‌دهنده اندروید | علاقه‌مند به امنیت و تجربه کاربری</p>
-  </header>
+<header>
+  <div class="menu-toggle" id="menuToggle">☰</div>
+  <img src="https://hadidadkhodaei.ir/image/me.jpg" alt="هادی دادخدائی">
+  <h1>هادی دادخدائی</h1>
+  <p>دانشجوی مهندسی کامپیوتر</p>
+</header>
 
-  <!-- Overlay -->
-  <div class="overlay" id="overlay"></div>
+<nav class="side-menu" id="sideMenu">
+  <div class="menu-header">
+    <span class="menu-close" id="menuClose">✖</span>
+    <span class="menu-label">: منو</span>
+  </div>
+  <hr>
+  <h2>گالری من</h2>
+  <a class="menu-button" href="https://hadidadkhodaei.ir/image" target="_blank">عکس</a>
+  <a class="menu-button" href="#" target="_blank">فیلم</a>
+  <a class="menu-button" href="#" target="_blank">موزیک</a>
 
-  <!-- Side Menu -->
-  <nav class="side-menu" id="sideMenu">
-    <div class="close-menu" id="closeMenu">
-      <div></div><div></div><div></div>
-    </div>
-    <a href="v2rayNG">کانفیگ رایگان</a>
-    <a href="#about">درباره من</a>
-    <a href="#contact">راه‌های ارتباطی</a>
-  </nav>
+  <hr>
+  <h3 style="color:white; text-align:center;">فیلترشکن رایگان</h3>
+  <a class="menu-button" href="https://Hadidadkhodaei.ir/v2rayNG" target="_blank">Config v2rayNG</a>
 
-  <!-- About -->
-  <section id="about">
-    <h2>بیوگرافی</h2>
-    <p>سلام! من هادی دادخدائی هستم، 20 ساله و دانشجوی مهندسی کامپیوتر. علاقه‌مند به توسعه اندروید، امنیت و طراحی تجربه کاربری هستم.</p>
-  </section>
+  <hr>
+  <h3 style="color:white; text-align:center;">راه‌های ارتباطی</h3>
+  <a class="menu-button" href="https://instagram.com/Hadi_dadkhodaei" target="_blank">اینستاگرام</a>
+  <a class="menu-button" href="https://t.me/+989130487019" target="_blank">تلگرام</a>
+  <a class="menu-button" href="https://wa.me/989130487019" target="_blank">واتساپ</a>
+  <a class="menu-button" href="tel:+989130487019">تماس</a>
+</nav>
 
-  <!-- Contact -->
-  <section id="contact">
-    <h2>راه‌های ارتباطی</h2>
-    <div class="contact-icons">
-      <a href="https://wa.me/989130487019" target="_blank"><img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"></a>
-      <a href="https://t.me/Hadi_dadkhodaei" target="_blank"><img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png"></a>
-      <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank"><img src="https://img.icons8.com/color/48/000000/instagram-new--v1.png"></a>
-      <a href="tel:+989130487019"><img src="https://img.icons8.com/color/48/000000/phone.png"></a>
-    </div>
-    <form onsubmit="alert('پیام شما ارسال شد!'); return false;">
-      <input type="text" placeholder="نام شما" required>
-      <input type="email" placeholder="ایمیل شما" required>
-      <textarea placeholder="پیام شما" rows="5" required></textarea>
-      <button type="submit">ارسال پیام</button>
-    </form>
-  </section>
+<section id="about">
+  <h2>بیوگرافی</h2>
+  <p>سلام! من هادی دادخدائی هستم، 20 ساله و دانشجوی مهندسی کامپیوتر. علاقه‌مند به توسعه اندروید، امنیت و طراحی تجربه کاربری هستم.</p>
+</section>
 
-  <!-- Footer -->
-  <footer>© 2025 هادی دادخدائی</footer>
+<section id="contact">
+  <h2>راه‌های ارتباطی</h2>
+  <div class="contact-icons no-select">
+    <a href="https://wa.me/989130487019" target="_blank"><img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"></a>
+    <a href="https://t.me/+989130487019" target="_blank"><img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png"></a>
+    <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank"><img src="https://img.icons8.com/color/48/000000/instagram-new--v1.png"></a>
+    <a href="tel:+989130487019"><img src="https://img.icons8.com/color/48/000000/phone.png"></a>
+  </div>
+</section>
 
-  <script>
-    const hamburger = document.getElementById('hamburger');
-    const sideMenu = document.getElementById('sideMenu');
-    const closeMenu = document.getElementById('closeMenu');
-    const overlay = document.getElementById('overlay');
+<div class="full-screen-animation" id="fullscreenAnim"></div>
 
-    function toggleMenu(open) {
-      if(open) {
-        sideMenu.classList.add('open');
-        overlay.classList.add('show');
-        hamburger.style.display = 'none';
-      } else {
-        sideMenu.classList.remove('open');
-        overlay.classList.remove('show');
-        hamburger.style.display = 'flex';
-      }
-    }
+<footer>© 2023 هادی دادخدائی</footer>
 
-    hamburger.addEventListener('click', () => toggleMenu(true));
-    closeMenu.addEventListener('click', () => toggleMenu(false));
-    overlay.addEventListener('click', () => toggleMenu(false));
+<script>
+const menuToggle = document.getElementById('menuToggle');
+const sideMenu = document.getElementById('sideMenu');
+const menuClose = document.getElementById('menuClose');
+const fullscreenAnim = document.getElementById('fullscreenAnim');
 
-    // Swipe gestures for mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
-    document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
-    document.addEventListener('touchend', e => {
-      touchEndX = e.changedTouches[0].screenX;
-      if(touchEndX - touchStartX > 100) toggleMenu(true);  // swipe right
-      if(touchStartX - touchEndX > 100) toggleMenu(false); // swipe left
-    });
-  </script>
+menuToggle.addEventListener('click', () => {
+  sideMenu.classList.add('open');
+  menuToggle.classList.add('hidden');
+});
+
+menuClose.addEventListener('click', () => {
+  sideMenu.classList.remove('open');
+  menuToggle.classList.remove('hidden');
+});
+
+document.querySelectorAll('.menu-button, .contact-icons a').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    fullscreenAnim.classList.add('open');
+    setTimeout(() => {
+      window.location.href = btn.href;
+    }, 300); // سریع‌تر انتقال
+  });
+});
+</script>
 </body>
 </html>
