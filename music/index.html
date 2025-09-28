@@ -134,7 +134,7 @@
     return decodeURIComponent(file.replace(/\.mp3$/i, ''));
   }
 
-  // گرفتن لیست mp3 ها از فولدر
+  // فقط فایل‌هایی که پسوند mp3 یا MP3 دارند
   fetch(dirURL)
     .then(res => res.text())
     .then(async html => {
@@ -143,7 +143,7 @@
       const links = [...doc.querySelectorAll('a')];
       const mp3Links = links
         .map(a => a.getAttribute('href'))
-        .filter(href => href && href.match(/\.mp3$/i));
+        .filter(href => href && href.match(/\.mp3$/i)); // فقط mp3 یا MP3
 
       if (!mp3Links.length) {
         musicList.innerHTML = 'هیچ فایل MP3 پیدا نشد';
