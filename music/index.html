@@ -2,7 +2,7 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>پلیر موزیک از فولدر</title>
+  <title>گالری موزیک هادی دادخدائی</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     html, body {
@@ -104,7 +104,7 @@
 <div class="music-list" id="musicList">در حال بارگذاری موزیک‌ها...</div>
 
 <script>
-  const dirURL = 'https://hadidadkhodaei.ir/music/';
+  const jsonURL = 'https://hadidadkhodaei.ir/music/music-list.json';
   const musicList = document.getElementById('musicList');
   const audioElements = [];
 
@@ -131,28 +131,14 @@
   function extractFileName(url) {
     const parts = url.split('/');
     const file = parts[parts.length - 1];
-    return decodeURIComponent(file.replace(/\.mp3$/i, ''));
+    return decodeURIComponent(file.replace('.mp3', '').replace('.MP3', ''));
   }
 
-  // فقط فایل‌هایی که پسوند mp3 یا MP3 دارند
-  fetch(dirURL)
-    .then(res => res.text())
-    .then(async html => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const links = [...doc.querySelectorAll('a')];
-      const mp3Links = links
-        .map(a => a.getAttribute('href'))
-        .filter(href => href && href.match(/\.mp3$/i)); // فقط mp3 یا MP3
-
-      if (!mp3Links.length) {
-        musicList.innerHTML = 'هیچ فایل MP3 پیدا نشد';
-        return;
-      }
-
+  fetch(jsonURL)
+    .then(res => res.json())
+    .then(async files => {
       musicList.innerHTML = '';
-      for (const file of mp3Links) {
-        const fileUrl = dirURL + file;
+      for (const fileUrl of files) {
         const title = extractFileName(fileUrl);
         const rtl = isPersian(title);
 
