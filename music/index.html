@@ -1,21 +1,8 @@
-<?php
-// مسیر ریشه سایت
-$dir = $_SERVER['DOCUMENT_ROOT'];
-$files = scandir($dir);
-
-// فقط فایل‌های mp3/MP3
-$mp3Files = [];
-foreach ($files as $file) {
-    if (preg_match('/\.(mp3|MP3)$/', $file)) {
-        $mp3Files[] = "https://{$_SERVER['HTTP_HOST']}/$file";
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>پلیر موزیک از ریشه سایت</title>
+  <title>پلیر موزیک از فولدر</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     html, body {
@@ -117,7 +104,7 @@ foreach ($files as $file) {
 <div class="music-list" id="musicList">در حال بارگذاری موزیک‌ها...</div>
 
 <script>
-  const files = <?php echo json_encode($mp3Files); ?>;
+  const dirURL = 'https://hadidadkhodaei.ir/music/';
   const musicList = document.getElementById('musicList');
   const audioElements = [];
 
@@ -142,68 +129,91 @@ foreach ($files as $file) {
   }
 
   function extractFileName(url) {
-    const file = url.split('/').pop();
+    const parts = url.split('/');
+    const file = parts[parts.length - 1];
     return decodeURIComponent(file.replace(/\.mp3$/i, ''));
   }
 
-  async function render() {
-    musicList.innerHTML = '';
-    for (const fileUrl of files) {
-      const title = extractFileName(fileUrl);
-      const rtl = isPersian(title);
+  // گرفتن لیست mp3 ها از فولدر
+  fetch(dirURL)
+    .then(res => res.text())
+    .then(async html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const links = [...doc.querySelectorAll('a')];
+      const mp3Links = links
+        .map(a => a.getAttribute('href'))
+        .filter(href => href && href.match(/\.mp3$/i));
 
-      const item = document.createElement('div');
-      item.className = 'music-item';
-
-      const header = document.createElement('div');
-      header.className = 'music-header';
-
-      const titleBox = document.createElement('div');
-      titleBox.className = 'music-title-box ' + (rtl ? 'rtl' : 'ltr');
-      titleBox.textContent = title;
-
-      const ring = document.createElement('div');
-      ring.className = 'music-ring hidden-ring';
-
-      if (rtl) {
-        header.appendChild(titleBox);
-        header.appendChild(ring);
-      } else {
-        header.appendChild(ring);
-        header.appendChild(titleBox);
+      if (!mp3Links.length) {
+        musicList.innerHTML = 'هیچ فایل MP3 پیدا نشد';
+        return;
       }
 
-      const audio = document.createElement('audio');
-      audio.controls = true;
-      audio.innerHTML = `<source src="${fileUrl}" type="audio/mpeg">`;
+      musicList.innerHTML = '';
+      for (const file of mp3Links) {
+        const fileUrl = dirURL + file;
+        const title = extractFileName(fileUrl);
+        const rtl = isPersian(title);
 
-      const sizeDisplay = document.createElement('div');
-      sizeDisplay.className = 'file-size';
-      sizeDisplay.textContent = '';
+        const item = document.createElement('div');
+        item.className = 'music-item';
 
-      item.appendChild(header);
-      item.appendChild(audio);
-      item.appendChild(sizeDisplay);
-      musicList.appendChild(item);
+        const header = document.createElement('div');
+        header.className = 'music-header';
 
-      audioElements.push(audio);
+        const titleBox = document.createElement('div');
+        titleBox.className = 'music-title-box';
+        titleBox.textContent = title;
+        titleBox.classList.add(rtl ? 'rtl' : 'ltr');
 
-      audio.addEventListener('play', () => {
-        audioElements.forEach(a => { if (a !== audio) a.pause(); });
-        item.classList.add('active-shadow');
-        ring.classList.remove('hidden-ring');
-      });
+        const ring = document.createElement('div');
+        ring.className = 'music-ring hidden-ring';
 
-      audio.addEventListener('pause', () => {
-        item.classList.remove('active-shadow');
-        ring.classList.add('hidden-ring');
-      });
+        if (rtl) {
+          header.appendChild(titleBox);
+          header.appendChild(ring);
+        } else {
+          header.appendChild(ring);
+          header.appendChild(titleBox);
+        }
 
-      sizeDisplay.textContent = await getFileSize(fileUrl);
-    }
-  }
+        const audio = document.createElement('audio');
+        audio.controls = true;
+        audio.innerHTML = `<source src="${fileUrl}" type="audio/mpeg">`;
 
-  render();
+        const sizeDisplay = document.createElement('div');
+        sizeDisplay.className = 'file-size';
+        sizeDisplay.textContent = '';
+
+        item.appendChild(header);
+        item.appendChild(audio);
+        item.appendChild(sizeDisplay);
+        musicList.appendChild(item);
+
+        audioElements.push(audio);
+
+        audio.addEventListener('play', () => {
+          audioElements.forEach(a => {
+            if (a !== audio) a.pause();
+          });
+          item.classList.add('active-shadow');
+          ring.classList.remove('hidden-ring');
+        });
+
+        audio.addEventListener('pause', () => {
+          item.classList.remove('active-shadow');
+          ring.classList.add('hidden-ring');
+        });
+
+        const sizeText = await getFileSize(fileUrl);
+        sizeDisplay.textContent = sizeText;
+      }
+    })
+    .catch(err => {
+      musicList.innerHTML = 'خطا در دریافت لیست موزیک‌ها';
+      console.error(err);
+    });
 </script>
 
 </body>
