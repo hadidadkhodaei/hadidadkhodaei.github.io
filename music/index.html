@@ -101,7 +101,7 @@
 </head>
 <body>
 
-<div class="music-list" id="musicList">در حال بارگذاری موزیک‌ها...</div>
+<div class="music-list" id="musicList">در حال بارگذاری لیست موزیک‌ها...</div>
 
 <script>
   const jsonURL = 'https://hadidadkhodaei.ir/music/music-list.json';
@@ -197,7 +197,7 @@
       }
     })
     .catch(err => {
-      musicList.innerHTML = 'خطا در دریافت لیست موزیک‌ها';
+      musicList.innerHTML = '❌ خطا در بارگذاری لیست موزیک‌ها';
       console.error(err);
     });
 </script>
