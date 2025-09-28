@@ -2,7 +2,7 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>پلیر موزیک خودکار</title>
+  <title>پلیر موزیک از JSON</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     html, body {
@@ -104,8 +104,7 @@
 <div class="music-list" id="musicList">در حال بارگذاری موزیک‌ها...</div>
 
 <script>
-  const baseURL = 'https://hadidadkhodaei.ir/music/';
-  const listURL = baseURL + 'list.php';
+  const jsonURL = 'https://hadidadkhodaei.ir/music/music-list.json';
   const musicList = document.getElementById('musicList');
   const audioElements = [];
 
@@ -135,12 +134,11 @@
     return decodeURIComponent(file.replace('.mp3', '').replace('.MP3', ''));
   }
 
-  fetch(listURL)
+  fetch(jsonURL)
     .then(res => res.json())
     .then(async files => {
       musicList.innerHTML = '';
-      for (const file of files) {
-        const fileUrl = baseURL + file;
+      for (const fileUrl of files) {
         const title = extractFileName(fileUrl);
         const rtl = isPersian(title);
 
