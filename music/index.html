@@ -1,8 +1,21 @@
+<?php
+// مسیر ریشه سایت
+$dir = $_SERVER['DOCUMENT_ROOT'];
+$files = scandir($dir);
+
+// فقط فایل‌های mp3/MP3
+$mp3Files = [];
+foreach ($files as $file) {
+    if (preg_match('/\.(mp3|MP3)$/', $file)) {
+        $mp3Files[] = "https://{$_SERVER['HTTP_HOST']}/$file";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>پلیر موزیک از JSON</title>
+  <title>پلیر موزیک از ریشه سایت</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     html, body {
@@ -104,7 +117,7 @@
 <div class="music-list" id="musicList">در حال بارگذاری موزیک‌ها...</div>
 
 <script>
-  const jsonURL = 'https://hadidadkhodaei.ir/music/music-list.json';
+  const files = <?php echo json_encode($mp3Files); ?>;
   const musicList = document.getElementById('musicList');
   const audioElements = [];
 
@@ -129,77 +142,68 @@
   }
 
   function extractFileName(url) {
-    const parts = url.split('/');
-    const file = parts[parts.length - 1];
-    return decodeURIComponent(file.replace('.mp3', '').replace('.MP3', ''));
+    const file = url.split('/').pop();
+    return decodeURIComponent(file.replace(/\.mp3$/i, ''));
   }
 
-  fetch(jsonURL)
-    .then(res => res.json())
-    .then(async files => {
-      musicList.innerHTML = '';
-      for (const fileUrl of files) {
-        const title = extractFileName(fileUrl);
-        const rtl = isPersian(title);
+  async function render() {
+    musicList.innerHTML = '';
+    for (const fileUrl of files) {
+      const title = extractFileName(fileUrl);
+      const rtl = isPersian(title);
 
-        const item = document.createElement('div');
-        item.className = 'music-item';
+      const item = document.createElement('div');
+      item.className = 'music-item';
 
-        const header = document.createElement('div');
-        header.className = 'music-header';
+      const header = document.createElement('div');
+      header.className = 'music-header';
 
-        const titleBox = document.createElement('div');
-        titleBox.className = 'music-title-box';
-        titleBox.textContent = title;
-        titleBox.classList.add(rtl ? 'rtl' : 'ltr');
+      const titleBox = document.createElement('div');
+      titleBox.className = 'music-title-box ' + (rtl ? 'rtl' : 'ltr');
+      titleBox.textContent = title;
 
-        const ring = document.createElement('div');
-        ring.className = 'music-ring hidden-ring';
+      const ring = document.createElement('div');
+      ring.className = 'music-ring hidden-ring';
 
-        if (rtl) {
-          header.appendChild(titleBox);
-          header.appendChild(ring);
-        } else {
-          header.appendChild(ring);
-          header.appendChild(titleBox);
-        }
-
-        const audio = document.createElement('audio');
-        audio.controls = true;
-        audio.innerHTML = `<source src="${fileUrl}" type="audio/mpeg">`;
-
-        const sizeDisplay = document.createElement('div');
-        sizeDisplay.className = 'file-size';
-        sizeDisplay.textContent = '';
-
-        item.appendChild(header);
-        item.appendChild(audio);
-        item.appendChild(sizeDisplay);
-        musicList.appendChild(item);
-
-        audioElements.push(audio);
-
-        audio.addEventListener('play', () => {
-          audioElements.forEach(a => {
-            if (a !== audio) a.pause();
-          });
-          item.classList.add('active-shadow');
-          ring.classList.remove('hidden-ring');
-        });
-
-        audio.addEventListener('pause', () => {
-          item.classList.remove('active-shadow');
-          ring.classList.add('hidden-ring');
-        });
-
-        const sizeText = await getFileSize(fileUrl);
-        sizeDisplay.textContent = sizeText;
+      if (rtl) {
+        header.appendChild(titleBox);
+        header.appendChild(ring);
+      } else {
+        header.appendChild(ring);
+        header.appendChild(titleBox);
       }
-    })
-    .catch(err => {
-      musicList.innerHTML = 'خطا در دریافت لیست موزیک‌ها';
-      console.error(err);
-    });
+
+      const audio = document.createElement('audio');
+      audio.controls = true;
+      audio.innerHTML = `<source src="${fileUrl}" type="audio/mpeg">`;
+
+      const sizeDisplay = document.createElement('div');
+      sizeDisplay.className = 'file-size';
+      sizeDisplay.textContent = '';
+
+      item.appendChild(header);
+      item.appendChild(audio);
+      item.appendChild(sizeDisplay);
+      musicList.appendChild(item);
+
+      audioElements.push(audio);
+
+      audio.addEventListener('play', () => {
+        audioElements.forEach(a => { if (a !== audio) a.pause(); });
+        item.classList.add('active-shadow');
+        ring.classList.remove('hidden-ring');
+      });
+
+      audio.addEventListener('pause', () => {
+        item.classList.remove('active-shadow');
+        ring.classList.add('hidden-ring');
+      });
+
+      sizeDisplay.textContent = await getFileSize(fileUrl);
+    }
+  }
+
+  render();
 </script>
 
 </body>
