@@ -1,18 +1,6 @@
 [
-  {
-    "src": "https://hadidadkhodaei.ir/image/me.jpg",
-    "date": "عکس من"
-  },
-  {
-    "src": "https://hadidadkhodaei.ir/image/daneshgah.jpg",
-    "date": "دانشگاه"
-  },
-  {
-    "src": "https://hadidadkhodaei.ir/image/kafi.jpg",
-    "date": "کافی‌شاپ"
-  },
-  {
-    "src": "https://hadidadkhodaei.ir/image/1759865862000.jpg",
-    "date": "عکس آخر"
-  }
+  { "src": "https://hadidadkhodaei.ir/image/me.jpg" },
+  { "src": "https://hadidadkhodaei.ir/image/daneshgah.jpg" },
+  { "src": "https://hadidadkhodaei.ir/image/kafi.jpg" },
+  { "src": "https://hadidadkhodaei.ir/image/1759865862000.jpg" }
 ]
