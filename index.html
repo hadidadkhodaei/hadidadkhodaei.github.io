@@ -5,7 +5,229 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>هادی دادخدائی</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Vazirmatn', sans-serif;
+  background: linear-gradient(135deg,#f0f4f8,#dbeafe);
+  color: #333;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* هدر */
+header {
+  position: relative;
+  text-align: center;
+  padding: 25px 20px;
+  background: linear-gradient(135deg,#4F86F7,#1E3A8A);
+  color: white;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.25);
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  flex-shrink: 0;
+}
+
+header img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid white;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+header p {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* منوی همبرگر */
+.menu-line-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1002;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.menu-line-container.hidden {
+  opacity: 0;
+}
+
+.menu-line {
+  width: 30px;
+  height: 4px;
+  background: white;
+  margin: 6px 0;
+  border-radius: 2px;
+}
+
+/* منوی کناری */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  background: rgba(30,58,138,0.95);
+  color: white;
+  padding: 15px;
+  transform: translateY(-100%);
+  transition: transform 0.5s ease, box-shadow 0.4s ease;
+  overflow-y: auto;
+  z-index: 1000;
+  border-bottom-right-radius: 20px;
+  box-sizing: border-box;
+}
+
+.side-menu.open {
+  transform: translateY(0);
+  box-shadow: 4px 0 30px rgba(0,0,0,0.25);
+}
+
+.side-menu .menu-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.menu-label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.menu-close {
+  font-size: 28px;
+  font-weight: bold;
+  color: #FF6B6B;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.side-menu hr {
+  border: 1px solid rgba(255,255,255,0.5);
+  margin-bottom: 10px;
+}
+
+.side-menu h2, .side-menu h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.side-menu a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(5px);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.side-menu a:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateX(5px);
+}
+
+/* بخش‌ها */
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+section {
+  max-width: 900px;
+  margin: 15px auto;
+  padding: 15px 20px;
+  background: linear-gradient(145deg,#ffffff,#f0f4f8);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+  user-select: none;
+  min-height: 120px; /* کوتاه‌تر کردن ارتفاع */
+}
+
+section h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #1E3A8A;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+section p {
+  font-size: 1rem;
+  color: #555;
+  text-align: right;
+  margin: 0;
+}
+
+/* آیکون‌های راه‌های ارتباطی داخل کادر */
+.contact-icons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.contact-icons a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-icons a img {
+  width: 45px;
+  height: 45px;
+}
+
+.contact-icons a:hover {
+  transform: scale(1.2);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+/* فوتر */
+footer {
+  text-align: center;
+  padding: 12px;
+  background: linear-gradient(135deg,#1E3A8A,#4F86F7);
+  color: white;
+  font-weight: 500;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  flex-shrink: 0;
+}
+</style>
 </head>
 <body>
 
@@ -17,7 +239,7 @@
   </div>
   <img src="https://hadidadkhodaei.ir/image/1759865862000.jpg" alt="هادی دادخدائی">
   <h1>هادی دادخدائی</h1>
-  <p>دانشجوی مهندسی کامپیوتر</p>
+ <p>طراح وب و برنامه نویس</p>
 </header>
 
 <nav class="side-menu" id="sideMenu">
@@ -29,36 +251,51 @@
   <h2>گالری من</h2>
   <a href="https://hadidadkhodaei.ir/image" target="_blank">عکس</a>
   <a href="https://hadidadkhodaei.ir/music" target="_blank">موزیک</a>
-
   <hr>
-  <h3 style="color:white; text-align:center;">فیلترشکن رایگان</h3>
+  <h3>فیلترشکن رایگان</h3>
   <a href="https://Hadidadkhodaei.ir/v2rayNG" target="_blank">Config v2rayNG</a>
-
   <hr>
-  <h3 style="color:white; text-align:center;">راه‌های ارتباطی</h3>
+  <h3>راه‌های ارتباطی</h3>
   <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank">اینستاگرام</a>
   <a href="https://t.me/+989130487019" target="_blank">تلگرام</a>
   <a href="https://wa.me/989130487019" target="_blank">واتساپ</a>
   <a href="tel:+989130487019">تماس</a>
 </nav>
 
-<section id="about">
-  <h2>بیوگرافی</h2>
-  <p>سلام! من هادی دادخدائی هستم، 20 ساله و دانشجوی مهندسی کامپیوتر. علاقه‌مند به توسعه اندروید، امنیت و طراحی تجربه کاربری هستم.</p>
-</section>
+<div class="main-content">
+  <section id="about">
+    <h2>بیوگرافی</h2>
+    <p>سلام من هادی دادخدائی هستم 20 ساله و دانشجوی مهندسی کامپیوتر علاقه مند به توسعه اندروید امنیت و طراحی تجربه کاربری هستم<p>
+  </section>
 
-<section id="contact">
-  <h2>راه‌های ارتباطی</h2>
-  <div class="contact-icons">
-    <a href="https://wa.me/989130487019" target="_blank"><img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"></a>
-    <a href="https://t.me/Hadi_dadkhodaei" target="_blank"><img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png"></a>
-    <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank"><img src="https://img.icons8.com/color/48/000000/instagram-new--v1.png"></a>
-    <a href="tel:+989130487019"><img src="https://img.icons8.com/color/48/000000/phone.png"></a>
-  </div>
-</section>
+  <section id="contact">
+    <h2>راه‌های ارتباطی</h2>
+    <div class="contact-icons">
+      <a href="https://wa.me/989130487019" target="_blank"><img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"></a>
+      <a href="https://t.me/Hadi_dadkhodaei" target="_blank"><img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png"></a>
+      <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank"><img src="https://img.icons8.com/color/48/000000/instagram-new--v1.png"></a>
+      <a href="tel:+989130487019"><img src="https://img.icons8.com/color/48/000000/phone.png"></a>
+    </div>
+  </section>
+</div>
 
 <footer>© 2023 هادی دادخدائی</footer>
 
-<script src="script.js"></script>
+<script>
+const menuLineContainer = document.getElementById('menuLineContainer');
+const sideMenu = document.getElementById('sideMenu');
+const menuClose = document.getElementById('menuClose');
+
+menuLineContainer.addEventListener('click', () => {
+  sideMenu.classList.add('open');
+  menuLineContainer.classList.add('hidden'); 
+});
+
+menuClose.addEventListener('click', () => {
+  sideMenu.classList.remove('open');
+  menuLineContainer.classList.remove('hidden'); 
+});
+</script>
+
 </body>
 </html>
