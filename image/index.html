@@ -11,79 +11,105 @@ html, body {
   padding:0;
   width:100vw;
   height:100vh;
-  overflow:hidden;
   font-family: 'Vazir', sans-serif;
+  overflow:hidden;
+  background: radial-gradient(circle at center, #0a0a0a 0%, #111 100%);
   user-select: none;
-  background:#000;
-  transition: background 0.5s ease;
 }
 
+/* کادر اصلی */
 #lightbox {
   display: flex;
-  position: fixed;
-  top:0; left:0;
-  width:100%;
-  height:100%;
-  z-index: 9999;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  width:100%;
+  height:100%;
+  position: relative;
 }
 
-#lightbox img {
-  max-width: 90%;
-  max-height: 80vh;
-  border-radius: 15px;
-  position: absolute;
-  box-shadow: 0 0 80px 15px rgba(255,255,255,0.8); /* نور سفید دور عکس */
+/* تصویر */
+#lightbox img#imgEl {
+  max-width: 80%;
+  max-height: 70vh;
+  border-radius: 25px;
+  box-shadow: 0 0 60px 20px rgba(0,255,255,0.4), 0 0 80px 25px rgba(255,0,255,0.3);
+  transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
   opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
 }
 
-#lightbox img.active {
+#lightbox img#imgEl.active {
   opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 0 80px 30px rgba(0,255,255,0.5), 0 0 100px 40px rgba(255,0,255,0.4);
 }
 
-#controls {
-  position: fixed;
-  top: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 20px;
-  z-index: 100;
-}
-
-#controls span {
-  font-size: 45px;
-  cursor: pointer;
-  text-shadow: 0 0 10px #000;
-}
-
+/* ضربدر قرمز نئونی */
 #closeBtn {
-  color: #ff4f4f;
-  margin-right: 15px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  color: #ff4f4f; 
+  font-size: 36px;
+  font-weight: bold;
+  transition: transform 0.2s ease, text-shadow 0.2s ease;
+  text-shadow: 0 0 10px #ff4f4f;
 }
 
+#closeBtn:hover {
+  transform: scale(1.2);
+  text-shadow: 0 0 20px #ff4f4f, 0 0 40px #ff0000;
+}
+
+/* شماره‌گر زرد نئونی بالای صفحه سمت راست */
+#imageCount {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 18px;
+  color: #ffeb3b;
+  font-weight: bold;
+  background: rgba(0,0,0,0.3);
+  padding: 5px 10px;
+  border-radius: 8px;
+  user-select: none;
+  text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffeb3b;
+  transition: all 0.2s ease;
+}
+
+/* دکمه‌های مربع پایین با glow */
 .lightbox-buttons {
-  position: fixed;
-  bottom: 20px;
+  position: absolute;
+  bottom: 25px;
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 25px;
 }
 
 .lightbox-buttons span {
-  font-size: 45px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
   cursor: pointer;
-  padding: 15px 20px;
-  border-radius: 12px;
-  border: 3px solid;
+  border-radius: 15px;
+  border: 2px solid;
+  transition: all 0.2s ease, box-shadow 0.2s ease;
 }
 
-.prev { border-color: #3498db; color: #3498db; } /* عقب آبی */
-.download-btn { border-color: #00ff00; color: #00ff00; } /* دانلود سبز */
-.next { border-color: #3498db; color: #3498db; } /* جلو آبی */
+.prev { border-color: #00f0ff; color: #00f0ff; text-shadow: 0 0 15px #00f0ff; }
+.next { border-color: #00f0ff; color: #00f0ff; text-shadow: 0 0 15px #00f0ff; }
+.download-btn { border-color: #0fff5b; color: #0fff5b; text-shadow: 0 0 15px #0fff5b; }
+
+.lightbox-buttons span:hover:not(.disabled) {
+  box-shadow: 0 0 20px #fff, 0 0 40px currentColor, 0 0 60px currentColor;
+  transform: translateY(-5px) scale(1.1);
+}
 
 .lightbox-buttons span.disabled {
   opacity:0.3;
@@ -95,9 +121,13 @@ html, body {
 
 <div id="lightbox">
   <img id="imgEl" class="active">
-  <div id="controls">
-    <span id="closeBtn">&times;</span>
-  </div>
+  
+  <!-- ضربدر -->
+  <div id="closeBtn">&times;</div>
+  
+  <!-- شماره‌گر -->
+  <span id="imageCount">0</span>
+
   <div class="lightbox-buttons">
     <span class="prev" onclick="changeImage(-1)">&#10094;</span>
     <span class="download-btn" onclick="downloadCurrentImage()">&#8681;</span>
@@ -113,8 +143,10 @@ const prevBtn = document.querySelector('.prev');
 const nextBtn = document.querySelector('.next');
 const downloadBtn = document.querySelector('.download-btn');
 const closeBtn = document.getElementById('closeBtn');
+const imageCount = document.getElementById('imageCount');
 
-closeBtn.onclick = () => window.location.href = "https://hadidadkhodaei.ir";
+// ضربدر
+closeBtn.onclick = () => window.history.back();
 
 function setBackgroundColor(src){
   const img = new Image();
@@ -122,28 +154,33 @@ function setBackgroundColor(src){
   img.src = src;
   img.onload = () => {
     const canvas = document.createElement('canvas');
-    canvas.width = 1;
-    canvas.height = 1;
+    canvas.width = 1; canvas.height = 1;
     const ctx = canvas.getContext('2d');
     ctx.drawImage(img,0,0,1,1);
     const data = ctx.getImageData(0,0,1,1).data;
-    document.body.style.background = `rgba(${data[0]},${data[1]},${data[2]},0.8)`; // رنگ از عکس
+    document.body.style.background = `radial-gradient(circle at center, rgba(${data[0]},${data[1]},${data[2]},0.3) 0%, #0a0a0a 100%)`;
   }
 }
 
-function updateButtons(){
-  prevBtn.classList.toggle('disabled', currentIndex===0);
-  nextBtn.classList.toggle('disabled', currentIndex===images.length-1);
+// بروزرسانی شماره‌گر و دکمه‌ها
+function updateUI(){
+  imageCount.textContent = `${currentIndex + 1} / ${images.length}`;
+  prevBtn.classList.toggle('disabled', currentIndex === 0);
+  nextBtn.classList.toggle('disabled', currentIndex === images.length - 1);
 }
 
+// تغییر تصویر سریع و بدون باگ
 function changeImage(dir){
   const nextIndex = currentIndex + dir;
   if(nextIndex < 0 || nextIndex >= images.length) return;
+
   currentIndex = nextIndex;
+  imgEl.classList.remove('active');
+  void imgEl.offsetWidth; // force reflow برای انیمیشن smooth
   imgEl.src = images[currentIndex];
   imgEl.classList.add('active');
   setBackgroundColor(images[currentIndex]);
-  updateButtons();
+  updateUI();
 }
 
 function downloadCurrentImage(){
@@ -155,16 +192,16 @@ function downloadCurrentImage(){
   document.body.removeChild(link);
 }
 
-// بارگذاری عکس‌ها از فایل JSON
+// بارگذاری تصاویر
 fetch("images.json")
   .then(response => response.json())
   .then(data => {
-    images = data.map(item => item.src); // JSON به شکل [{ "src": "url1" }, { "src": "url2" }, ...]
+    images = data.map(item => item.src);
     if(images.length>0){
       imgEl.src = images[0];
       imgEl.classList.add('active');
       setBackgroundColor(images[0]);
-      updateButtons();
+      updateUI();
     }
   })
   .catch(err => console.error("خطا در بارگذاری عکس‌ها:", err));
