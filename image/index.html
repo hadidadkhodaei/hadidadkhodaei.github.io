@@ -14,7 +14,8 @@ html, body {
   overflow:hidden;
   font-family: 'Vazir', sans-serif;
   user-select: none;
-  background: #000;
+  background:#000;
+  transition: background 0.5s ease;
 }
 
 #lightbox {
@@ -26,7 +27,6 @@ html, body {
   z-index: 9999;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   overflow: hidden;
 }
 
@@ -34,9 +34,13 @@ html, body {
   max-width: 90%;
   max-height: 80vh;
   border-radius: 15px;
-  pointer-events: none;
-  box-shadow: 0 0 20px #fff;
   position: absolute;
+  box-shadow: 0 0 50px #ffffff;
+  opacity: 0;
+}
+
+#lightbox img.active {
+  opacity: 1;
 }
 
 #controls {
@@ -49,73 +53,48 @@ html, body {
   z-index: 100;
 }
 
-#closeBtn {
+#controls span {
   font-size: 45px;
-  color: #ff4f4f;
-  font-weight: bold;
   cursor: pointer;
+  text-shadow: 0 0 10px #000;
+}
+
+#closeBtn {
+  color: #ff4f4f;
+  margin-right: 15px;
 }
 
 .lightbox-buttons {
   position: fixed;
-  bottom: 30px;
+  bottom: 20px;
+  width: 100%;
   display: flex;
   justify-content: center;
-  gap: 20px;
-  width: 100%;
-  pointer-events: auto;
+  gap: 12px;
 }
 
 .lightbox-buttons span {
-  font-size: 40px;
+  font-size: 45px;
   cursor: pointer;
-  padding: 15px 25px;
-  border-radius: 10px;
-  font-weight: bold;
-  color: white;
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: 3px solid;
 }
 
-.prev { background: linear-gradient(to bottom, #009900, #ffffff); } /* سبز به سفید */
-.download-btn { background: linear-gradient(to bottom, #ffffff, #ff0000); } /* سفید به قرمز */
-.next { background: linear-gradient(to bottom, #009900, #ffffff, #ff0000); } /* سبز-سفید-قرمز */
+.prev { border-color: #239f40; color: #239f40; }
+.download-btn { border-color: #fff; color: #00ff00; }
+.next { border-color: #d70000; color: #d70000; }
 
-#gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  gap: 20px;
-  overflow-y: auto;
-  height: 100vh;
-}
-
-.photo {
-  position: relative;
-  cursor: pointer;
-  border-radius: 15px;
-  box-shadow: 0 0 20px #fff;
-  transition: transform 0.2s ease;
-}
-
-.photo img {
-  width: 200px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 15px;
-}
-
-.photo:hover {
-  transform: scale(1.05);
+.lightbox-buttons span.disabled {
+  opacity:0.3;
+  pointer-events:none;
 }
 </style>
 </head>
 <body>
 
-<div id="gallery"></div>
-
 <div id="lightbox">
-  <img id="lightbox-img" src="">
+  <img id="imgEl" class="active">
   <div id="controls">
     <span id="closeBtn">&times;</span>
   </div>
@@ -129,69 +108,17 @@ html, body {
 <script>
 let images = [];
 let currentIndex = 0;
+const imgEl = document.getElementById("imgEl");
+const prevBtn = document.querySelector('.prev');
+const nextBtn = document.querySelector('.next');
+const downloadBtn = document.querySelector('.download-btn');
+const closeBtn = document.getElementById('closeBtn');
 
-const gallery = document.getElementById("gallery");
-const lightbox = document.getElementById("lightbox");
-const lightboxImg = document.getElementById("lightbox-img");
-const closeBtn = document.getElementById("closeBtn");
+closeBtn.onclick = () => window.location.href = "https://hadidadkhodaei.ir";
 
-fetch('images.json')
-  .then(res => res.json())
-  .then(data => {
-    images = data;
-    images.forEach((img, idx) => {
-      const div = document.createElement('div');
-      div.classList.add('photo');
-      const imageEl = document.createElement('img');
-      imageEl.src = img.src;
-      div.appendChild(imageEl);
-      div.onclick = () => openLightbox(idx);
-      gallery.appendChild(div);
-    });
-  });
-
-function openLightbox(index) {
-  currentIndex = index;
-  lightbox.style.display = "flex";
-  lightboxImg.src = images[currentIndex].src;
-  setBackgroundColor(images[currentIndex].src);
-  document.body.style.overflow = "hidden";
-  updateButtons();
-}
-
-function closeLightbox() {
-  lightbox.style.display = "none";
-  document.body.style.overflow = "auto";
-}
-
-closeBtn.onclick = closeLightbox;
-
-function changeImage(dir) {
-  let next = currentIndex + dir;
-  if(next<0 || next>=images.length) return;
-  currentIndex = next;
-  lightboxImg.src = images[currentIndex].src;
-  setBackgroundColor(images[currentIndex].src);
-  updateButtons();
-}
-
-function updateButtons() {
-  document.querySelector('.prev').style.opacity = currentIndex===0?0.3:1;
-  document.querySelector('.next').style.opacity = currentIndex===images.length-1?0.3:1;
-}
-
-function downloadCurrentImage() {
-  const link = document.createElement('a');
-  link.href = images[currentIndex].src;
-  link.download = `image_${currentIndex+1}.jpg`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
-// تعیین رنگ بکگراند از عکس
 function setBackgroundColor(src){
   const img = new Image();
+  img.crossOrigin = "Anonymous";
   img.src = src;
   img.onload = () => {
     const canvas = document.createElement('canvas');
@@ -199,9 +126,46 @@ function setBackgroundColor(src){
     const ctx = canvas.getContext('2d');
     ctx.drawImage(img,0,0,1,1);
     const data = ctx.getImageData(0,0,1,1).data;
-    document.body.style.background = `rgba(${data[0]},${data[1]},${data[2]},0.4)`;
+    document.body.style.background = `rgba(${data[0]},${data[1]},${data[2]},0.5)`;
   }
 }
+
+function updateButtons(){
+  prevBtn.classList.toggle('disabled', currentIndex===0);
+  nextBtn.classList.toggle('disabled', currentIndex===images.length-1);
+}
+
+function changeImage(dir){
+  const nextIndex = currentIndex + dir;
+  if(nextIndex < 0 || nextIndex >= images.length) return;
+  currentIndex = nextIndex;
+  imgEl.src = images[currentIndex];
+  imgEl.classList.add('active');
+  setBackgroundColor(images[currentIndex]);
+  updateButtons();
+}
+
+function downloadCurrentImage(){
+  const link = document.createElement('a');
+  link.href = images[currentIndex];
+  link.download = `image_${currentIndex+1}.jpg`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// بارگذاری عکس‌ها از فایل JSON
+fetch("images.json")
+  .then(response => response.json())
+  .then(data => {
+    images = data.map(item => item.src); // فرض بر اینه که JSON به شکل [{ "src": "url1" }, { "src": "url2" }, ...]
+    if(images.length>0){
+      imgEl.src = images[0];
+      setBackgroundColor(images[0]);
+      updateButtons();
+    }
+  })
+  .catch(err => console.error("خطا در بارگذاری عکس‌ها:", err));
 </script>
 
 </body>
