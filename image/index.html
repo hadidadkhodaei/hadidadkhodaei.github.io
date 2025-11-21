@@ -2,8 +2,8 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>گالری عکس هادی دادخدائی</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>عکس هادی دادخدایی<title>
 <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
 <style>
 html, body {
@@ -13,8 +13,14 @@ html, body {
   height:100vh;
   font-family: 'Vazir', sans-serif;
   overflow:hidden;
-  background: radial-gradient(circle at center, #0a0a0a 0%, #111 100%);
-  user-select: none;
+  background: linear-gradient(135deg, #1a1a2e, #162447);
+  user-select: none; 
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  touch-action: manipulation; 
 }
 
 /* کادر اصلی */
@@ -22,98 +28,113 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 10px;
 }
 
-/* تصویر */
+/* تصویر با سایز واقعی همیشه وسط */
 #lightbox img#imgEl {
-  max-width: 80%;
-  max-height: 70vh;
-  border-radius: 25px;
-  box-shadow: 0 0 60px 20px rgba(0,255,255,0.4), 0 0 80px 25px rgba(255,0,255,0.3);
+  display: block;
+  max-width: 90%;
+  max-height: 65%; /* نسبت مناسب برای موبایل */
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(0,255,255,0.2), 0 0 80px rgba(255,0,255,0.15);
   transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
   opacity: 0;
   transform: scale(0.95);
+  object-fit: contain;
   pointer-events: none;
+  margin: auto; /* همیشه وسط */
 }
 
 #lightbox img#imgEl.active {
   opacity: 1;
   transform: scale(1);
-  box-shadow: 0 0 80px 30px rgba(0,255,255,0.5), 0 0 100px 40px rgba(255,0,255,0.4);
+  box-shadow: 0 0 60px rgba(0,255,255,0.4), 0 0 100px rgba(255,0,255,0.3);
 }
 
-/* ضربدر قرمز نئونی */
-#closeBtn {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  cursor: pointer;
-  color: #ff4f4f; 
-  font-size: 36px;
-  font-weight: bold;
-  transition: transform 0.2s ease, text-shadow 0.2s ease;
-  text-shadow: 0 0 10px #ff4f4f;
-}
-
-#closeBtn:hover {
-  transform: scale(1.2);
-  text-shadow: 0 0 20px #ff4f4f, 0 0 40px #ff0000;
-}
-
-/* شماره‌گر زرد نئونی بالای صفحه سمت راست */
+/* شماره‌گر زرد بالای صفحه سمت راست */
 #imageCount {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 18px;
-  color: #ffeb3b;
+  top: 10px;
+  right: 10px;
+  font-size: 16px;
+  color: #ffe066;
   font-weight: bold;
   background: rgba(0,0,0,0.3);
-  padding: 5px 10px;
+  padding: 4px 8px;
   border-radius: 8px;
+  text-shadow: 0 0 5px #ffe066;
   user-select: none;
-  text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffeb3b;
-  transition: all 0.2s ease;
+  z-index: 10;
 }
 
-/* دکمه‌های مربع پایین با glow */
+/* دکمه‌های مربع پایین با رنگ‌های ملایم و glow */
 .lightbox-buttons {
   position: absolute;
-  bottom: 25px;
+  bottom: 60px; /* فاصله از پایین تا داخل صفحه باشد */
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 25px;
+  gap: 20px;
+  z-index: 10;
 }
 
 .lightbox-buttons span {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 30px;
   cursor: pointer;
   border-radius: 15px;
   border: 2px solid;
   transition: all 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.prev { border-color: #00f0ff; color: #00f0ff; text-shadow: 0 0 15px #00f0ff; }
-.next { border-color: #00f0ff; color: #00f0ff; text-shadow: 0 0 15px #00f0ff; }
-.download-btn { border-color: #0fff5b; color: #0fff5b; text-shadow: 0 0 15px #0fff5b; }
+.prev { border-color: #6dd5ed; color: #6dd5ed; text-shadow: 0 0 10px #6dd5ed; }
+.next { border-color: #6dd5ed; color: #6dd5ed; text-shadow: 0 0 10px #6dd5ed; }
+.download-btn { border-color: #a8ff78; color: #a8ff78; text-shadow: 0 0 10px #a8ff78; }
 
 .lightbox-buttons span:hover:not(.disabled) {
   box-shadow: 0 0 20px #fff, 0 0 40px currentColor, 0 0 60px currentColor;
-  transform: translateY(-5px) scale(1.1);
+  transform: translateY(-4px) scale(1.05);
 }
 
 .lightbox-buttons span.disabled {
   opacity:0.3;
   pointer-events:none;
+}
+
+/* responsive برای موبایل و تبلت */
+@media (max-height: 700px) {
+  #lightbox img#imgEl {
+    max-height: 55%;
+  }
+  .lightbox-buttons {
+    bottom: 40px;
+  }
+}
+
+@media (max-width: 400px) {
+  #lightbox img#imgEl {
+    max-height: 50%;
+  }
+  .lightbox-buttons span {
+    width: 60px;
+    height: 60px;
+    font-size: 26px;
+  }
+  .lightbox-buttons {
+    bottom: 35px;
+  }
 }
 </style>
 </head>
@@ -121,10 +142,7 @@ html, body {
 
 <div id="lightbox">
   <img id="imgEl" class="active">
-  
-  <!-- ضربدر -->
-  <div id="closeBtn">&times;</div>
-  
+
   <!-- شماره‌گر -->
   <span id="imageCount">0</span>
 
@@ -142,11 +160,7 @@ const imgEl = document.getElementById("imgEl");
 const prevBtn = document.querySelector('.prev');
 const nextBtn = document.querySelector('.next');
 const downloadBtn = document.querySelector('.download-btn');
-const closeBtn = document.getElementById('closeBtn');
 const imageCount = document.getElementById('imageCount');
-
-// ضربدر
-closeBtn.onclick = () => window.history.back();
 
 function setBackgroundColor(src){
   const img = new Image();
@@ -158,25 +172,23 @@ function setBackgroundColor(src){
     const ctx = canvas.getContext('2d');
     ctx.drawImage(img,0,0,1,1);
     const data = ctx.getImageData(0,0,1,1).data;
-    document.body.style.background = `radial-gradient(circle at center, rgba(${data[0]},${data[1]},${data[2]},0.3) 0%, #0a0a0a 100%)`;
+    document.body.style.background = `radial-gradient(circle at center, rgba(${data[0]},${data[1]},${data[2]},0.2) 0%, #1a1a2e 100%)`;
   }
 }
 
-// بروزرسانی شماره‌گر و دکمه‌ها
 function updateUI(){
   imageCount.textContent = `${currentIndex + 1} / ${images.length}`;
   prevBtn.classList.toggle('disabled', currentIndex === 0);
   nextBtn.classList.toggle('disabled', currentIndex === images.length - 1);
 }
 
-// تغییر تصویر سریع و بدون باگ
 function changeImage(dir){
   const nextIndex = currentIndex + dir;
   if(nextIndex < 0 || nextIndex >= images.length) return;
 
   currentIndex = nextIndex;
   imgEl.classList.remove('active');
-  void imgEl.offsetWidth; // force reflow برای انیمیشن smooth
+  void imgEl.offsetWidth;
   imgEl.src = images[currentIndex];
   imgEl.classList.add('active');
   setBackgroundColor(images[currentIndex]);
