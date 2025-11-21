@@ -35,7 +35,7 @@ html, body {
   max-height: 80vh;
   border-radius: 15px;
   position: absolute;
-  box-shadow: 0 0 50px #ffffff;
+  box-shadow: 0 0 80px 15px rgba(255,255,255,0.8); /* نور سفید دور عکس */
   opacity: 0;
 }
 
@@ -81,9 +81,9 @@ html, body {
   border: 3px solid;
 }
 
-.prev { border-color: #239f40; color: #239f40; }
-.download-btn { border-color: #fff; color: #00ff00; }
-.next { border-color: #d70000; color: #d70000; }
+.prev { border-color: #3498db; color: #3498db; } /* عقب آبی */
+.download-btn { border-color: #00ff00; color: #00ff00; } /* دانلود سبز */
+.next { border-color: #3498db; color: #3498db; } /* جلو آبی */
 
 .lightbox-buttons span.disabled {
   opacity:0.3;
@@ -122,11 +122,12 @@ function setBackgroundColor(src){
   img.src = src;
   img.onload = () => {
     const canvas = document.createElement('canvas');
-    canvas.width = 1; canvas.height = 1;
+    canvas.width = 1;
+    canvas.height = 1;
     const ctx = canvas.getContext('2d');
     ctx.drawImage(img,0,0,1,1);
     const data = ctx.getImageData(0,0,1,1).data;
-    document.body.style.background = `rgba(${data[0]},${data[1]},${data[2]},0.5)`;
+    document.body.style.background = `rgba(${data[0]},${data[1]},${data[2]},0.8)`; // رنگ از عکس
   }
 }
 
@@ -158,9 +159,10 @@ function downloadCurrentImage(){
 fetch("images.json")
   .then(response => response.json())
   .then(data => {
-    images = data.map(item => item.src); // فرض بر اینه که JSON به شکل [{ "src": "url1" }, { "src": "url2" }, ...]
+    images = data.map(item => item.src); // JSON به شکل [{ "src": "url1" }, { "src": "url2" }, ...]
     if(images.length>0){
       imgEl.src = images[0];
+      imgEl.classList.add('active');
       setBackgroundColor(images[0]);
       updateButtons();
     }
