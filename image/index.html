@@ -1,239 +1,207 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>گالری عکس هادی دادخدائی</title>
-  <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Vazir', sans-serif;
-      background: linear-gradient(135deg, #e0eafc, #cfdef3);
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>گالری عکس هادی دادخدائی</title>
+<link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+<style>
+html, body {
+  margin:0;
+  padding:0;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  font-family: 'Vazir', sans-serif;
+  user-select: none;
+  background: #000;
+}
 
-    .photo-gallery-title {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 25px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(12px);
-      color: #333;
-      font-size: 2.2rem;
-      text-align: center;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-      position: relative;
-      font-style: italic;
-      border: 1px solid rgba(255,255,255,0.4);
-    }
-    .photo-gallery-title::before {
-      content: "❝";
-      font-size: 3rem;
-      position: absolute;
-      top: -15px;
-      left: 20px;
-      opacity: 0.3;
-    }
-    .photo-gallery-title::after {
-      content: "❞";
-      font-size: 3rem;
-      position: absolute;
-      bottom: -15px;
-      right: 20px;
-      opacity: 0.3;
-    }
+#lightbox {
+  display: flex;
+  position: fixed;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
 
-    .photo-gallery {
-      padding: 20px;
-    }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-    }
-    .photo {
-      position: relative;
-      overflow: hidden;
-      border-radius: 20px;
-      cursor: pointer;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      animation: fadeInUp 0.7s ease;
-    }
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .photo:hover {
-      transform: scale(1.03);
-      box-shadow: 0 14px 30px rgba(0,0,0,0.3);
-    }
-    .photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      border-radius: 20px;
-    }
-    .photo-caption {
-      text-align: center;
-      padding-top: 8px;
-      font-size: 16px;
-      color: #444;
-    }
+#lightbox img {
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 15px;
+  pointer-events: none;
+  box-shadow: 0 0 20px #fff;
+  position: absolute;
+}
 
-    #lightbox {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 9999;
-    }
-    .lightbox-overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-    }
-    .lightbox-content {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-    }
-    #lightbox img {
-      width: auto;
-      height: auto;
-      max-width: 90%;
-      max-height: 80vh;
-      border-radius: 15px;
-      transition: transform 0.4s ease;
-    }
-    #lightbox.show img {
-      transform: scale(1.05);
-    }
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 40px;
-      color: #ff3b3b;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .lightbox-caption {
-      position: absolute;
-      bottom: 20px;
-      color: white;
-      font-size: 18px;
-      text-shadow: 0 0 5px black;
-    }
-    .prev, .next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 40px;
-      color: white;
-      padding: 15px;
-      cursor: pointer;
-      background: rgba(0,0,0,0.4);
-      border-radius: 50%;
-    }
-    .prev {left: 20px;}
-    .next {right: 20px;}
-  </style>
+#controls {
+  position: fixed;
+  top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px;
+  z-index: 100;
+}
+
+#closeBtn {
+  font-size: 45px;
+  color: #ff4f4f;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.lightbox-buttons {
+  position: fixed;
+  bottom: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  pointer-events: auto;
+}
+
+.lightbox-buttons span {
+  font-size: 40px;
+  cursor: pointer;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+}
+
+.prev { background: linear-gradient(to bottom, #009900, #ffffff); } /* سبز به سفید */
+.download-btn { background: linear-gradient(to bottom, #ffffff, #ff0000); } /* سفید به قرمز */
+.next { background: linear-gradient(to bottom, #009900, #ffffff, #ff0000); } /* سبز-سفید-قرمز */
+
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.photo {
+  position: relative;
+  cursor: pointer;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #fff;
+  transition: transform 0.2s ease;
+}
+
+.photo img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.photo:hover {
+  transform: scale(1.05);
+}
+</style>
 </head>
 <body>
 
-<section class="photo-gallery">
-  <div class="photo-gallery-title">گالری هادی دادخدائی</div>
-  <div class="gallery" id="gallery"></div>
-</section>
+<div id="gallery"></div>
 
 <div id="lightbox">
-  <div class="lightbox-overlay"></div>
-  <div class="lightbox-content">
-    <span class="close" onclick="closeLightbox()">&times;</span>
-    <img id="lightbox-img" src="" alt="">
-    <div class="lightbox-caption" id="lightbox-caption"></div>
+  <img id="lightbox-img" src="">
+  <div id="controls">
+    <span id="closeBtn">&times;</span>
+  </div>
+  <div class="lightbox-buttons">
     <span class="prev" onclick="changeImage(-1)">&#10094;</span>
+    <span class="download-btn" onclick="downloadCurrentImage()">&#8681;</span>
     <span class="next" onclick="changeImage(1)">&#10095;</span>
   </div>
 </div>
 
 <script>
 let images = [];
-let currentImageIndex = 0;
+let currentIndex = 0;
+
+const gallery = document.getElementById("gallery");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const closeBtn = document.getElementById("closeBtn");
+
+fetch('images.json')
+  .then(res => res.json())
+  .then(data => {
+    images = data;
+    images.forEach((img, idx) => {
+      const div = document.createElement('div');
+      div.classList.add('photo');
+      const imageEl = document.createElement('img');
+      imageEl.src = img.src;
+      div.appendChild(imageEl);
+      div.onclick = () => openLightbox(idx);
+      gallery.appendChild(div);
+    });
+  });
 
 function openLightbox(index) {
-  document.getElementById("lightbox").style.display = "flex";
-  document.getElementById("lightbox").classList.add("show");
-  currentImageIndex = index;
-  updateLightbox();
-  document.body.style.overflow = "hidden"; 
+  currentIndex = index;
+  lightbox.style.display = "flex";
+  lightboxImg.src = images[currentIndex].src;
+  setBackgroundColor(images[currentIndex].src);
+  document.body.style.overflow = "hidden";
+  updateButtons();
 }
 
 function closeLightbox() {
-  document.getElementById("lightbox").style.display = "none";
-  document.getElementById("lightbox").classList.remove("show");
+  lightbox.style.display = "none";
   document.body.style.overflow = "auto";
 }
 
-function changeImage(direction) {
-  let nextIndex = currentImageIndex + direction;
-  if (nextIndex < 0 || nextIndex >= images.length) return;
-  currentImageIndex = nextIndex;
-  updateLightbox();
+closeBtn.onclick = closeLightbox;
+
+function changeImage(dir) {
+  let next = currentIndex + dir;
+  if(next<0 || next>=images.length) return;
+  currentIndex = next;
+  lightboxImg.src = images[currentIndex].src;
+  setBackgroundColor(images[currentIndex].src);
+  updateButtons();
 }
 
-function updateLightbox() {
-  document.getElementById("lightbox-img").src = images[currentImageIndex].src;
-  document.getElementById("lightbox-caption").innerText = images[currentImageIndex].date;
-  document.querySelector(".prev").style.display = (currentImageIndex === 0) ? "none" : "block";
-  document.querySelector(".next").style.display = (currentImageIndex === images.length - 1) ? "none" : "block";
+function updateButtons() {
+  document.querySelector('.prev').style.opacity = currentIndex===0?0.3:1;
+  document.querySelector('.next').style.opacity = currentIndex===images.length-1?0.3:1;
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  fetch("images.json")
-    .then(response => response.json())
-    .then(data => {
-      const gallery = document.getElementById("gallery");
-      images = data;
+function downloadCurrentImage() {
+  const link = document.createElement('a');
+  link.href = images[currentIndex].src;
+  link.download = `image_${currentIndex+1}.jpg`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
-      data.forEach((item, index) => {
-        const photoDiv = document.createElement("div");
-        photoDiv.classList.add("photo");
-
-        const img = document.createElement("img");
-        img.src = item.src;
-        img.alt = "تصویر " + (index + 1);
-        img.loading = "lazy";
-        photoDiv.appendChild(img);
-
-        const caption = document.createElement("div");
-        caption.classList.add("photo-caption");
-        caption.innerText = item.date;
-        photoDiv.appendChild(caption);
-
-        photoDiv.onclick = () => openLightbox(index);
-
-        gallery.appendChild(photoDiv);
-      });
-    })
-    .catch(err => console.error("خطا در بارگذاری عکس‌ها:", err));
-});
+// تعیین رنگ بکگراند از عکس
+function setBackgroundColor(src){
+  const img = new Image();
+  img.src = src;
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1; canvas.height = 1;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img,0,0,1,1);
+    const data = ctx.getImageData(0,0,1,1).data;
+    document.body.style.background = `rgba(${data[0]},${data[1]},${data[2]},0.4)`;
+  }
+}
 </script>
 
 </body>
