@@ -5,57 +5,68 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>هادی دادخدائی</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+<meta name="description" content="سلام من هادی دادخدائی هستم 20 ساله از رودبارجنوب دانشجوی مهندسی کامپیوتر">
+
 <style>
 html, body {
   margin: 0;
   padding: 0;
   font-family: 'Vazirmatn', sans-serif;
-  background: linear-gradient(135deg,#f0f4f8,#dbeafe);
-  color: #333;
-  font-size: 16px;
-  line-height: 1.6;
+  background: #e0f0ff;
   overflow: hidden;
   width: 100%;
   height: 100%;
-  user-select: none;
   display: flex;
   flex-direction: column;
+  user-select: none;
+  touch-action: none;
 }
 
 /* هدر */
 header {
   position: relative;
   text-align: center;
-  padding: 25px 20px;
+  padding: 30px 20px;
   background: linear-gradient(135deg,#4F86F7,#1E3A8A);
   color: white;
-  box-shadow: 0 6px 30px rgba(0,0,0,0.25);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.25);
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
-  flex-shrink: 0;
+  perspective: 1200px;
 }
 
+/* نور پشت عکس پروفایل */
+header .profile-light {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(255,215,0,0.5) 0%, transparent 60%);
+  border-radius: 50%;
+  z-index: 0; /* پشت عکس پروفایل */
+  filter: blur(20px);
+}
+
+/* عکس پروفایل */
 header img {
+  position: relative;
+  z-index: 1; /* روی نور */
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  border: 4px solid white;
+  border: 4px solid #FFD700;
   object-fit: cover;
   margin-bottom: 10px;
+  box-shadow: 0 0 30px rgba(255,215,0,0.7);
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-header h1 {
-  font-size: 2rem;
-  margin-bottom: 5px;
-  font-weight: 700;
-}
-
-header p {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 500;
-  opacity: 0.9;
-}
+/* نام و توضیحات */
+header h1 { margin: 0; font-size: 2rem; font-weight: 700; text-shadow: 1px 1px 8px rgba(0,0,0,0.25); }
+header p { margin: 5px 0 0; font-size: 1.1rem; font-weight: 500; opacity: 0.9; }
 
 /* منوی همبرگر */
 .menu-line-container {
@@ -64,20 +75,29 @@ header p {
   left: 20px;
   z-index: 1002;
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
+  animation: bounce 2s infinite;
 }
+@keyframes bounce { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-3px) rotate(2deg); } }
+.menu-line { width: 35px; height: 5px; background: white; margin: 6px 0; border-radius: 3px; box-shadow: 0 3px 5px rgba(0,0,0,0.3); transition: all 0.3s ease; }
+.menu-line:hover { transform: scale(1.1) rotateY(5deg); }
 
-.menu-line-container.hidden {
-  opacity: 0;
+/* نقطه زرد چشمک زن کنار خط اول */
+.menu-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background-color: #FFFF00;
+  border-radius: 50%;
+  animation: blink 1s infinite;
 }
+@keyframes blink { 0%,50%,100% { opacity:1; } 25%,75% { opacity:0; } }
 
-.menu-line {
-  width: 30px;
-  height: 4px;
-  background: white;
-  margin: 6px 0;
-  border-radius: 2px;
-}
+/* مخفی کردن خطوط و نقطه هنگام باز بودن منو */
+.menu-line-container.hidden .menu-line,
+.menu-line-container.hidden .menu-dot { opacity: 0; transform: translateX(-20px); }
 
 /* منوی کناری */
 .side-menu {
@@ -88,166 +108,71 @@ header p {
   height: 100%;
   background: rgba(30,58,138,0.95);
   color: white;
-  padding: 15px;
-  transform: translateY(-100%);
-  transition: transform 0.5s ease, box-shadow 0.4s ease;
+  padding: 20px;
+  transform: translateY(-110%);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   overflow-y: auto;
   z-index: 1000;
   border-bottom-right-radius: 20px;
-  box-sizing: border-box;
-}
-
-.side-menu.open {
-  transform: translateY(0);
-  box-shadow: 4px 0 30px rgba(0,0,0,0.25);
-}
-
-.side-menu .menu-header {
+  backdrop-filter: blur(6px);
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
+  will-change: transform;
 }
+.side-menu.open { transform: translateY(0); }
 
-.menu-label {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-right: 5px;
-}
+/* هدر منو */
+.side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.side-menu-header span { font-weight: bold; font-size: 1.2rem; }
+.menu-close { font-size: 28px; font-weight: bold; cursor: pointer; color: red; }
 
-.menu-close {
-  font-size: 28px;
-  font-weight: bold;
-  color: #FF6B6B;
-  cursor: pointer;
-  margin-left: auto;
-}
+/* خطوط جداکننده داخل منو */
+.side-menu hr { border: 1px solid rgba(255,255,255,0.3); margin: 10px 0; }
 
-.side-menu hr {
-  border: 1px solid rgba(255,255,255,0.5);
-  margin-bottom: 10px;
-}
-
-.side-menu h2, .side-menu h3 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin: 10px 0;
-  text-align: center;
-}
-
-.side-menu a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 0;
-  padding: 12px;
-  color: white;
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(5px);
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.side-menu a:hover {
-  background: rgba(255,255,255,0.3);
-  transform: translateX(5px);
-}
+/* آیتم‌های منو */
+.side-menu h2, .side-menu h3 { text-align: center; margin: 12px 0; font-weight: bold; }
+.side-menu a { display: flex; align-items: center; justify-content: center; margin: 8px 0; padding: 12px; color: white; text-decoration: none; font-weight: 600; border-radius: 12px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); transition: all 0.3s ease; }
+.side-menu a:hover { background: rgba(255,255,255,0.25); transform: translateX(5px) scale(1.05) rotateY(3deg); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 
 /* بخش‌ها */
-.main-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 15px;
-  box-sizing: border-box;
-}
+.main-content { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+section { max-width: 700px; margin: 20px 0; padding: 25px; background: linear-gradient(145deg,#ffffff,#dbeafe); border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: transform 0.5s ease, box-shadow 0.5s ease; will-change: transform, box-shadow; transform-style: preserve-3d; }
+section:hover { transform: rotateY(5deg) rotateX(3deg) scale(1.02); box-shadow: 0 20px 50px rgba(0,0,0,0.25); }
+section h2 { margin-bottom: 10px; color: #1E3A8A; font-weight: 700; }
+section p { margin: 0; }
 
-section {
-  max-width: 900px;
-  margin: 15px auto;
-  padding: 15px 20px;
-  background: linear-gradient(145deg,#ffffff,#f0f4f8);
-  border-radius: 20px;
-  box-shadow: 0 12px 35px rgba(0,0,0,0.15);
-  user-select: none;
-  min-height: 120px; /* کوتاه‌تر کردن ارتفاع */
-}
-
-section h2 {
-  text-align: center;
-  margin-bottom: 10px;
-  color: #1E3A8A;
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-section p {
-  font-size: 1rem;
-  color: #555;
-  text-align: right;
-  margin: 0;
-}
-
-/* آیکون‌های راه‌های ارتباطی داخل کادر */
-.contact-icons {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 15px;
-}
-
-.contact-icons a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.contact-icons a img {
-  width: 45px;
-  height: 45px;
-}
-
-.contact-icons a:hover {
-  transform: scale(1.2);
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-}
+/* آیکون‌های تماس */
+.contact-icons { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin-top: 15px; }
+.contact-icons a img { width: 50px; height: 50px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.contact-icons a img:hover { transform: scale(1.2) rotateY(10deg); box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
 
 /* فوتر */
-footer {
-  text-align: center;
-  padding: 12px;
-  background: linear-gradient(135deg,#1E3A8A,#4F86F7);
-  color: white;
-  font-weight: 500;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  flex-shrink: 0;
-}
+footer { text-align: center; padding: 15px; background: linear-gradient(135deg,#1E3A8A,#4F86F7); color: white; font-weight: 500; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -6px 25px rgba(0,0,0,0.2); }
+
+/* مخفی‌سازی تصاویر SEO بدون پوشش روی صفحه */
+.hidden-seo-images { position: absolute; width: 0; height: 0; opacity: 0; overflow: hidden; z-index: -9999; }
 </style>
 </head>
 <body>
 
 <header>
+  <div class="profile-light" id="profileLight"></div>
   <div class="menu-line-container" id="menuLineContainer">
     <div class="menu-line"></div>
     <div class="menu-line"></div>
     <div class="menu-line"></div>
+    <span class="menu-dot"></span>
   </div>
-  <img src="https://hadidadkhodaei.ir/image/1759865862000.jpg" alt="هادی دادخدائی">
+  <img src="https://hadidadkhodaei.ir/image/1759865862000.jpg" alt="هادی دادخدائی" id="profileImg">
   <h1>هادی دادخدائی</h1>
- <p>طراح وب و برنامه نویس</p>
+  <p>طراح وب و برنامه نویس | دانشجوی مهندسی کامپیوتر</p>
 </header>
 
 <nav class="side-menu" id="sideMenu">
-  <div class="menu-header">
-    <span class="menu-label">منو :</span>
+  <div class="side-menu-header">
+    <span>منو</span>
     <span class="menu-close" id="menuClose">✖</span>
   </div>
-  <hr>
   <h2>گالری من</h2>
   <a href="https://hadidadkhodaei.ir/image" target="_blank">عکس</a>
   <a href="https://hadidadkhodaei.ir/music" target="_blank">موزیک</a>
@@ -265,7 +190,7 @@ footer {
 <div class="main-content">
   <section id="about">
     <h2>بیوگرافی</h2>
-    <p>سلام من هادی دادخدائی هستم 20 ساله و دانشجوی مهندسی کامپیوتر علاقه مند به توسعه اندروید امنیت و طراحی تجربه کاربری هستم<p>
+    <p>سلام من هادی دادخدائی هستم 20 ساله از رودبارجنوب دانشجوی مهندسی کامپیوتر</p>
   </section>
 
   <section id="contact">
@@ -279,23 +204,63 @@ footer {
   </section>
 </div>
 
-<footer>© 2023 هادی دادخدائی</footer>
+<div id="seoImages" class="hidden-seo-images"></div>
 
 <script>
 const menuLineContainer = document.getElementById('menuLineContainer');
 const sideMenu = document.getElementById('sideMenu');
 const menuClose = document.getElementById('menuClose');
 
+// منوی روان
 menuLineContainer.addEventListener('click', () => {
   sideMenu.classList.add('open');
   menuLineContainer.classList.add('hidden'); 
 });
-
 menuClose.addEventListener('click', () => {
   sideMenu.classList.remove('open');
   menuLineContainer.classList.remove('hidden'); 
 });
+
+// نور و 3D روی عکس پروفایل
+const profileImg = document.getElementById('profileImg');
+const profileLight = document.getElementById('profileLight');
+document.addEventListener('mousemove', (e)=>{
+  const x = (window.innerWidth/2 - e.clientX)/40;
+  const y = (window.innerHeight/2 - e.clientY)/40;
+  profileImg.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+  profileLight.style.transform = `translateX(-50%) translateY(${y*2}px)`;
+});
+
+// بارگیری تصاویر و ذخیره در localStorage
+const container = document.getElementById("seoImages");
+async function loadImages() {
+  const cacheKey = "myImagesCache";
+  let data;
+
+  if(localStorage.getItem(cacheKey)) {
+    data = JSON.parse(localStorage.getItem(cacheKey));
+  } else {
+    try {
+      const res = await fetch("https://hadidadkhodaei.ir/image/images.json");
+      data = await res.json();
+      localStorage.setItem(cacheKey, JSON.stringify(data));
+    } catch(err) {
+      console.error("خطا در بارگذاری JSON:", err);
+      return;
+    }
+  }
+
+  data.forEach(item => {
+    const img = document.createElement("img");
+    img.src = item.src;
+    img.alt = "Hadi Dadkhodaei Photo";
+    container.appendChild(img);
+  });
+}
+
+loadImages();
 </script>
 
+<footer>© 2023 هادی دادخدائی</footer>
 </body>
 </html>
