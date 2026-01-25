@@ -5,262 +5,427 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>هادی دادخدائی</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
-<meta name="description" content="سلام من هادی دادخدائی هستم 20 ساله از رودبارجنوب دانشجوی مهندسی کامپیوتر">
 
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Vazirmatn', sans-serif;
-  background: #e0f0ff;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  user-select: none;
-  touch-action: none;
+:root{
+--bg-main: linear-gradient(135deg,#020617,#0f172a);
+--card-bg: rgba(255,255,255,0.08);
+--glass-border: rgba(255,255,255,0.18);
+--neon-blue:#38bdf8;
+--text-main:#e5e7eb;
 }
 
-/* هدر */
-header {
-  position: relative;
-  text-align: center;
-  padding: 30px 20px;
-  background: linear-gradient(135deg,#4F86F7,#1E3A8A);
-  color: white;
-  box-shadow: 0 10px 35px rgba(0,0,0,0.25);
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
-  perspective: 1200px;
+*{box-sizing:border-box; user-select:none; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none;}
+
+html,body{
+margin:0;
+padding:0;
+font-family:'Vazirmatn',sans-serif;
+background:var(--bg-main);
+color:var(--text-main);
+height:100%;
+width:100%;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:flex-start;
 }
 
-/* نور پشت عکس پروفایل */
-header .profile-light {
-  position: absolute;
-  top: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 160px;
-  height: 160px;
-  background: radial-gradient(circle, rgba(255,215,0,0.5) 0%, transparent 60%);
-  border-radius: 50%;
-  z-index: 0; /* پشت عکس پروفایل */
-  filter: blur(20px);
+/* header */
+header{
+text-align:center;
+padding:25px 15px;
+background:linear-gradient(135deg,#1e3a8a,#7c3aed);
+border-bottom-left-radius:25px;
+border-bottom-right-radius:25px;
+box-shadow:0 10px 40px rgba(0,0,0,0.6);
+position:relative;
+width:100%;
 }
 
-/* عکس پروفایل */
-header img {
-  position: relative;
-  z-index: 1; /* روی نور */
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 4px solid #FFD700;
-  object-fit: cover;
-  margin-bottom: 10px;
-  box-shadow: 0 0 30px rgba(255,215,0,0.7);
-  transform-style: preserve-3d;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.profile-light{
+position:absolute;
+top:15px;
+left:50%;
+transform:translateX(-50%);
+width:140px;
+height:140px;
+background:radial-gradient(circle,rgba(56,189,248,.5),transparent 60%);
+border-radius:50%;
+filter:blur(25px);
 }
 
-/* نام و توضیحات */
-header h1 { margin: 0; font-size: 2rem; font-weight: 700; text-shadow: 1px 1px 8px rgba(0,0,0,0.25); }
-header p { margin: 5px 0 0; font-size: 1.1rem; font-weight: 500; opacity: 0.9; }
-
-/* منوی همبرگر */
-.menu-line-container {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 1002;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  animation: bounce 2s infinite;
+header img{
+width:120px;
+height:120px;
+border-radius:50%;
+border:3px solid var(--neon-blue);
+box-shadow:0 0 20px var(--neon-blue);
+object-fit:cover;
+position:relative;
+z-index:2;
+transition:.3s;
 }
-@keyframes bounce { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-3px) rotate(2deg); } }
-.menu-line { width: 35px; height: 5px; background: white; margin: 6px 0; border-radius: 3px; box-shadow: 0 3px 5px rgba(0,0,0,0.3); transition: all 0.3s ease; }
-.menu-line:hover { transform: scale(1.1) rotateY(5deg); }
 
-/* نقطه زرد چشمک زن کنار خط اول */
-.menu-dot {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 10px;
-  height: 10px;
-  background-color: #FFFF00;
-  border-radius: 50%;
-  animation: blink 1s infinite;
+header h1{margin:10px 0 5px;font-size:1.5rem}
+header p{opacity:.85;font-size:0.9rem}
+
+/* hamburger */
+.menu-line-container{
+position:absolute;
+top:20px;
+left:20px;
+cursor:pointer;
+z-index:10;
 }
-@keyframes blink { 0%,50%,100% { opacity:1; } 25%,75% { opacity:0; } }
-
-/* مخفی کردن خطوط و نقطه هنگام باز بودن منو */
-.menu-line-container.hidden .menu-line,
-.menu-line-container.hidden .menu-dot { opacity: 0; transform: translateX(-20px); }
-
-/* منوی کناری */
-.side-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 260px;
-  height: 100%;
-  background: rgba(30,58,138,0.95);
-  color: white;
-  padding: 20px;
-  transform: translateY(-110%);
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-  overflow-y: auto;
-  z-index: 1000;
-  border-bottom-right-radius: 20px;
-  backdrop-filter: blur(6px);
-  display: flex;
-  flex-direction: column;
-  will-change: transform;
+.menu-line{
+width:32px;
+height:4px;
+background:white;
+margin:6px 0;
+border-radius:3px;
 }
-.side-menu.open { transform: translateY(0); }
 
-/* هدر منو */
-.side-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-.side-menu-header span { font-weight: bold; font-size: 1.2rem; }
-.menu-close { font-size: 28px; font-weight: bold; cursor: pointer; color: red; }
+/* side menu */
+.side-menu{
+position:fixed;
+top:0;
+left:0;
+width:260px;
+height:100%;
+background:rgba(2,6,23,.95);
+backdrop-filter:blur(15px);
+padding:20px;
+transform:translateY(-110%);
+transition:.4s;
+z-index:1000;
+border-bottom-right-radius:25px;
+overflow-y:auto;
+}
 
-/* خطوط جداکننده داخل منو */
-.side-menu hr { border: 1px solid rgba(255,255,255,0.3); margin: 10px 0; }
+.side-menu.open{transform:translateY(0)}
 
-/* آیتم‌های منو */
-.side-menu h2, .side-menu h3 { text-align: center; margin: 12px 0; font-weight: bold; }
-.side-menu a { display: flex; align-items: center; justify-content: center; margin: 8px 0; padding: 12px; color: white; text-decoration: none; font-weight: 600; border-radius: 12px; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); transition: all 0.3s ease; }
-.side-menu a:hover { background: rgba(255,255,255,0.25); transform: translateX(5px) scale(1.05) rotateY(3deg); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+.side-menu-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
 
-/* بخش‌ها */
-.main-content { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-section { max-width: 700px; margin: 20px 0; padding: 25px; background: linear-gradient(145deg,#ffffff,#dbeafe); border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: transform 0.5s ease, box-shadow 0.5s ease; will-change: transform, box-shadow; transform-style: preserve-3d; }
-section:hover { transform: rotateY(5deg) rotateX(3deg) scale(1.02); box-shadow: 0 20px 50px rgba(0,0,0,0.25); }
-section h2 { margin-bottom: 10px; color: #1E3A8A; font-weight: 700; }
-section p { margin: 0; }
+.menu-close{
+cursor:pointer;
+font-size:26px;
+color:#ff4d4d;
+}
 
-/* آیکون‌های تماس */
-.contact-icons { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin-top: 15px; }
-.contact-icons a img { width: 50px; height: 50px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-.contact-icons a img:hover { transform: scale(1.2) rotateY(10deg); box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
+.side-menu a{
+display:block;
+text-align:center;
+margin:10px 0;
+padding:12px;
+border-radius:12px;
+color:white;
+text-decoration:none;
+background:linear-gradient(135deg,#2563eb,#7c3aed);
+box-shadow:0 0 10px rgba(124,58,237,.6);
+transition:.3s;
+}
 
-/* فوتر */
-footer { text-align: center; padding: 15px; background: linear-gradient(135deg,#1E3A8A,#4F86F7); color: white; font-weight: 500; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -6px 25px rgba(0,0,0,0.2); }
+.side-menu a:hover{
+background:linear-gradient(135deg,#38bdf8,#a78bfa);
+box-shadow:0 0 25px rgba(56,189,248,.9);
+transform:scale(1.05);
+}
 
-/* مخفی‌سازی تصاویر SEO بدون پوشش روی صفحه */
-.hidden-seo-images { position: absolute; width: 0; height: 0; opacity: 0; overflow: hidden; z-index: -9999; }
+.menu-subtext{
+text-align:center;
+font-size:13px;
+opacity:0.7;
+margin-bottom:5px;
+}
+
+/* main */
+.main-content{
+flex:1;
+overflow:auto;
+padding:15px;
+display:flex;
+flex-direction:column;
+align-items:center;
+width:100%;
+}
+
+/* bio */
+section{
+max-width:700px;
+margin:15px 0;
+padding:25px;
+background:var(--card-bg);
+border-radius:22px;
+border:1px solid var(--glass-border);
+box-shadow:0 10px 40px rgba(0,0,0,.5);
+backdrop-filter:blur(12px);
+transition:.5s;
+text-align:center;
+}
+
+section:hover{
+transform:translateY(-3px) scale(1.02);
+box-shadow:0 20px 60px rgba(56,189,248,.3);
+}
+
+section h2{color:var(--neon-blue);margin-bottom:10px}
+
+/* contact icons */
+#contactCard .contact-icons{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:nowrap;
+}
+
+#contactCard .contact-icons a{
+display:flex;
+justify-content:center;
+align-items:center;
+width:50px;
+height:50px;
+}
+
+#contactCard .contact-icons img{
+width:48px;
+height:48px;
+transition:.3s;
+}
+
+#contactCard .contact-icons img:hover{
+transform:scale(1.2);
+}
+
+/* footer */
+footer{
+padding:10px 15px;
+background:linear-gradient(135deg,#1e3a8a,#4f46e5);
+border-top-left-radius:20px;
+border-top-right-radius:20px;
+box-shadow:0 -6px 25px rgba(0,0,0,.4);
+font-size:0.9rem;
+line-height:1.4rem;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+text-align:center;
+}
+
+/* language switcher */
+.language-switcher{
+position:absolute;
+top:20px;
+right:20px;
+cursor:pointer;
+font-size:24px;
+color:var(--text-main);
+user-select:none;
+z-index:15;
+}
+
+.language-options{
+display:none;
+position:absolute;
+top:35px;
+right:0;
+background: var(--card-bg);
+border:1px solid var(--glass-border);
+border-radius:10px;
+overflow:hidden;
+text-align:center;
+box-shadow:0 5px 15px rgba(0,0,0,0.4);
+backdrop-filter:blur(10px);
+}
+
+.language-options span{
+display:block;
+padding:8px 20px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.language-options span:hover{
+background:var(--neon-blue);
+color:#fff;
+}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="profile-light" id="profileLight"></div>
-  <div class="menu-line-container" id="menuLineContainer">
-    <div class="menu-line"></div>
-    <div class="menu-line"></div>
-    <div class="menu-line"></div>
-    <span class="menu-dot"></span>
-  </div>
-  <img src="https://hadidadkhodaei.ir/image/1759865862000.jpg" alt="هادی دادخدائی" id="profileImg">
-  <h1>هادی دادخدائی</h1>
-  <p>طراح وب و برنامه نویس | دانشجوی مهندسی کامپیوتر</p>
+<div class="profile-light"></div>
+<div class="menu-line-container" id="menuBtn">
+<div class="menu-line"></div>
+<div class="menu-line"></div>
+<div class="menu-line"></div>
+</div>
+
+<div class="language-switcher" id="languageSwitcher">
+🌐
+<div class="language-options" id="languageOptions">
+<span data-lang="fa">فارسی</span>
+<span data-lang="en">English</span>
+<span data-lang="ar">عربی</span>
+</div>
+</div>
+
+<img src="https://hadidadkhodaei.ir/image/1759865862000.jpg" id="profileImg">
+<h1 id="headerTitle">هادی دادخدائی</h1>
+<p id="headerDesc">طراح وب و برنامه نویس | دانشجوی مهندسی کامپیوتر</p>
 </header>
 
+<!-- منو VIP -->
 <nav class="side-menu" id="sideMenu">
   <div class="side-menu-header">
-    <span>منو</span>
-    <span class="menu-close" id="menuClose">✖</span>
+    <span class="menu-close" id="closeMenu">✖</span>
+    <span id="menuHeaderText">منو VIP</span>
   </div>
-  <h2>گالری من</h2>
-  <a href="https://hadidadkhodaei.ir/image" target="_blank">عکس</a>
-  <a href="https://hadidadkhodaei.ir/music" target="_blank">موزیک</a>
+
+  <a href="https://hadidadkhodaei.ir/image" target="_blank" id="menuGallery">گالری تصاویر</a>
   <hr>
-  <h3>فیلترشکن رایگان</h3>
-  <a href="https://Hadidadkhodaei.ir/v2rayNG" target="_blank">Config v2rayNG</a>
+  <div class="menu-subtext" id="vpnSubtext">فیلترشکن رایگان</div>
+  <a href="https://Hadidadkhodaei.ir/v2rayNG" target="_blank" id="menuVpn">v2rayNG</a>
   <hr>
-  <h3>راه‌های ارتباطی</h3>
-  <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank">اینستاگرام</a>
-  <a href="https://t.me/+989130487019" target="_blank">تلگرام</a>
-  <a href="https://wa.me/989130487019" target="_blank">واتساپ</a>
-  <a href="tel:+989130487019">تماس</a>
+  <div class="menu-subtext" id="contactSubtext">راه های ارتباطی</div>
+  <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank" id="menuInstagram">اینستاگرام</a>
+  <a href="https://t.me/+989130487019" target="_blank" id="menuTelegram">تلگرام</a>
+  <a href="https://wa.me/989130487019" target="_blank" id="menuWhatsapp">واتساپ</a>
+  <a href="tel:+989130487019" id="menuCall">تماس مستقیم</a>
 </nav>
 
 <div class="main-content">
-  <section id="about">
-    <h2>بیوگرافی</h2>
-    <p>سلام من هادی دادخدائی هستم 20 ساله از رودبارجنوب دانشجوی مهندسی کامپیوتر</p>
-  </section>
+<section>
+<h2 id="bioTitle">بیوگرافی</h2>
+<p id="bioDesc">
+سلام، من هادی دادخدائی هستم، ۲۰ ساله از رودبارجنوب  
+دانشجوی مهندسی کامپیوتر و علاقه‌مند به طراحی وب و برنامه‌نویسی.
+</p>
+</section>
 
-  <section id="contact">
-    <h2>راه‌های ارتباطی</h2>
-    <div class="contact-icons">
-      <a href="https://wa.me/989130487019" target="_blank"><img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"></a>
-      <a href="https://t.me/Hadi_dadkhodaei" target="_blank"><img src="https://img.icons8.com/color/48/000000/telegram-app--v1.png"></a>
-      <a href="https://instagram.com/Hadi_dadkhodaei" target="_blank"><img src="https://img.icons8.com/color/48/000000/instagram-new--v1.png"></a>
-      <a href="tel:+989130487019"><img src="https://img.icons8.com/color/48/000000/phone.png"></a>
-    </div>
-  </section>
+<section id="contactCard">
+<div class="contact-icons">
+<a href="https://wa.me/989130487019"><img src="https://img.icons8.com/color/48/whatsapp--v1.png"></a>
+<a href="https://t.me/Hadi_dadkhodaei"><img src="https://img.icons8.com/color/48/telegram-app--v1.png"></a>
+<a href="https://instagram.com/Hadi_dadkhodaei"><img src="https://img.icons8.com/color/48/instagram-new--v1.png"></a>
+<a href="tel:+989130487019"><img src="https://img.icons8.com/color/48/phone.png"></a>
+</div>
+</section>
 </div>
 
-<div id="seoImages" class="hidden-seo-images"></div>
+<footer>
+<div id="dateFa" style="text-align:left;flex:1;"></div>
+<div style="text-align:center;flex:1;">
+  <span id="time"></span>
+</div>
+<div style="text-align:right;flex:1;">
+  <span id="dateEn"></span>
+</div>
+<div style="width:100%;text-align:center;margin-top:5px;">_<span id="visitorCount">0</span>
+</div>
+</footer>
 
 <script>
-const menuLineContainer = document.getElementById('menuLineContainer');
-const sideMenu = document.getElementById('sideMenu');
-const menuClose = document.getElementById('menuClose');
+// منو
+const menuBtn=document.getElementById("menuBtn");
+const sideMenu=document.getElementById("sideMenu");
+const closeMenu=document.getElementById("closeMenu");
+const profileImg=document.getElementById("profileImg");
 
-// منوی روان
-menuLineContainer.addEventListener('click', () => {
-  sideMenu.classList.add('open');
-  menuLineContainer.classList.add('hidden'); 
-});
-menuClose.addEventListener('click', () => {
-  sideMenu.classList.remove('open');
-  menuLineContainer.classList.remove('hidden'); 
-});
+menuBtn.onclick=()=>sideMenu.classList.add("open");
+closeMenu.onclick=()=>sideMenu.classList.remove("open");
 
-// نور و 3D روی عکس پروفایل
-const profileImg = document.getElementById('profileImg');
-const profileLight = document.getElementById('profileLight');
-document.addEventListener('mousemove', (e)=>{
-  const x = (window.innerWidth/2 - e.clientX)/40;
-  const y = (window.innerHeight/2 - e.clientY)/40;
-  profileImg.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-  profileLight.style.transform = `translateX(-50%) translateY(${y*2}px)`;
+document.addEventListener("mousemove",e=>{
+const x=(window.innerWidth/2-e.clientX)/40;
+const y=(window.innerHeight/2-e.clientY)/40;
+profileImg.style.transform=`rotateY(${x}deg) rotateX(${y}deg)`;
 });
 
-// بارگیری تصاویر و ذخیره در localStorage
-const container = document.getElementById("seoImages");
-async function loadImages() {
-  const cacheKey = "myImagesCache";
-  let data;
+// زبان
+const languageSwitcher=document.getElementById("languageSwitcher");
+const languageOptions=document.getElementById("languageOptions");
+languageSwitcher.onclick=()=>{languageOptions.style.display=languageOptions.style.display==="block"?"none":"block";};
 
-  if(localStorage.getItem(cacheKey)) {
-    data = JSON.parse(localStorage.getItem(cacheKey));
-  } else {
-    try {
-      const res = await fetch("https://hadidadkhodaei.ir/image/images.json");
-      data = await res.json();
-      localStorage.setItem(cacheKey, JSON.stringify(data));
-    } catch(err) {
-      console.error("خطا در بارگذاری JSON:", err);
-      return;
+const translations = {
+fa:{headerTitle:"هادی دادخدائی",headerDesc:"طراح وب و برنامه نویس | دانشجوی مهندسی کامپیوتر",bioTitle:"بیوگرافی",bioDesc:"سلام، من هادی دادخدائی هستم، ۲۰ ساله از رودبار جنوب\nدانشجوی مهندسی کامپیوتر و علاقه‌مند به طراحی وب و برنامه‌نویسی.",menuHeaderText:"منو VIP",menuGallery:"گالری تصاویر",vpnSubtext:"فیلترشکن رایگان",menuVpn:"v2rayNG",contactSubtext:"راه های ارتباطی",menuInstagram:"اینستاگرام",menuTelegram:"تلگرام",menuWhatsapp:"واتساپ",menuCall:"تماس مستقیم"},
+en:{headerTitle:"Hadi Dadkhodaei",headerDesc:"Web Designer & Programmer | Computer Engineering Student",bioTitle:"Biography",bioDesc:"Hi, I am Hadi Dadkhodaei, 20 years old from Rudbar Jonoub.\nComputer Engineering student, interested in web design and programming.",menuHeaderText:"VIP Menu",menuGallery:"Image Gallery",vpnSubtext:"Free VPN",menuVpn:"v2rayNG",contactSubtext:"Contact Methods",menuInstagram:"Instagram",menuTelegram:"Telegram",menuWhatsapp:"WhatsApp",menuCall:"Direct Call"},
+ar:{headerTitle:"هادي دادخدائي",headerDesc:"مصمم ويب ومبرمج | طالب هندسة الحاسوب",bioTitle:"السيرة الذاتية",bioDesc:"مرحبًا، أنا هادي دادخدائي، 20 عامًا من رودبار جنوب.\nطالب هندسة الحاسوب ومهتم بتصميم الويب والبرمجة.",menuHeaderText:"قائمة VIP",menuGallery:"معرض الصور",vpnSubtext:"VPN مجاني",menuVpn:"v2rayNG",contactSubtext:"طرق التواصل",menuInstagram:"إنستغرام",menuTelegram:"تليجرام",menuWhatsapp:"واتساب",menuCall:"اتصال مباشر"}
+};
+
+languageOptions.querySelectorAll("span").forEach(span=>{
+  span.onclick=()=>{
+    const lang=span.getAttribute("data-lang");
+    document.documentElement.lang=lang;
+    document.body.dir=lang==="en"?"ltr":"rtl";
+    Object.keys(translations[lang]).forEach(id=>{
+      document.getElementById(id).textContent=translations[lang][id];
+    });
+    languageOptions.style.display="none";
+  };
+});
+
+document.addEventListener("click",(e)=>{
+if(!languageSwitcher.contains(e.target)){
+languageOptions.style.display="none";
+}
+});
+
+// تابع دقیق شمسی
+function toJalaali(gy, gm, gd) {
+    var g_d_m = [0,31,59,90,120,151,181,212,243,273,304,334];
+    var gy2 = (gm > 2) ? gy + 1 : gy;
+    var days = 355666 + (365 * gy) + Math.floor((gy+3)/4) - Math.floor((gy+99)/100) + Math.floor((gy+399)/400) + gd + g_d_m[gm-1];
+    var jy = -1595 + 33 * Math.floor(days/12053);
+    days %= 12053;
+    jy += 4 * Math.floor(days/1461);
+    days %= 1461;
+    if (days > 365) {
+        jy += Math.floor((days-1)/365);
+        days = (days-1)%365;
     }
-  }
-
-  data.forEach(item => {
-    const img = document.createElement("img");
-    img.src = item.src;
-    img.alt = "Hadi Dadkhodaei Photo";
-    container.appendChild(img);
-  });
+    var jm, jd;
+    if (days < 186) {
+        jm = 1 + Math.floor(days/31);
+        jd = 1 + (days%31);
+    } else {
+        jm = 7 + Math.floor((days-186)/30);
+        jd = 1 + ((days-186)%30);
+    }
+    return {jy,jm,jd};
 }
 
-loadImages();
-</script>
+// تاریخ و ساعت
+function updateDateTime(){
+  const now=new Date();
+  const pad=(n)=>n.toString().padStart(2,'0');
+  const j=toJalaali(now.getFullYear(),now.getMonth()+1,now.getDate());
+  document.getElementById("dateFa").textContent=`${j.jy}/${pad(j.jm)}/${pad(j.jd)}`;
+  document.getElementById("dateEn").textContent=`${now.getFullYear()}/${pad(now.getMonth()+1)}/${pad(now.getDate())}`;
+  document.getElementById("time").textContent=`${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+}
+setInterval(updateDateTime,1000);
+updateDateTime();
 
-<footer>© 2023 هادی دادخدائی</footer>
+// شمارش بازدید روزانه هر دستگاه
+const today=new Date().toDateString();
+let visited=localStorage.getItem("visitedDate");
+let count=localStorage.getItem("visitorCount");
+if(!count) count=0;
+if(visited!==today){
+  count++;
+  localStorage.setItem("visitorCount",count);
+  localStorage.setItem("visitedDate",today);
+}
+document.getElementById("visitorCount").textContent=count;
+
+</script>
 </body>
 </html>
