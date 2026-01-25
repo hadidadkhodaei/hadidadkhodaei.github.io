@@ -1,1 +1,2 @@
 vless://ab25de01-0988-4473-b424-6c72e85e354e@pl1.abriclub.ir:8443?security=none&encryption=none&host=ripe.net&headerType=http&type=tcp#%D9%87%D8%A7%D8%AF%DB%8C%20%D8%AF%D8%A7%D8%AF%D8%AE%D8%AF%D8%A7%D8%A6%DB%8C
+vless://f4083ccf-57a0-4f22-9b63-58be2f730e2f@tun1.amirtunel1.indevs.in:3055?security=none&encryption=none&host=speedtest.net&headerType=http&type=tcp#hadidadkhodaei.ir
